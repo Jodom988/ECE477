@@ -55,7 +55,7 @@ def main():
 	scrn_poly.set_fc((0, 0, 0, 0))
 	ax.add_patch(scrn_poly)
 
-	ax.plot(x_line[0], x_line[1], 'bo:')
+	ax.plot(x_line[0], x_line[1], 'bo:') 
 	ax.plot(y_line[0], y_line[1], 'bo:')
 	# ax.plot(x_line_parallax[0], x_line_parallax[1], 'go:')
 	# ax.plot(y_line_parallax[0], y_line_parallax[1], 'go:')
