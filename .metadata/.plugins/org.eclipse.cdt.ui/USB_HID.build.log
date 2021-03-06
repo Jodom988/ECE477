@@ -1,0 +1,6 @@
+20:30:16 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+
+20:30:16 Build Finished (took 73ms)
+

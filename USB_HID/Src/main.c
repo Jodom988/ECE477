@@ -69,6 +69,7 @@ static void MX_USART2_UART_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -97,15 +98,10 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
-
-  //Initialize USB Device File Descriptor
-  MX_USB_DEVICE_Init();
-
-
   //Initialize Buffer
   HIDBuffer[0]=0;  //1-> Left Click, 2-> Right Click
-  HIDBuffer[1]=0;  //X Position
-  HIDBuffer[2]=10;  //Y Position
+//  HIDBuffer[1]=-126;  //X Position
+//  HIDBuffer[2]=-126;  //Y Position
   HIDBuffer[3]=0;  //Scroll Wheel
 
   //Todo Create interfaces for analyzing a 'packet' structure and perform action.
@@ -118,11 +114,23 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+	/* USER CODE BEGIN 3 */
 	  if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) != GPIO_PIN_SET){
-		  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer,HID_BUFFER_SIZE);
-		  HAL_Delay(20);
+		  for(int i = -126; i<127 ; i++){
+			  HIDBuffer[1] = i;
+			  for(int j = -126; j<127; j++){
+				  HIDBuffer[2] = j;
+				  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer ,HID_BUFFER_SIZE);
+				  HAL_Delay(10);
+			  }
+		  }
 	  }
+
+
+//	  if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) != GPIO_PIN_SET){
+//		  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer ,HID_BUFFER_SIZE);
+//		  HIDBuffer[1] += 1;
+//	 }
 
 
   }
