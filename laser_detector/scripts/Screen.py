@@ -39,8 +39,8 @@ class Screen:
 		return Polygon(self.corners)
 
 	def get_y_percent(self, pt):
-		curr_step = .5
-		percentage = 1
+		curr_step = .25
+		percentage = .5
 		
 		top_left = self.get_nw()
 		bottom_left = self.get_sw()
@@ -75,8 +75,8 @@ class Screen:
 		return percentage, lines
 
 	def get_x_percent(self, pt):
-		curr_step = .5
-		percentage = 1
+		curr_step = .25
+		percentage = .5
 		
 		top_left = self.get_nw()
 		bottom_left = self.get_sw()
