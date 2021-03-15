@@ -21,6 +21,7 @@ class Screen:
 			raise Exception('Unrecognized Ratio')
 
 		self.ratio = ratio
+		## sw, nw, ne, se ##
 		self.corners = points
 
 	def get_ne(self):
