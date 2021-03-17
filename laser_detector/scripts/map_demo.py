@@ -4,6 +4,8 @@ import numpy as np
 from matplotlib.patches import Polygon
 from Screen import *
 
+from utility import *
+
 def plot_full():
 	points = [[6, 60],
 				[18, 5],
@@ -22,8 +24,10 @@ def plot_full():
 
 	laser_pt = [81, 33]
 
+	start = current_time_micros()
 	x_percent, x_lines = scrn.get_x_percent(laser_pt)
 	y_percent, y_lines = scrn.get_y_percent(laser_pt)
+	print(current_time_micros() - start)
 
 	fig, axs = plt.subplots(1, 2, figsize=(10,5))
 
@@ -70,7 +74,7 @@ def plot_full():
 	ax.invert_yaxis()
 	ax.set_title("Laser Mapped to Screen")
 
-	plt.savefig('imgs/mapping_complete.png')
+	plt.savefig('plots/mapping_complete.png')
 	plt.show()
 
 def plot_steps():
@@ -160,7 +164,7 @@ def plot_steps():
 	ax.invert_yaxis()
 	ax.set_title("C")
 	
-	plt.savefig('imgs/steps.png')
+	plt.savefig('plots/steps.png')
 	plt.show()
 
 def main():
