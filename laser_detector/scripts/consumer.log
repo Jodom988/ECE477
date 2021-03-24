@@ -1,0 +1,13 @@
+INFO:root:Created consumer log file
+INFO:root:b'Frame number 0'
+INFO:root:b'Frame number 1'
+INFO:root:b'Frame number 2'
+INFO:root:b'Frame number 3'
+INFO:root:b'Frame number 4'
+INFO:root:b'Frame number 5'
+INFO:root:b'Frame number 6'
+INFO:root:b'Frame number 7'
+INFO:root:b'Frame number 8'
+INFO:root:b'Frame number 9'
+INFO:root:Received CODE_EXIT, exiting...
+INFO:root:Exited

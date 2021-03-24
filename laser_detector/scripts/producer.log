@@ -1,0 +1,6 @@
+INFO:root:Created producer log file
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:root:Launching consumer program...
+INFO:root:Launched consumer program
+INFO:root:Awaiting Connection...
+INFO:root:Rx Connection!
