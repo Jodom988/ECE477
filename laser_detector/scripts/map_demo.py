@@ -6,6 +6,42 @@ from Screen import *
 
 from utility import *
 
+import time
+
+
+def bin_search_time():
+	points = [[6, 60],
+				[18, 5],
+				[90, 3],
+				[95, 95]]
+
+
+
+	points_sq = [[0, 900],
+				[0, 0],
+				[1600, 0],
+				[1600, 900]]
+
+	scrn = Screen(points, Screen.RATIO_16_9)
+	scrn_sq = Screen(points_sq, Screen.RATIO_16_9)
+
+	laser_pt = [81, 33]
+
+	times_us = list()
+
+	for i in range(10000):
+		start = current_time_micros()
+		x_percent, x_lines = scrn.get_x_percent(laser_pt)
+		y_percent, y_lines = scrn.get_y_percent(laser_pt)
+		times_us.append(current_time_micros() - start)
+
+	plt.hist(times_us)
+	plt.xlabel("Time (µs)")
+	plt.ylabel("Frequency")
+	plt.savefig('plots/bin_search_time.png')
+
+	
+
 def plot_full():
 	points = [[6, 60],
 				[18, 5],
@@ -168,9 +204,9 @@ def plot_steps():
 	plt.show()
 
 def main():
-	plot_full()
+	#plot_full()
 	#plot_steps()
-	
+	bin_search_time()
 
 if __name__ == '__main__':
 	main()

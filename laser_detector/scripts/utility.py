@@ -9,3 +9,6 @@ def get_point_between(p1, p2, percent):
 
 def current_time_micros():
 	return round(time.time() * 1000000)
+
+def current_time_millis():
+	return round(time.time() * 1000)

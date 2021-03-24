@@ -1,16 +1,16 @@
-from io import BytesIO
-from picamera import PiCamera
+import argparse
+import sys
 
-import time
+REQ_PORT = 8989
 
+def main():
+	parser = argparse.ArgumentParser()
+	group = parser.add_mutually_exclusive_group(required=True)
 
-stream = BytesIO()
-camera = PiCamera()
+	group.add_argument('-g', '--generate_frames', action="store_true", help="Only call the program with this argument from the command line. With this option, the program will start the camera and listen for frame requests.")
+	group.add_argument('-c', '--consume_frames', action="store", nargs=1, help="Never call the program with this argument from the command line. With this option, the program will request frames and process them.")
+	print(sys.argv)
+	parsed_args = parser.parse_args(sys.argv[1:])
 
-camera.resolution = (640, 480)
-camera.start_recording(stream, format='h264', quality=23)
-
-time.sleep(2)
-
-
-print("Done!")
+if __name__ == '__main__':
+	main()

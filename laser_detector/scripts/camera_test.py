@@ -2,6 +2,9 @@ from picamera import PiCamera
 import time
 import cv2 as cv
 
+
+
+
 def get_video(fname, res, framerate=30, durration=5.0):
 
 
