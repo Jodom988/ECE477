@@ -6,12 +6,17 @@ import select
 import threading
 import logging
 
+from picamera import PiCamera
+
+from io import BytesIO
+
 REQ_PORT = 8989
 LOCAL_HOST = "127.0.0.1"
 BUFFER_SIZE = 4096
 
-CODE_REQ_FRAME = b'\x01'
 CODE_EXIT = b'\x00'
+CODE_REQ_FRAME = b'\x01'
+CODE_POS_DATA = b'\x02'
 
 
 def rec_from(s):
@@ -53,7 +58,15 @@ def consume_frames(req_port):
 
 
 def serve_frames():
+	# Do camera setup
+	camera = PiCamera()
+	camera.resolution = (640, 480)
+	camera.framerate = 20
 
+	stream = BytesIO()
+	camera.start_recording(stream, format='mjpeg', quality=23)
+
+	# Do socket setup
 	listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -64,36 +77,70 @@ def serve_frames():
 		raise e
 
 	listen_socket.listen(0) #Only allow one at a time, (allow zero in backlog)
+	
+	asyncio.run(launch_consumer())
 
+	logging.info("Awaiting Connection...")
+	to_socket, in_addrinfo = listen_socket.accept()
+	logging.info("Received Connection!")
+	
 	running = True
 	while running:
-		asyncio.run(launch_consumer())
+		try:
+			
+			read_socket, _, _ = select.select([to_socket], list(), list())	# Wait until socket in list has data (blocks until ready)
+			read_socket = read_socket[0] # only one socket so we know its the first
 
-		logging.info("Awaiting Connection...")
-		to_socket, in_addrinfo = listen_socket.accept()
-		logging.info("Rx Connection!")
+			i = 0
+			while running:
+				msg = rec_from(read_socket)
+				if msg == CODE_REQ_FRAME:
+					# Get latest frame here
+					logging.info("Received request for new frame")
+					to_socket.send(str.encode('Frame number {}'.format(i)))
+					i += 1
+				elif msg == CODE_POS_DATA:
+					## TODO 
+					logging.error("Need to implement rx position data")
+			try:
+				logging.info("Consumer program disconnected, relaunching program")
+				asyncio.run(launch_consumer())
 
-		read_socket, _, _ = select.select([to_socket], list(), list())	# Wait until socket in list has data (blocks until ready)
-		read_socket = read_socket[0] # only one socket so we know its the first
+				logging.info("Awaiting Connection...")
+				to_socket, in_addrinfo = listen_socket.accept()
+				logging.info("Received Connection!")
+			
+			except Exception as e:
+				logging.ERROR("FATAL ERROR IN MAIN LOOP OF serve_frames()")
+				print("FATAL ERROR IN MAIN LOOP OF serve_frames()")
 
-		for i in range(10):
-			msg = rec_from(read_socket)
-			if msg == CODE_REQ_FRAME:
-				# Get latest frame here
-				to_socket.send(str.encode('Frame number {}'.format(i)))
+		except KeyboardInterrupt as e:
+			
+			logging.info("Received KeyboardInterrupt, exiting gracefully...")
+			try:
+				to_socket.send(CODE_EXIT)
+				to_socket.close()
+				listen_socket.close()
+			except Exception as e:
+				# Socket already closed
+				pass
 
-		to_socket.send(CODE_EXIT)
-		#print("Consumer program disconnected, relaunching program")
-		break
+			return
+
+		except Exception as e:
+			## TODO: Do error handling for full buffer
+			logging.error("BUFFER FULL")
+			print("Buffer full")
+			pass
 
 async def launch_consumer():
 
 
 	logging.info("Launching consumer program...")
 	proc = await asyncio.create_subprocess_shell(
-		"python3 Overhead.py -c {}".format(REQ_PORT),
-		stdout=asyncio.subprocess.PIPE,
-		stderr=asyncio.subprocess.PIPE)
+		"python3 Overhead.py -c {}".format(REQ_PORT))
+		# stdout=asyncio.subprocess.PIPE,
+		# stderr=asyncio.subprocess.PIPE)
 	
 	# stdout, stderr = await proc.communicate()
 	# if stdout:
