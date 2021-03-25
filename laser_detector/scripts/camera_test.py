@@ -14,6 +14,15 @@ def find_last(b, search):
 		if b[i:i+search_len] == search:
 			return i
 
+def detect_in_frame(img):
+	cv.imshow("preview", img)
+	cv.waitKey(0)
+	cv.destroyAllWindows()
+	pass
+
+def test_detect_stream():
+	pass
+
 def test_recent_frame(res, framerate=20):
 	print("Initializing Camera...")
 	camera = PiCamera()
@@ -158,6 +167,8 @@ def get_video(fname, res, framerate=30, durration=5.0):
 	writer.release()
 	vid.release()
 
+	os.system("rm {}".format(tmp_fname))
+
 def infinte_preview(res=(640, 480), framerate=30):
 	camera = PiCamera()
 	camera.resolution = res
@@ -180,10 +191,13 @@ def take_picture(fname, res):
 	cam.capture(fname)
 
 def main():
-	#take_picture("./imgs/tmp.jpg", (1064, 768))
-	#get_video("./imgs/tmp.mjpeg", (640, 480))
+	#take_picture("./imgs/test-detect.jpg", (640, 480))
+	#get_video("./imgs/test-detect.mjpeg", (640, 480))
 	#test_recent_frame((640, 480))
-	infinte_preview()
+	#infinte_preview()
+
+	img = cv.imread("./imgs/test-detect.jpg")
+	detect_in_frame(img)
 
 if __name__ == '__main__':
 	main()
