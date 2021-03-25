@@ -1,42 +1,132 @@
-from picamera import PiCamera
+from picamera import PiCamera, CircularIO, PiCameraCircularIO
 import time
 import cv2 as cv
 from io import BytesIO
+import numpy as np
+
+SEEK_SET = 0
 
 
-def test_recent_frame(res, framerate=30):
+
+def find_last(b, search):
+	search_len = len(search)
+	for i in range(len(b) - search_len + 1, 0, -1):
+		if b[i:i+search_len] == search:
+			return i
+
+def test_recent_frame(res, framerate=20):
 	print("Initializing Camera...")
 	camera = PiCamera()
 	camera.resolution = (640, 480)
-	camera.framerate = 20
-	camera.start_preview()
+	camera.framerate = framerate
 
-	stream = BytesIO()
+	mb = 1000000
+	stream = PiCameraCircularIO(camera, size=(50 * mb))
 	time.sleep(2)
 	camera.start_recording(stream, format='mjpeg', quality=23)
 	print("Done!")
 
-	for i in range(1, 2):
+	## Wait some time then get the last frame in buffer
+	## ================================== ##
+
+	for i in range(1, 4):
+		print("Timer: %d" % i)
+		time.sleep(.1)
+
+	frames = list()
+	read_size = 0
+	last_read_size = 0
+	for frame in stream.frames:
+		frames.append(frame)
+		last_read_size = read_size
+		read_size += frame.frame_size
+
+
+	stream.seek(SEEK_SET, whence=0)
+	stream_bytes = stream.read(read_size)
+
+	frame_bytes = stream_bytes[last_read_size:]
+
+	i = cv.imdecode(np.frombuffer(frame_bytes, dtype=np.uint8), cv.IMREAD_COLOR)
+	cv.imwrite("imgs/buffer_read-1.jpg", i)
+
+	## Wait some time then get the last frame in buffer
+	## ================================== ##
+	for i in range(1, 4):
+		print("Timer: %d" % i)
+		time.sleep(1)
+
+	frames = list()
+	read_size = 0
+	last_read_size = 0
+	for frame in stream.frames:
+		frames.append(frame)
+		last_read_size = read_size
+		read_size += frame.frame_size
+
+	stream.seek(SEEK_SET, whence=0)
+	stream_bytes = stream.read(read_size)
+
+	frame_bytes = stream_bytes[last_read_size:]
+
+	i = cv.imdecode(np.frombuffer(frame_bytes, dtype=np.uint8), 0)
+	cv.imwrite("imgs/buffer_read-2.jpg", i)
+
+	camera.stop_recording()
+
+def test_recent_frame_manual(res, framerate=20):
+	print("Initializing Camera...")
+	camera = PiCamera()
+	camera.resolution = (640, 480)
+	camera.framerate = framerate
+
+	mb = 1000000
+	stream = CircularIO(50 * mb)
+	time.sleep(2)
+	camera.start_recording(stream, format='mjpeg', quality=23)
+	print("Done!") 
+
+	for i in range(1, 3):
 		print(i)
 		time.sleep(1)
 
 	camera.stop_recording()
-	img_bytes = b''
-	while True:
-		read = stream.read(1024)
-		img_bytes += read
-		a = img_bytes.find(b'\xff\xd8')
-		b = img_bytes.find(b'\xff\xd9')
-		if a != -1 and b != -1:
-			jpg = img_bytes[a:b+2]
-			img_bytes = img_bytes[b+2:]
-			i = cv.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.CV_LOAD_IMAGE_COLOR)
-			cv.imwrite("imgs/buffer_read.jpg")
-		elif len(read) == 0:
-			print("No frame found")
-			return
-		
+	stream_bytes = b''
 
+	stream.seek(SEEK_SET, whence=0)
+	stream_bytes = stream.readall()
+	print("Length read: %.2f" % (len(stream_bytes) / mb))
+	
+	a = None
+	b = None
+
+	search = b'\xff\xd9'
+	search_len = len(search)
+	for i in range(len(stream_bytes) - search_len, 0, -1):
+		if stream_bytes[i:i+search_len] == search:
+			b = i
+			break
+	
+	search = b'\xff\xd8'
+	search_len = len(search)
+	for i in range(len(stream_bytes) - search_len, 0, -1):
+		if stream_bytes[i:i+search_len] == search:
+			if i > b:
+				continue
+			else:
+				a = i
+				break
+
+	print((a, b))
+
+	if a != None and b != None:
+		jpg = stream_bytes[a:b+2]
+		i = cv.imdecode(np.fromstring(jpg, dtype=np.uint8), 0)
+		cv.imwrite("imgs/buffer_read.jpg", i)
+	else:
+		print("No frame found")
+		with open("imgs/tmp.mjpg", 'wb') as f:
+			f.write(stream_bytes)
 
 def get_video(fname, res, framerate=30, durration=5.0):
 
@@ -68,6 +158,20 @@ def get_video(fname, res, framerate=30, durration=5.0):
 	writer.release()
 	vid.release()
 
+def infinte_preview(res=(640, 480), framerate=30):
+	camera = PiCamera()
+	camera.resolution = res
+	camera.framerate = framerate
+	camera.start_preview()
+
+	print("Press ctrl+c to stop preview")
+
+	try:
+		time.sleep(1000000)
+	except KeyboardInterrupt:
+		camera.stop_preview()
+		print("\n")
+
 def take_picture(fname, res):
 	cam = PiCamera()
 	cam.resolution = res
@@ -78,7 +182,8 @@ def take_picture(fname, res):
 def main():
 	#take_picture("./imgs/tmp.jpg", (1064, 768))
 	#get_video("./imgs/tmp.mjpeg", (640, 480))
-	test_recent_frame((640, 480))
+	#test_recent_frame((640, 480))
+	infinte_preview()
 
 if __name__ == '__main__':
 	main()
