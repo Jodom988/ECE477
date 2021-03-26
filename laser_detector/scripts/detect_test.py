@@ -42,30 +42,35 @@ def detect_in_frame(img):
 
 	return (x_avg,y_avg)
 
-def detect_in_video(infile, outfile):
+
+def count_frames(fname):
+	# WARNING, Do not call this function if file is already opened.
+	cap = cv.VideoCapture(fname)
+	count = 0
+	while cap.isOpened():
+		ret, frame = cap.read()
+		if not ret:
+			break
+		count += 1
+	return count
+
+def test_time_detect(fname):
+	frame_count = count_frames(infile)
 	cap = cv.VideoCapture(infile)
 
-	fourcc = cv.VideoWriter_fourcc(*'XVID')
-	width = 640
-	height = 480
-	out = cv.VideoWriter(outfile, fourcc, 30.0, (width,  height))
+	fptr = f.open("data/times_proc_frame.txt", "w")
 
-	times = list()
-
-	bar = Bar('Processing', max=144)
+	bar = Bar('Processing', max=frame_count)
 
 	while cap.isOpened():
 		ret, frame = cap.read()
 		# if frame is read correctly ret is True
 		if not ret:
-			print("Can't receive frame (stream end?). Exiting ...")
+			#print("Can't receive frame (stream end?). Exiting ...")
 			break
 		
-		pos = detect_in_frame(frame)
-
 		start = current_time_micros()
-		cv.line(frame, (0, pos[1]), (width, pos[1]), (0,0,255), 1)
-		cv.line(frame, (pos[0], 0), (pos[0], height), (0,0,255), 1)
+		pos = detect_in_frame(frame)
 		ellapsed = current_time_micros() - start
 
 		times.append(ellapsed)
@@ -77,7 +82,49 @@ def detect_in_video(infile, outfile):
 		# if cv.waitKey(1) == ord('q'):
 		# 	break
 
-		#frame
+		bar.next()
+	bar.finish()
+
+
+	[print(time) for time in times]
+
+	print(len(times))
+
+def detect_in_video(infile, outfile):
+	frame_count = count_frames(infile)
+	cap = cv.VideoCapture(infile)
+
+	fourcc = cv.VideoWriter_fourcc(*'XVID')
+	width = 640
+	height = 480
+	out = cv.VideoWriter(outfile, fourcc, 30.0, (width,  height))
+
+	times = list()
+
+	bar = Bar('Processing', max=frame_count)
+
+	while cap.isOpened():
+		ret, frame = cap.read()
+		# if frame is read correctly ret is True
+		if not ret:
+			#print("Can't receive frame (stream end?). Exiting ...")
+			break
+		
+		start = current_time_micros()
+		pos = detect_in_frame(frame)
+		ellapsed = current_time_micros() - start
+		times.append(ellapsed)
+
+		cv.line(frame, (0, pos[1]), (width, pos[1]), (0,0,255), 1)
+		cv.line(frame, (pos[0], 0), (pos[0], height), (0,0,255), 1)
+
+
+		out.write(frame)
+
+
+		# cv.imshow('frame', frame)
+		# if cv.waitKey(1) == ord('q'):
+		# 	break
 
 		bar.next()
 	bar.finish()
