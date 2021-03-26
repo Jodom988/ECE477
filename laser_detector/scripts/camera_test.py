@@ -14,14 +14,6 @@ def find_last(b, search):
 		if b[i:i+search_len] == search:
 			return i
 
-def detect_in_frame(img):
-	cv.imshow("preview", img)
-	cv.waitKey(0)
-	cv.destroyAllWindows()
-	pass
-
-def test_detect_stream():
-	pass
 
 def test_recent_frame(res, framerate=20):
 	print("Initializing Camera...")
@@ -196,8 +188,8 @@ def main():
 	#test_recent_frame((640, 480))
 	#infinte_preview()
 
-	img = cv.imread("./imgs/test-detect.jpg")
-	detect_in_frame(img)
+
+	pass
 
 if __name__ == '__main__':
 	main()
