@@ -102,7 +102,7 @@ def detect_in_video(infile, outfile):
 	times = list()
 
 	bar = Bar('Processing', max=frame_count)
-
+	count = 0
 	while cap.isOpened():
 		ret, frame = cap.read()
 		# if frame is read correctly ret is True
@@ -110,9 +110,9 @@ def detect_in_video(infile, outfile):
 			#print("Can't receive frame (stream end?). Exiting ...")
 			break
 		
-		start = current_time_micros()
+		start = current_time_millis()
 		pos = detect_in_frame(frame)
-		ellapsed = current_time_micros() - start
+		ellapsed = current_time_millis() - start
 		times.append(ellapsed)
 
 		cv.line(frame, (0, pos[1]), (width, pos[1]), (0,0,255), 1)
@@ -120,7 +120,8 @@ def detect_in_video(infile, outfile):
 
 
 		out.write(frame)
-
+		if count == 25: break
+		count += 1
 
 		# cv.imshow('frame', frame)
 		# if cv.waitKey(1) == ord('q'):
@@ -130,9 +131,6 @@ def detect_in_video(infile, outfile):
 	bar.finish()
 
 	[print(time) for time in times]
-
-	print(len(times))
-
 
 def test_detect_in_frame(img):
 
