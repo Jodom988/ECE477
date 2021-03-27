@@ -4,7 +4,52 @@ from utility import *
 
 from progress.bar import Bar
 
-def test_detect_in_frame(img):
+
+def test_detect_in_frame_ir(img, base_img):
+
+	height, width, ch = img.shape
+
+	new_img = np.zeros((height*2,width*ch,ch),np.uint8)
+
+	largest = list()
+	positions = list()
+	N = 50
+
+	for row_i in range(len(img)):
+		for col_i in range(len(img[row_i])):
+			new_img[row_i][col_i+(width*2)][2] = img[row_i][col_i][2]
+			new_img[row_i][col_i+width][1] = img[row_i][col_i][1]
+			val = int(img[row_i][col_i][2])-int(img[row_i][col_i][1])
+			if val > 255:
+				val = 255
+			if val < 0:
+				val = 0
+
+			new_img[row_i][col_i][0] = val
+			new_img[row_i][col_i][1] = val
+			new_img[row_i][col_i][2] = val
+			
+			i = insert_sorted(largest, val)
+			if not i == None:
+				largest.insert(i, val)
+				positions.insert(i, (row_i, col_i))
+				if len(largest) > N:
+					largest.pop()
+					positions.pop()
+
+	row_avg = round(np.average([pos[0] for pos in positions]))
+	col_avg = round(np.average([pos[1] for pos in positions]))
+
+	cv.line(new_img, (0, row_avg), (width, row_avg), (0,0,255), 1)
+	cv.line(new_img, (col_avg, 0), (col_avg, height), (0,0,255), 1)
+
+	print((row_avg,col_avg))
+	cv.imshow("preview", new_img)
+	cv.waitKey(0)
+	cv.destroyAllWindows()
+	pass
+
+def test_detect_in_frame_red(img):
 
 	height, width, ch = img.shape
 
@@ -58,12 +103,12 @@ def insert_sorted(l, elem):
 			return i
 	return None
 			
-def detect_in_frame(img):
+def detect_in_frame_red(img):
 	height, width, ch = img.shape
 	
 	largest = list()
 	positions = list()
-	N = 20
+	N = 5
 
 	for row_i in range(len(img)):
 		for col_i in range(len(img[row_i])):

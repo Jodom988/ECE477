@@ -3,6 +3,7 @@ import time
 import cv2 as cv
 from io import BytesIO
 import numpy as np
+import os
 
 SEEK_SET = 0
 
@@ -137,12 +138,18 @@ def get_video(fname, res, framerate=30, durration=5.0):
 	camera = PiCamera()
 	camera.resolution = res
 	camera.framerate = framerate
+	camera.start_preview()
+	print("Press enter to start recording")
+	input()
 	camera.start_recording(tmp_fname)
 	print("recording")
 	camera.wait_recording(durration)
 	print("done")
 	camera.stop_recording()
 
+	camera.stop_preview()
+
+	print("Rewriting video...")
 	vid = cv.VideoCapture(tmp_fname)
 
 	fourcc = cv.VideoWriter_fourcc(*'MPEG')
@@ -167,13 +174,9 @@ def infinte_preview(res=(640, 480), framerate=30):
 	camera.framerate = framerate
 	camera.start_preview()
 
-	print("Press ctrl+c to stop preview")
-
-	try:
-		time.sleep(1000000)
-	except KeyboardInterrupt:
-		camera.stop_preview()
-		print("\n")
+	print("Press enter to stop preview")
+	input()
+	camera.stop_preview()
 
 def take_picture(fname, res):
 	cam = PiCamera()
@@ -183,10 +186,10 @@ def take_picture(fname, res):
 	cam.capture(fname)
 
 def main():
-	#take_picture("./imgs/test-detect.jpg", (640, 480))
-	#get_video("./imgs/test-detect.mjpeg", (640, 480))
+	#take_picture("./imgs/base.jpg", (640, 480))
+	#get_video("./videos/ir-laser-test-1mw-9ma-2.mjpeg", (640, 480), durration=5.0)
 	#test_recent_frame((640, 480))
-	#infinte_preview()
+	infinte_preview()
 
 
 	pass
