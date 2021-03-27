@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "usbd_hid.h"
+#include <math.h>
 
 /* USER CODE END Includes */
 
@@ -35,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define HID_BUFFER_SIZE 4
+#define HID_BUFFER_SIZE 7
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -99,10 +100,13 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   //Initialize Buffer
-  HIDBuffer[0]=0;  //1-> Left Click, 2-> Right Click
-//  HIDBuffer[1]=-126;  //X Position
-//  HIDBuffer[2]=-126;  //Y Position
-  HIDBuffer[3]=0;  //Scroll Wheel
+  HIDBuffer[0]=1;  //1-> Left Click, 2-> Right Click 3-> Middle
+  HIDBuffer[1]=0;  //X Position
+  HIDBuffer[2]=0;  //X Position (2) (Most Significant Bits)
+  HIDBuffer[3]=0;  //Y Position
+  HIDBuffer[4]=0;  //Y Position (2) (Most Significant Bits)
+  HIDBuffer[5]=0;  //Scroll Wheel
+  HIDBuffer[6]=0;  //Scroll Wheel (2)
 
   //Todo Create interfaces for analyzing a 'packet' structure and perform action.
 
@@ -115,22 +119,32 @@ int main(void)
     /* USER CODE END WHILE */
 
 	/* USER CODE BEGIN 3 */
+
 	  if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) != GPIO_PIN_SET){
-		  for(int i = -126; i<127 ; i++){
-			  HIDBuffer[1] = i;
-			  for(int j = -126; j<127; j++){
-				  HIDBuffer[2] = j;
+		  	  double center_x = 4095/2.0;
+		  	  double center_y = 4095/2.0;
+		  	  double radius = 250;
+		  	  double resolution_x = 1920;
+		  	  double resolution_y = 1200;
+		  	  double x_scaling = 4095/resolution_x;
+		  	  double y_scaling = 4095/resolution_y;
+	  		  uint16_t x_component;
+	  		  uint16_t y_component;
+
+	  		  while(1){
+	  			for(double angle = 0; angle <= M_PI*2; angle += 0.01){
+				  x_component = (uint16_t)(center_x + radius * x_scaling * cos(angle));
+				  y_component = (uint16_t)(center_y + radius * y_scaling * sin(angle));
+				  HIDBuffer[1] = (x_component & 0xFF);
+				  HIDBuffer[2] = (x_component >> 8) & 0x0F;
+				  HIDBuffer[3] = (y_component & 0xFF);
+				  HIDBuffer[4] = (y_component >> 8) & 0x0F;
 				  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer ,HID_BUFFER_SIZE);
-				  HAL_Delay(10);
+				  HAL_Delay(4);
 			  }
-		  }
-	  }
 
-
-//	  if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) != GPIO_PIN_SET){
-//		  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer ,HID_BUFFER_SIZE);
-//		  HIDBuffer[1] += 1;
-//	 }
+	  		  }
+	  	  }
 
 
   }

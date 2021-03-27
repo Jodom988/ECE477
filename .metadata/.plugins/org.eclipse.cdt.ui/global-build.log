@@ -2511,3 +2511,1506 @@ arm-none-eabi-size "USB_HID.elf"
 20:30:16 **** Incremental Build of configuration Debug for project USB_HID ****
 make all 
 make: Nothing to be done for `all'.
+17:48:03 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17216	    480	   3928	  21624	   5478	USB_HID.elf
+ 
+17:48:06 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:48:37 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:49:21 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17216	    480	   3928	  21624	   5478	USB_HID.elf
+ 
+17:50:10 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:50:20 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:51:11 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:52:46 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17216	    480	   3928	  21624	   5478	USB_HID.elf
+ 
+18:28:49 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+18:30:07 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+18:30:58 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+18:32:46 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+13:43:20 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+13:46:54 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+13:47:52 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+13:50:24 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+13:51:36 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+15:39:17 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+15:39:57 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+15:41:07 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17236	    480	   3928	  21644	   548c	USB_HID.elf
+ 
+15:41:44 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17240	    480	   3928	  21648	   5490	USB_HID.elf
+ 
+15:52:14 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25404	    480	   3928	  29812	   7474	USB_HID.elf
+ 
+15:53:12 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+15:54:35 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+15:55:23 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25444	    480	   3928	  29852	   749c	USB_HID.elf
+ 
+15:56:38 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25444	    480	   3928	  29852	   749c	USB_HID.elf
+ 
+15:59:12 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25436	    480	   3928	  29844	   7494	USB_HID.elf
+ 
+16:00:33 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25444	    480	   3928	  29852	   749c	USB_HID.elf
+ 
+16:01:14 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25444	    480	   3928	  29852	   749c	USB_HID.elf
+ 
+16:02:00 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25396	    480	   3928	  29804	   746c	USB_HID.elf
+ 
+16:11:06 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25452	    480	   3928	  29860	   74a4	USB_HID.elf
+ 
+16:11:50 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+16:18:22 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+16:18:36 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+16:19:13 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+16:19:56 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+16:20:06 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+16:21:31 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+16:22:10 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+16:23:03 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+16:23:17 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+16:23:33 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+16:24:10 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25380	    480	   3928	  29788	   745c	USB_HID.elf
+ 
+16:24:54 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25380	    480	   3928	  29788	   745c	USB_HID.elf
+ 
+16:32:32 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25380	    480	   3928	  29788	   745c	USB_HID.elf
+ 
+16:35:02 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25380	    480	   3928	  29788	   745c	USB_HID.elf
+ 
+16:35:42 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+16:56:44 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+16:57:23 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+16:57:37 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+16:58:01 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+16:59:49 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25444	    480	   3928	  29852	   749c	USB_HID.elf
+ 
+17:00:18 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25452	    480	   3928	  29860	   74a4	USB_HID.elf
+ 
+17:00:58 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+17:01:57 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25452	    480	   3928	  29860	   74a4	USB_HID.elf
+ 
+17:02:55 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:03:15 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25380	    480	   3928	  29788	   745c	USB_HID.elf
+ 
+17:03:56 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+17:06:46 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:10:13 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+18:44:13 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/usb_device.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usb_device.d" -MT"Src/usb_device.o" -o "Src/usb_device.o" "../Src/usb_device.c"
+Finished building: ../Src/usb_device.c
+ 
+Building file: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.d" -MT"Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" -o "Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.o" "../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c"
+Finished building: ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/usbd_hid.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+18:44:31 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+12:05:02 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:05:51 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:07:24 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:12:56 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:14:28 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:15:00 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:16:08 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:16:56 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:18:27 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:18:52 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:20:31 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:22:13 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+12:22:48 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+12:23:31 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:23:49 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:24:30 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:25:07 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:25:14 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:25:18 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:25:53 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:26:48 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17136	    480	   3928	  21544	   5428	USB_HID.elf
+ 
+12:26:54 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:27:10 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+12:27:48 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25412	    480	   3928	  29820	   747c	USB_HID.elf
+ 
+12:29:16 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25444	    480	   3928	  29852	   749c	USB_HID.elf
+ 
+12:34:32 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+12:37:06 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+make: Nothing to be done for `all'.
+17:25:09 **** Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+18:26:30 **** Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+18:26:59 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25420	    480	   3928	  29828	   7484	USB_HID.elf
+ 
+18:27:23 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+18:27:41 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
+18:27:57 **** Incremental Build of configuration Debug for project USB_HID ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USB_HID/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USB_HID.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_HID.elf" @"objects.list"   -lm
+Finished building target: USB_HID.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USB_HID.elf" "USB_HID.hex"
+arm-none-eabi-size "USB_HID.elf"
+   text	   data	    bss	    dec	    hex	filename
+  25428	    480	   3928	  29836	   748c	USB_HID.elf
+ 
