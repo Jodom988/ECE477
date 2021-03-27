@@ -298,7 +298,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_
 __ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE] __ALIGN_END = {
 
 
-	//Original Descriptor
+//	//Original Descriptor
 //	0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
 //	0x09, 0x02,        // Usage (Mouse)
 //	0xA1, 0x01,        // Collection (Application)
@@ -345,48 +345,90 @@ __ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE] __
 	// 74 bytes
 
 	//Modified:
-	0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
-	0x09, 0x02,        // Usage (Mouse)
-	0xA1, 0x01,        // Collection (Application)
-	0x09, 0x01,        //   Usage (Pointer)
-	0xA1, 0x00,        //   Collection (Physical)
+//	0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+//	0x09, 0x02,        // Usage (Mouse)
+//	0xA1, 0x01,        // Collection (Application)
+//	0x09, 0x01,        //   Usage (Pointer)
+//	0xA1, 0x00,        //   Collection (Physical)
+//
+//	0x05, 0x09,        //     Usage Page (Button) -> Left, Right Middle Buttons
+//	0x19, 0x01,        //     Usage Minimum (0x01)
+//	0x29, 0x03,        //     Usage Maximum (0x03)
+//	0x15, 0x00,        //     Logical Minimum (0)
+//	0x25, 0x01,        //     Logical Maximum (1)
+//	0x95, 0x03,        //     Report Count (3)
+//	0x75, 0x01,        //     Report Size (1)
+//	0x81, 0x02,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+//	0x95, 0x01,        //     Report Count (1)
+//	0x75, 0x05,        //     Report Size (5)
+//	0x81, 0x01,        //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+//
+//	0x05, 0x01,        //     Usage Page (Generic Desktop Ctrls) -> X,Y Position, Scroll Wheel
+//	0x09, 0x30,        //     Usage (X)
+//	0x09, 0x31,        //     Usage (Y)
+//	0x09, 0x38,        //     Usage (Wheel)
+//	0x15, 0x81,        //     Logical Minimum (-127)
+//	0x25, 0x7F,        //     Logical Maximum (127)
+//	0x75, 0x08,        //     Report Size (8)
+//	0x95, 0x03,        //     Report Count (3)
+//	0x81, 0x82,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position, Volatile)
+//
+//	0xC0,              //   End Collection
+//
+//	0x09, 0x3C,        //   Usage (Motion Wakeup) -> Wakeup motion
+//	0x05, 0xFF,        //   Usage Page (Reserved 0xFF)
+//	0x09, 0x01,        //   Usage (0x01)
+//	0x15, 0x00,        //   Logical Minimum (0)
+//	0x25, 0x01,        //   Logical Maximum (1)
+//	0x75, 0x01,        //   Report Size (1)
+//	0x95, 0x02,        //   Report Count (2)
+//	0xB1, 0x22,        //   Feature (Data,Var,Abs,No Wrap,Linear,No Preferred State,No Null Position,Non-volatile)
+//	0x75, 0x06,        //   Report Size (6)
+//	0x95, 0x01,        //   Report Count (1)
+//	0xB1, 0x01,        //   Feature (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+//	0xC0,              // End Collection
 
-	0x05, 0x09,        //     Usage Page (Button) -> Left, Right Middle Buttons
-	0x19, 0x01,        //     Usage Minimum (0x01)
-	0x29, 0x03,        //     Usage Maximum (0x03)
-	0x15, 0x00,        //     Logical Minimum (0)
-	0x25, 0x01,        //     Logical Maximum (1)
-	0x95, 0x03,        //     Report Count (3)
-	0x75, 0x01,        //     Report Size (1)
-	0x81, 0x02,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-	0x95, 0x01,        //     Report Count (1)
-	0x75, 0x05,        //     Report Size (5)
-	0x81, 0x01,        //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+		0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+		0x09, 0x02,        // Usage (Mouse)
+		0xA1, 0x01,        // Collection (Application)
+		0x09, 0x01,        //   Usage (Pointer)
+		0xA1, 0x00,        //   Collection (Physical)
+		0x05, 0x09,        //     Usage Page (Button)
+		0x19, 0x01,        //     Usage Minimum (0x01)
+		0x29, 0x03,        //     Usage Maximum (0x03)
+		0x15, 0x00,        //     Logical Minimum (0)
+		0x25, 0x01,        //     Logical Maximum (1)
+		0x95, 0x03,        //     Report Count (3)
+		0x75, 0x01,        //     Report Size (1)
+		0x81, 0x02,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+		0x95, 0x01,        //     Report Count (1)
+		0x75, 0x05,        //     Report Size (5)
+		0x81, 0x01,        //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+		0x05, 0x01,        //     Usage Page (Generic Desktop Ctrls)
+		0x09, 0x30,        //     Usage (X)
+		0x09, 0x31,        //     Usage (Y)
+		0x09, 0x38,        //     Usage (Wheel)
+		0x15, 0x00,        //     Logical Minimum (0)
+		0x26, 0xFF, 0x0F,  //     Logical Maximum (4095)
+		0x75, 0x10,        //     Report Size (16)
+		0x95, 0x03,        //     Report Count (3)
+		0x81, 0x82,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+		0xC0,              //   End Collection
+		0x09, 0x3C,        //   Usage (Motion Wakeup)
+		0x05, 0xFF,        //   Usage Page (Reserved 0xFF)
+		0x09, 0x01,        //   Usage (0x01)
+		0x15, 0x00,        //   Logical Minimum (0)
+		0x25, 0x01,        //   Logical Maximum (1)
+		0x75, 0x01,        //   Report Size (1)
+		0x95, 0x02,        //   Report Count (2)
+		0xB1, 0x22,        //   Feature (Data,Var,Abs,No Wrap,Linear,No Preferred State,No Null Position,Non-volatile)
+		0x75, 0x06,        //   Report Size (6)
+		0x95, 0x01,        //   Report Count (1)
+		0xB1, 0x01,        //   Feature (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+		0xC0,              // End Collection
 
-	0x05, 0x01,        //     Usage Page (Generic Desktop Ctrls) -> X,Y Position, Scroll Wheel
-	0x09, 0x30,        //     Usage (X)
-	0x09, 0x31,        //     Usage (Y)
-	0x09, 0x38,        //     Usage (Wheel)
-	0x15, 0x81,        //     Logical Minimum (-127)
-	0x25, 0x7F,        //     Logical Maximum (127)
-	0x75, 0x08,        //     Report Size (8)
-	0x95, 0x03,        //     Report Count (3)
-	0x81, 0x82,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position, Volatile)
+		// 75 bytes
 
-	0xC0,              //   End Collection
-
-	0x09, 0x3C,        //   Usage (Motion Wakeup) -> Wakeup motion
-	0x05, 0xFF,        //   Usage Page (Reserved 0xFF)
-	0x09, 0x01,        //   Usage (0x01)
-	0x15, 0x00,        //   Logical Minimum (0)
-	0x25, 0x01,        //   Logical Maximum (1)
-	0x75, 0x01,        //   Report Size (1)
-	0x95, 0x02,        //   Report Count (2)
-	0xB1, 0x22,        //   Feature (Data,Var,Abs,No Wrap,Linear,No Preferred State,No Null Position,Non-volatile)
-	0x75, 0x06,        //   Report Size (6)
-	0x95, 0x01,        //   Report Count (1)
-	0xB1, 0x01,        //   Feature (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
-	0xC0,              // End Collection
 
 };
 
