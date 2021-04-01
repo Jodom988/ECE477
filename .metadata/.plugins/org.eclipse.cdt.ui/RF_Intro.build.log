@@ -1,0 +1,180 @@
+13:31:59 **** Build of configuration Debug for project RF_Intro ****
+make all 
+Building file: ../startup/startup_stm32f446xx.s
+Invoking: MCU GCC Assembler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-as -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -mcpu=cortex-m4 -g -o "startup/startup_stm32f446xx.o" "../startup/startup_stm32f446xx.s"
+Finished building: ../startup/startup_stm32f446xx.s
+ 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/nrf24.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/nrf24.d" -MT"Src/nrf24.o" -o "Src/nrf24.o" "../Src/nrf24.c"
+Finished building: ../Src/nrf24.c
+ 
+Building file: ../Src/radio_demo.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/radio_demo.d" -MT"Src/radio_demo.o" -o "Src/radio_demo.o" "../Src/radio_demo.c"
+../Src/radio_demo.c: In function 'runRadio':
+../Src/radio_demo.c:192:0: warning: ignoring #pragma clang diagnostic [-Wunknown-pragmas]
+ #pragma clang diagnostic push
+ 
+../Src/radio_demo.c:193:0: warning: ignoring #pragma clang diagnostic [-Wunknown-pragmas]
+ #pragma clang diagnostic ignored "-Wmissing-noreturn"
+ 
+../Src/radio_demo.c:201:0: warning: ignoring #pragma clang diagnostic [-Wunknown-pragmas]
+ #pragma clang diagnostic pop
+ 
+../Src/radio_demo.c:816:0: warning: ignoring #pragma clang diagnostic [-Wunknown-pragmas]
+ #pragma clang diagnostic push
+ 
+../Src/radio_demo.c:817:0: warning: ignoring #pragma clang diagnostic [-Wunknown-pragmas]
+ #pragma clang diagnostic ignored "-Wmissing-noreturn"
+ 
+../Src/radio_demo.c:844:0: warning: ignoring #pragma clang diagnostic [-Wunknown-pragmas]
+ #pragma clang diagnostic pop
+ 
+Finished building: ../Src/radio_demo.c
+ 
+Building file: ../Src/stm32f4xx_hal_msp.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/stm32f4xx_hal_msp.d" -MT"Src/stm32f4xx_hal_msp.o" -o "Src/stm32f4xx_hal_msp.o" "../Src/stm32f4xx_hal_msp.c"
+Finished building: ../Src/stm32f4xx_hal_msp.c
+ 
+Building file: ../Src/stm32f4xx_it.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/stm32f4xx_it.d" -MT"Src/stm32f4xx_it.o" -o "Src/stm32f4xx_it.o" "../Src/stm32f4xx_it.c"
+Finished building: ../Src/stm32f4xx_it.c
+ 
+Building file: ../Src/syscalls.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" -o "Src/syscalls.o" "../Src/syscalls.c"
+Finished building: ../Src/syscalls.c
+ 
+Building file: ../Src/system_stm32f4xx.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/system_stm32f4xx.d" -MT"Src/system_stm32f4xx.o" -o "Src/system_stm32f4xx.o" "../Src/system_stm32f4xx.c"
+Finished building: ../Src/system_stm32f4xx.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+ 
+Building file: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Desktop/RF_Intro/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/RF_Intro/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/RF_Intro/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o" -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o" "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
+Finished building: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+ 
+Building target: RF_Intro.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../" -Wl,-Map=output.map -Wl,--gc-sections -o "RF_Intro.elf" @"objects.list"   -lm
+/Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/bin/ld: read in flex scanner failed
+collect2: error: ld returned 1 exit status
+make: *** [RF_Intro.elf] Error 1
+
+13:32:05 Build Finished (took 6s.519ms)
+

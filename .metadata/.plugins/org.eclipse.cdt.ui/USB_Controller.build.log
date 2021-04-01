@@ -1,0 +1,14 @@
+12:53:52 **** Incremental Build of configuration Debug for project USB_Controller ****
+make all 
+Building target: USB_Controller.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USB_Controller.elf" @"objects.list"   -lm
+Src/sysmem.o: In function `_sbrk':
+/Users/joseluistejada/Desktop/USB_Controller/Debug/../Src/sysmem.c:39: multiple definition of `_sbrk'
+Src/syscalls.o:/Users/joseluistejada/Desktop/USB_Controller/Debug/../Src/syscalls.c:118: first defined here
+/Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/bin/ld: warning: cannot find entry symbol Reset_Handler; defaulting to 0000000008000000
+collect2: error: ld returned 1 exit status
+make: *** [USB_Controller.elf] Error 1
+
+12:53:52 Build Finished (took 173ms)
+
