@@ -26,6 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include "usbd_hid.h"
 #include <math.h>
+#include "MY_NRF24.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,6 +100,34 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
+
+  //Initialize NRF24
+  NRF24_begin(CSN_GPIO_Port, CSN_Pin, CE_Pin, hspi3);
+
+  //Initialize NRF24 UART Debugging
+  nrf24_DebugUART_Init(huart2);
+
+
+  //Attempt Transmission
+
+
+	uint64_t TxpipeAddrs = 0x11223344AA;
+	char myTxData[32] = "Hello World!";
+	char AckPayload[32];
+	//**** TRANSMIT - ACK ****//
+	NRF24_stopListening();
+	NRF24_openWritingPipe(TxpipeAddrs);
+	NRF24_setAutoAck(true);
+	NRF24_setChannel(52);
+	NRF24_setPayloadSize(32);
+	NRF24_enableDynamicPayloads();
+	NRF24_enableAckPayload();
+
+	printRadioSettings();
+
+
+
+
   //Initialize Buffer
   HIDBuffer[0]=1;  //1-> Left Click, 2-> Right Click 3-> Middle
   HIDBuffer[1]=0;  //X Position
@@ -115,32 +144,51 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) != GPIO_PIN_SET){
-		double center_x = 4095/2.0;
-		double center_y = 4095/2.0;
-		double radius = 250;
-		double resolution_x = 2560;
-		double resolution_y = 1600;
-		double x_scaling = 4095/resolution_x;
-		double y_scaling = 4095/resolution_y;
-		uint16_t x_component;
-		uint16_t y_component;
-
-		while(1){
-			for(double angle = 0; angle <= M_PI*2; angle += 0.01){
-			  x_component = (uint16_t)(center_x + radius * x_scaling * cos(angle));
-			  y_component = (uint16_t)(center_y + radius * y_scaling * sin(angle));
-			  HIDBuffer[1] = (x_component & 0xFF);
-			  HIDBuffer[2] = (x_component >> 8) & 0x0F;
-			  HIDBuffer[3] = (y_component & 0xFF);
-			  HIDBuffer[4] = (y_component >> 8) & 0x0F;
-			  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer ,HID_BUFFER_SIZE);
-			  HAL_Delay(4);
-				}
-			}
-	  	 }
+   //Test
     /* USER CODE BEGIN 3 */
+	if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) != GPIO_PIN_SET){
+			  double center_x = 4095/2.0;
+			  double center_y = 4095/2.0;
+			  double radius = 250;
+			  double resolution_x = 2560;
+			  double resolution_y = 1600;
+			  double x_scaling = 4095/resolution_x;
+			  double y_scaling = 4095/resolution_y;
+			  uint16_t x_component;
+			  uint16_t y_component;
+
+			  while(1){
+				for(double angle = 0; angle <= M_PI*2; angle += 0.01){
+				  x_component = (uint16_t)(center_x + radius * x_scaling * cos(angle));
+				  y_component = (uint16_t)(center_y + radius * y_scaling * sin(angle));
+				  HIDBuffer[1] = (x_component & 0xFF);
+				  HIDBuffer[2] = (x_component >> 8) & 0x0F;
+				  HIDBuffer[3] = (y_component & 0xFF);
+				  HIDBuffer[4] = (y_component >> 8) & 0x0F;
+				  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer ,HID_BUFFER_SIZE);
+				  HAL_Delay(4);
+			  }
+				if(NRF24_write(myTxData, 32))
+									{
+										NRF24_read(AckPayload, 32);
+										HAL_UART_Transmit(&huart2, (uint8_t *)"Transmitted Successfully\r\n", strlen("Transmitted Successfully\r\n"), 10);
+
+										char myDataack[80];
+										sprintf(myDataack, "AckPayload:  %s \r\n", AckPayload);
+										HAL_UART_Transmit(&huart2, (uint8_t *)myDataack, strlen(myDataack), 10);
+									}
+
+									HAL_Delay(1000);
+
+						  }
+		 }
+
+
+
+
   }
+
+
   /* USER CODE END 3 */
 }
 
@@ -278,17 +326,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(CSN_GPIO_Port, CSN_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(CE_GPIO_Port, CE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, CSN_Pin|CE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -303,19 +347,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : CSN_Pin */
-  GPIO_InitStruct.Pin = CSN_Pin;
+  /*Configure GPIO pins : CSN_Pin CE_Pin */
+  GPIO_InitStruct.Pin = CSN_Pin|CE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(CSN_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : CE_Pin */
-  GPIO_InitStruct.Pin = CE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(CE_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 }
 

@@ -22,6 +22,7 @@
 "Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o"
 "Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o"
 "Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o"
+"Src/MY_NRF24.o"
 "Src/main.o"
 "Src/stm32f4xx_hal_msp.o"
 "Src/stm32f4xx_it.o"
