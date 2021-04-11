@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;STM_RFIntro&apos;" deleteContents="false" description="Delete resource &apos;STM_RFIntro&apos;" element1="/STM_RFIntro" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1616859210118"/>&#x0A;<refactoring comment="Delete resource &apos;USB_HID&apos;" deleteContents="false" description="Delete resource &apos;USB_HID&apos;" element1="/USB_HID" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1616864687072"/>
+</session>

@@ -124,8 +124,8 @@ int main(void)
 		  	  double center_x = 4095/2.0;
 		  	  double center_y = 4095/2.0;
 		  	  double radius = 250;
-		  	  double resolution_x = 1920;
-		  	  double resolution_y = 1200;
+		  	  double resolution_x = 2560;
+		  	  double resolution_y = 1600;
 		  	  double x_scaling = 4095/resolution_x;
 		  	  double y_scaling = 4095/resolution_y;
 	  		  uint16_t x_component;
