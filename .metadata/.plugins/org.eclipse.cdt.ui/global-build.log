@@ -1,221 +1,42 @@
-12:00:21 **** Incremental Build of configuration Debug for project USBController2 ****
-make all 
-Building file: ../Src/MY_NRF24.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/MY_NRF24.d" -MT"Src/MY_NRF24.o" -o "Src/MY_NRF24.o" "../Src/MY_NRF24.c"
-../Src/MY_NRF24.c: In function 'printRadioSettings':
-../Src/MY_NRF24.c:732:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
-  sprintf(uartTxBuf, "\r\n**********************************************\r\n");
-  ^~~~~~~
-../Src/MY_NRF24.c:732:2: warning: incompatible implicit declaration of built-in function 'sprintf'
-../Src/MY_NRF24.c:732:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-../Src/MY_NRF24.c: In function 'printStatusReg':
-../Src/MY_NRF24.c:859:2: warning: incompatible implicit declaration of built-in function 'sprintf'
-  sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-  ^~~~~~~
-../Src/MY_NRF24.c:859:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-../Src/MY_NRF24.c: In function 'printConfigReg':
-../Src/MY_NRF24.c:876:2: warning: incompatible implicit declaration of built-in function 'sprintf'
-  sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-  ^~~~~~~
-../Src/MY_NRF24.c:876:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-../Src/MY_NRF24.c: In function 'printFIFOstatus':
-../Src/MY_NRF24.c:898:2: warning: incompatible implicit declaration of built-in function 'sprintf'
-  sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-  ^~~~~~~
-../Src/MY_NRF24.c:898:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-Finished building: ../Src/MY_NRF24.c
- 
-Building file: ../Src/main.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-Finished building: ../Src/main.c
- 
-Building file: ../Src/stm32f7xx_hal_msp.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/stm32f7xx_hal_msp.d" -MT"Src/stm32f7xx_hal_msp.o" -o "Src/stm32f7xx_hal_msp.o" "../Src/stm32f7xx_hal_msp.c"
-Finished building: ../Src/stm32f7xx_hal_msp.c
- 
-Building file: ../Src/stm32f7xx_it.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/stm32f7xx_it.d" -MT"Src/stm32f7xx_it.o" -o "Src/stm32f7xx_it.o" "../Src/stm32f7xx_it.c"
-Finished building: ../Src/stm32f7xx_it.c
- 
-Building file: ../Src/system_stm32f7xx.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/system_stm32f7xx.d" -MT"Src/system_stm32f7xx.o" -o "Src/system_stm32f7xx.o" "../Src/system_stm32f7xx.c"
-Finished building: ../Src/system_stm32f7xx.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.c
- 
-Building file: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController2/Debug
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.d" -MT"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o" -o "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o" "../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.c"
-Finished building: ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.c
- 
-Building target: USBController2.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F746ZGTX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController2.elf" @"objects.list"   -lm
-Finished building target: USBController2.elf
- 
-/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
-Generating hex and Printing size information:
-arm-none-eabi-objcopy -O ihex "USBController2.elf" "USBController2.hex"
-arm-none-eabi-size "USBController2.elf"
-   text	   data	    bss	    dec	    hex	filename
-  20516	    120	   3184	  23820	   5d0c	USBController2.elf
- 
-12:00:36 **** Incremental Build of configuration Debug for project USBController2 ****
-make all 
-make: Nothing to be done for `all'.
-12:04:09 **** Incremental Build of configuration Debug for project USBController ****
+22:19:55 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 Building file: ../Src/main.c
 Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController/Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/USBController/Inc" -I"/Users/joseluistejada/Desktop/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Desktop/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Desktop/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+../Src/main.c: In function 'validData':
+../Src/main.c:188:13: warning: pointer targets in passing argument 1 of 'sscanf' differ in signedness [-Wpointer-sign]
+     (sscanf(myRxData, "%*u%u", &click))){
+             ^~~~~~~~
+In file included from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usbd_conf.h:31:0,
+                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:29,
+                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usb_device.h:33,
+                 from ../Src/main.c:23:
+/Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/arm-none-eabi/include/stdio.h:204:5: note: expected 'const char * restrict' but argument is of type 'uint8_t * {aka unsigned char *}'
+ int sscanf (const char *__restrict, const char *__restrict, ...)
+     ^~~~~~
+../Src/main.c:188:28: warning: format '%u' expects argument of type 'unsigned int *', but argument 3 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+     (sscanf(myRxData, "%*u%u", &click))){
+                           ~^   ~~~~~~
+                           %hhu
+../Src/main.c:199:12: warning: pointer targets in passing argument 1 of 'sscanf' differ in signedness [-Wpointer-sign]
+    (sscanf(myRxData, "%*u%u%u", &xPosition, &yPosition))){
+            ^~~~~~~~
+In file included from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usbd_conf.h:31:0,
+                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:29,
+                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usb_device.h:33,
+                 from ../Src/main.c:23:
+/Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/arm-none-eabi/include/stdio.h:204:5: note: expected 'const char * restrict' but argument is of type 'uint8_t * {aka unsigned char *}'
+ int sscanf (const char *__restrict, const char *__restrict, ...)
+     ^~~~~~
+../Src/main.c:199:27: warning: format '%u' expects argument of type 'unsigned int *', but argument 3 has type 'uint16_t * {aka short unsigned int *}' [-Wformat=]
+    (sscanf(myRxData, "%*u%u%u", &xPosition, &yPosition))){
+                          ~^     ~~~~~~~~~~
+                          %hu
+../Src/main.c:199:29: warning: format '%u' expects argument of type 'unsigned int *', but argument 4 has type 'uint16_t * {aka short unsigned int *}' [-Wformat=]
+    (sscanf(myRxData, "%*u%u%u", &xPosition, &yPosition))){
+                            ~^               ~~~~~~~~~~
+                            %hu
 Finished building: ../Src/main.c
  
 Building target: USBController.elf
@@ -228,25 +49,5 @@ Generating hex and Printing size information:
 arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
 arm-none-eabi-size "USBController.elf"
    text	   data	    bss	    dec	    hex	filename
-  35664	    480	   4200	  40344	   9d98	USBController.elf
- 
-12:05:11 **** Incremental Build of configuration Debug for project USBController ****
-make all 
-Building file: ../Src/main.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Desktop/USBController/Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Desktop/USBController/Inc" -I"/Users/joseluistejada/Desktop/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Desktop/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Desktop/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Desktop/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-Finished building: ../Src/main.c
- 
-Building target: USBController.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
-Finished building target: USBController.elf
- 
-/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
-Generating hex and Printing size information:
-arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
-arm-none-eabi-size "USBController.elf"
-   text	   data	    bss	    dec	    hex	filename
-  35664	    480	   4200	  40344	   9d98	USBController.elf
+  29600	    844	   4200	  34644	   8754	USBController.elf
  

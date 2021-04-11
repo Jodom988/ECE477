@@ -33,7 +33,7 @@ Src/%.o: ../Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)
-	arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Desktop/USBController2/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Desktop/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m7 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F746xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController2/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController2/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController2/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
