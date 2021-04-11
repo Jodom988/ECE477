@@ -164,8 +164,6 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); // Turn off yellow 1
 		  wait(3000);
-
-		  // May have to more? Something about the screen size?
 	  }
 
 	  // 2 is PC14
