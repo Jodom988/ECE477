@@ -21,7 +21,7 @@ void add_lines(Mat img, int row, int col, int w);
 int main(int argc, char** argv)
 {
 	// Test video
-	if (1)
+	if (0)
 	{
 		VideoCapture cap("./ir-laser-test-1mw-24ma-2.mjpeg");
 		//VideoCapture cap(0);
@@ -62,11 +62,11 @@ int main(int argc, char** argv)
 	}
 
 	// Test single frame
-	if (0)
+	if (1)
 	{
 		Mat image, base;
-		base = cv::imread("../imgs/base.jpg", 1);
-		image = cv::imread("../imgs/ir-laser-1mw-24ma.jpg", 1);
+		base = cv::imread("../../imgs/base.jpg", 1);
+		image = cv::imread("../../imgs/ir-laser-1mw-24ma.jpg", 1);
 
 		uint16_t rows = image.size().height;
 		uint16_t cols = image.size().width;
