@@ -4,8 +4,10 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/types.hpp>
 #include <list>
+#include <thread>
 
 #define THRESH 50
+#define THREADS 4
 
 using namespace cv;
 using namespace std;
@@ -21,48 +23,58 @@ void add_lines(Mat img, int row, int col, int w);
 int main(int argc, char** argv)
 {
 	// Test video
-	if (0)
+	if (1)
 	{
-		VideoCapture cap("./ir-laser-test-1mw-24ma-2.mjpeg");
+		VideoCapture cap(".././ir-laser-test-1mw-24ma-2.mjpeg");
 		//VideoCapture cap(0);
 
 		int fourcc = VideoWriter::fourcc('X','V','I','D');
 		int width = 640;
 		int height = 480;
-		VideoWriter out("./outcpp.mp4", cv::VideoWriter::fourcc('H','2','6','4'), 30, Size(640,480));
+		VideoWriter out("./outcpp.avi", fourcc, 30, Size(640,480));
 
-		FILE* times_fptr = fopen("../scripts/data/times_proc_frame.txt", "w");
+		FILE* times_fptr = fopen("../../scripts/data/times_proc_frame.txt", "w");
 
 		int i = 0;
 		Mat frame;
 		Mat base_frame;
+		Point pos(0, 0);
 		while(1)
-		{			
+		{
+
 			cap.read(frame);
-			printf("Here\n");
 			if(frame.empty())
 			{
 				break;
 			}
-			printf("Here\n");
 			if(i == 0)
 			{
-				base_frame = Mat(frame);
+				base_frame = frame.clone();
 			}
 
+			int start = current_time_millis();
+			pos = detect_in_frame(frame, base_frame);
+			int diff = current_time_millis() - start;
+
+			fprintf(times_fptr, "%d\n", diff);
+
+			printf("%d (%d, %d) \n", i, pos.x, pos.y);
+
+			add_lines(frame, pos.y, pos.x, 3);
 			out.write(frame);
 
-			Point pos = detect_in_frame(frame, base_frame);
-
 			i++;
+
 		}
 
-
-		fclose(times_fptr);
+		if (times_fptr != NULL)
+		{
+			fclose(times_fptr);
+		}
 	}
 
 	// Test single frame
-	if (1)
+	if (0)
 	{
 		Mat image, base;
 		base = cv::imread("../../imgs/base.jpg", 1);
@@ -71,7 +83,10 @@ int main(int argc, char** argv)
 		uint16_t rows = image.size().height;
 		uint16_t cols = image.size().width;
 
+		long start = current_time_millis();
 		test_detect_in_frame(image, base);
+		long diff = current_time_millis() - start;
+		//printf("Time Elapsed %ld\n", diff);
 	}
 
 	return 0;
@@ -85,6 +100,87 @@ long current_time_millis(){
 
 void print_point(Point p){
 	printf("(%d, %d)", p.x, p.y);
+}
+
+Point detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> largest_vals, int min_col, int max_col){
+	uint16_t height = img.size().height;
+	uint16_t width = img.size().width;
+
+	int N = 4;
+
+	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
+	
+	int max_col = 0;
+	for (int row_idx = 0; row_idx < height; row_idx++)
+	{
+		for (int col_idx = min_col; col_idx < max_col; col_idx++)
+		{
+			// Calculate diff
+			int val = get_pixel(img, col_idx, row_idx)[1] - get_pixel(base, col_idx, row_idx)[1];
+			// Add to list
+			if (val > largest_vals.back().z)
+			{
+				for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
+					if (val > (*it).z)
+					{
+						largest_vals.insert(it, Point3d(col_idx, row_idx, val));
+						if (largest_vals.size() > N)
+						{
+							largest_vals.pop_back();
+						}
+						break;
+					}
+				}
+			}
+
+		}
+	}
+
+	if (largest_vals.back().z == THRESH){
+		largest_vals.pop_back();
+	}
+
+	Point3d sum;
+	
+	for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
+		sum += *it;
+	}
+
+	int row_avg = sum.y / N;
+	int col_avg = sum.x / N;
+
+	return Point(col_avg, row_avg);
+}
+
+Point detect_in_frame_thread(Mat img, Mat base){
+	std::thread workers[THREADS];
+	std::list<cv::Point3d> queues[THREADS];	
+
+	int min_col = 0;
+	const int thickness = img.size().width / N;
+	int max_col = min_col + thickness;
+
+	for (int i = 0; i < THREADS; ++i)
+	{
+		queues[i] = std::list<cv::Point3d>;
+		workers[i] = std::thread detect_in_frame_worker();
+
+		min_col = max_col + 1;
+
+		if (i == N - 2)
+		{
+			max_col = img.size().width;
+		} else
+		{
+			max_col = min_col + thickness;
+		}
+	}
+
+
+	for (int i = 0; i < THREADS; i++)
+	{
+		workers[i].join();
+	}
 }
 
 Point detect_in_frame(Mat img, Mat base){
@@ -137,6 +233,8 @@ Point detect_in_frame(Mat img, Mat base){
 
 	return Point(col_avg, row_avg);
 }
+
+
 
 Point test_detect_in_frame(Mat img, Mat base){
 	uint16_t height = img.size().height;
@@ -212,10 +310,10 @@ Point test_detect_in_frame(Mat img, Mat base){
 
 	printf("Elapsed Time: %ld\n", current_time_millis() - start);
 
-	add_lines(img, row_avg, col_avg, 4);
+	add_lines(new_img, row_avg, col_avg, 4);
 
 	namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
-	imshow("Display Image", img);
+	imshow("Display Image", new_img);
 
 	vector<int> compression_params;
     compression_params.push_back(IMWRITE_PNG_COMPRESSION);
@@ -225,6 +323,7 @@ Point test_detect_in_frame(Mat img, Mat base){
 
 	waitKey(0);
 
+
 	return Point(col_avg, row_avg);
 }
 
@@ -233,11 +332,11 @@ void add_lines(Mat img, int row, int col, int w)
 	int width = img.size().width;
 	int height = img.size().height;
 
-	cv::line(img, Point(0, row+w), Point(width, row+w), {0, 255, 0});
-	cv::line(img, Point(0, row-w), Point(width, row-w), {0, 255, 0});
+	cv::line(img, Point(0, row+w), Point(width, row+w), {0, 255, 0}, 1);
+	cv::line(img, Point(0, row-w), Point(width, row-w), {0, 255, 0}, 1);
 
-	cv::line(img, Point(col-w, 0), Point(col-w, height), {0, 255, 0});
-	cv::line(img, Point(col+w, 0), Point(col+w, height), {0, 255, 0});
+	cv::line(img, Point(col-w, 0), Point(col-w, height), {0, 255, 0}, 1);
+	cv::line(img, Point(col+w, 0), Point(col+w, height), {0, 255, 0}, 1);
 }
 
 uchar* get_pixel(Mat img, int x, int y){
