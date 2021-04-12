@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 			}
 
 			int start = current_time_millis();
-			pos = detect_in_frame(frame, base_frame);
+			pos = detect_in_frame_thread(frame, base_frame);
 			int diff = current_time_millis() - start;
 
 			fprintf(times_fptr, "%d\n", diff);
