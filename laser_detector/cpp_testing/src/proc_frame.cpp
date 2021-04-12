@@ -4,6 +4,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/types.hpp>
 #include <list>
+#include <iostream>
 #include <thread>
 
 #define THRESH 50
@@ -20,6 +21,9 @@ uchar* get_pixel(Mat img, int x, int y);
 void printlist(std::list<Point3d> list);
 void add_lines(Mat img, int row, int col, int w);
 
+Point detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> largest_vals, int min_col, int max_col);
+Point detect_in_frame_thread(Mat img, Mat base);
+
 int main(int argc, char** argv)
 {
 	// Test video
@@ -31,7 +35,7 @@ int main(int argc, char** argv)
 		int fourcc = VideoWriter::fourcc('X','V','I','D');
 		int width = 640;
 		int height = 480;
-		VideoWriter out("./outcpp.avi", fourcc, 30, Size(640,480));
+		//VideoWriter out("./outcpp.avi", fourcc, 30, Size(640,480));
 
 		FILE* times_fptr = fopen("../../scripts/data/times_proc_frame.txt", "w");
 
@@ -41,10 +45,13 @@ int main(int argc, char** argv)
 		Point pos(0, 0);
 		while(1)
 		{
-
 			cap.read(frame);
 			if(frame.empty())
 			{
+				if (i == 0)
+				{
+					printf("Couldn't read first frame\n");
+				}
 				break;
 			}
 			if(i == 0)
@@ -61,7 +68,7 @@ int main(int argc, char** argv)
 			printf("%d (%d, %d) \n", i, pos.x, pos.y);
 
 			add_lines(frame, pos.y, pos.x, 3);
-			out.write(frame);
+			//out.write(frame);
 
 			i++;
 
@@ -108,9 +115,8 @@ Point detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> largest_v
 
 	int N = 4;
 
-	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
+	//largest_vals.push_front(cv::Point3d(0, 0, THRESH));
 	
-	int max_col = 0;
 	for (int row_idx = 0; row_idx < height; row_idx++)
 	{
 		for (int col_idx = min_col; col_idx < max_col; col_idx++)
@@ -156,18 +162,21 @@ Point detect_in_frame_thread(Mat img, Mat base){
 	std::thread workers[THREADS];
 	std::list<cv::Point3d> queues[THREADS];	
 
-	int min_col = 0;
-	const int thickness = img.size().width / N;
-	int max_col = min_col + thickness;
+	int min_col;
+	const int thickness = img.size().width / THREADS;
+	int max_col;
+
+	min_col = 0;
+	max_col = min_col + thickness;
 
 	for (int i = 0; i < THREADS; ++i)
 	{
-		queues[i] = std::list<cv::Point3d>;
-		workers[i] = std::thread detect_in_frame_worker();
+		queues[i].push_front(cv::Point3d(0, 0, THRESH));
+		workers[i] = std::thread(detect_in_frame_worker, img, base, queues[i], min_col, max_col);
 
 		min_col = max_col + 1;
 
-		if (i == N - 2)
+		if (i == THREADS - 2)
 		{
 			max_col = img.size().width;
 		} else
@@ -192,7 +201,6 @@ Point detect_in_frame(Mat img, Mat base){
 	std::list<cv::Point3d> largest_vals;
 	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
 	
-	int max_col = 0;
 	for (int row_idx = 0; row_idx < height; row_idx++)
 	{
 		for (int col_idx = 0; col_idx < width; col_idx++)
