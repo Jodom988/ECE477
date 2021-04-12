@@ -9,6 +9,8 @@
 
 #define THRESH 50
 #define THREADS 4
+#define N 4
+
 
 using namespace cv;
 using namespace std;
@@ -21,7 +23,7 @@ uchar* get_pixel(Mat img, int x, int y);
 void printlist(std::list<Point3d> list);
 void add_lines(Mat img, int row, int col, int w);
 
-Point detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> largest_vals, int min_col, int max_col);
+void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_vals_ptr, int min_col, int max_col);
 Point detect_in_frame_thread(Mat img, Mat base);
 
 int main(int argc, char** argv)
@@ -109,13 +111,11 @@ void print_point(Point p){
 	printf("(%d, %d)", p.x, p.y);
 }
 
-Point detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> largest_vals, int min_col, int max_col){
+void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_vals, int min_col, int max_col){
 	uint16_t height = img.size().height;
 	uint16_t width = img.size().width;
 
-	int N = 4;
-
-	//largest_vals.push_front(cv::Point3d(0, 0, THRESH));
+	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
 	
 	for (int row_idx = 0; row_idx < height; row_idx++)
 	{
@@ -146,21 +146,13 @@ Point detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> largest_v
 		largest_vals.pop_back();
 	}
 
-	Point3d sum;
-	
-	for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
-		sum += *it;
-	}
-
-	int row_avg = sum.y / N;
-	int col_avg = sum.x / N;
-
-	return Point(col_avg, row_avg);
 }
 
 Point detect_in_frame_thread(Mat img, Mat base){
 	std::thread workers[THREADS];
 	std::list<cv::Point3d> queues[THREADS];	
+
+	Point3d maxes[N];
 
 	int min_col;
 	const int thickness = img.size().width / THREADS;
@@ -171,8 +163,8 @@ Point detect_in_frame_thread(Mat img, Mat base){
 
 	for (int i = 0; i < THREADS; ++i)
 	{
-		queues[i].push_front(cv::Point3d(0, 0, THRESH));
-		workers[i] = std::thread(detect_in_frame_worker, img, base, queues[i], min_col, max_col);
+
+		workers[i] = std::thread(detect_in_frame_worker, img, base, std::ref(queues[i]), min_col, max_col);
 
 		min_col = max_col + 1;
 
@@ -185,18 +177,45 @@ Point detect_in_frame_thread(Mat img, Mat base){
 		}
 	}
 
-
+	int strips_with_multiple_count = 0;
+	int strip_with_multiple;
 	for (int i = 0; i < THREADS; i++)
 	{
 		workers[i].join();
+		if (queues[i].size() > 0)
+		{
+			strips_with_multiple_count++;
+			strip_with_multiple = i;
+		}
 	}
+
+	if (strips_with_multiple_count == 0)
+	{ //Not found 
+		return Point(0, 0);
+	} else if (strips_with_multiple_count == 1)
+	{
+		Point3d sum;
+	
+		for (std::list<Point3d>::iterator it = queues[strip_with_multiple].begin(); it != queues[strip_with_multiple].end(); it++){
+			sum += *it;
+		}
+
+		int row_avg = sum.y / N;
+		int col_avg = sum.x / N;
+
+		return Point(col_avg, row_avg);
+	} else {
+		printf("CONSOLIDATION FUNCTIONALITY NOT WORKING YET\n");
+
+		return Point(0, 0);
+	}
+
+	
 }
 
 Point detect_in_frame(Mat img, Mat base){
 	uint16_t height = img.size().height;
 	uint16_t width = img.size().width;
-
-	int N = 4;
 
 	std::list<cv::Point3d> largest_vals;
 	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
@@ -249,8 +268,6 @@ Point test_detect_in_frame(Mat img, Mat base){
 	uint16_t width = img.size().width;
 
 	Mat new_img(height, width*3, CV_8UC(3));
-
-	int N = 4;
 
 	std::list<cv::Point3d> largest_vals;
 	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
