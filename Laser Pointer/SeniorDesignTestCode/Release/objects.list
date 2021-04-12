@@ -1,3 +1,4 @@
+"Core/Src/MY_NRF24.o"
 "Core/Src/main.o"
 "Core/Src/stm32l0xx_hal_msp.o"
 "Core/Src/stm32l0xx_it.o"
@@ -21,5 +22,6 @@
 "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.o"
 "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o"
 "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.o"
+"Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o"
 "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.o"
 "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.o"

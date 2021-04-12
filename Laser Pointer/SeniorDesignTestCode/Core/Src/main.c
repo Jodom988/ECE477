@@ -22,7 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <math.h>
+#include "MY_NRF24.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,6 +43,8 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
 
+SPI_HandleTypeDef hspi1;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -50,6 +53,7 @@ ADC_HandleTypeDef hadc;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC_Init(void);
+static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 void wait (unsigned int n);
 void send_lasers_on();
@@ -60,7 +64,87 @@ void send_calibration_mode();
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void wait (unsigned int n)
+{
+	n *= 100;
+	for (int i = 0; i <= n; i++);
+}
 
+void send_lasers_on()
+{
+	char myTxData[32] = "";
+	myTxData[0] = 0x05;
+	myTxData[1] = 0x0;
+	char AckPayload[32];
+
+	if(NRF24_write(myTxData, 32)) {
+		NRF24_read(AckPayload, 32);
+		while (AckPayload[0] == 0x01) {
+			if(NRF24_write(myTxData, 32)) {
+				NRF24_read(AckPayload, 32);
+			}
+		}
+	}
+	return;
+}
+
+void send_mouse_movement()
+{
+	char myTxData[32] = "";
+	myTxData[0] = 0x03;
+	myTxData[1] = 0x07;
+	myTxData[2] = 0xFF;
+	myTxData[3] = 0x07;
+	myTxData[4] = 0xFF;
+	  char AckPayload[32];
+
+	  if(NRF24_write(myTxData, 32))
+	          {
+	            NRF24_read(AckPayload, 32);
+	          }
+	  return;
+}
+
+void send_right_click()
+{
+	char myTxData[32] = "";
+	myTxData[0] = 0x02;
+	myTxData[1] = 0x02;
+	char AckPayload[32];
+
+	if(NRF24_write(myTxData, 32)) {
+		NRF24_read(AckPayload, 32);
+		while (AckPayload[0] == 0x01) {
+			if(NRF24_write(myTxData, 32)) {
+				NRF24_read(AckPayload, 32);
+			}
+		}
+	}
+	return;
+}
+
+void send_left_click()
+{
+	char myTxData[32] = "";
+	myTxData[0] = 0x02;
+	myTxData[1] = 0x01;
+	char AckPayload[32];
+
+	if(NRF24_write(myTxData, 32)) {
+		NRF24_read(AckPayload, 32);
+		while (AckPayload[0] == 0x01) {
+			if(NRF24_write(myTxData, 32)) {
+				NRF24_read(AckPayload, 32);
+			}
+		}
+	}
+	return;
+}
+
+void send_calibration_packet()
+{
+	return;
+}
 /* USER CODE END 0 */
 
 /**
@@ -92,7 +176,26 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC_Init();
+  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+
+  //Initialize NRF24
+  NRF24_begin(CSN_GPIO_Port, CSN_Pin, 17, hspi1);
+  //Initialize NRF24 UART Debugging
+  //nrf24_DebugUART_Init(huart2);
+
+  //Attempt Transmission
+	uint64_t TxpipeAddrs = 0x11223344AA;
+	//**** TRANSMIT - ACK ****//
+	NRF24_stopListening();
+	NRF24_openWritingPipe(TxpipeAddrs);
+	NRF24_setAutoAck(true);
+	NRF24_setChannel(52);
+	NRF24_setPayloadSize(32);
+	NRF24_enableDynamicPayloads();
+	NRF24_enableAckPayload();
+
+	//printRadioSettings();
 
   /* USER CODE END 2 */
 
@@ -110,6 +213,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
 	  // Down is PA4
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4))
 	  {
@@ -117,6 +221,15 @@ int main(void)
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); // Toggle red laser
 		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0); // Toggle IR laser
 		  wait(750);
+	  }
+
+	  // '-' is PA2
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2))
+	  {
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
+		  HAL_Delay(500);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Start with yellow 4 (going left to right)
+
 	  }
 
 	  // A is PA6
@@ -133,31 +246,38 @@ int main(void)
 		  wait(300);
 	  }
 
+    // 'Home' is PA7
+    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
+    {
+      send_mouse_movement(); // Send right click
+      wait(300);
+    }
+
 	  // 1 is PB7
 	  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7))
 	  {
-		  send_calibration_mode(); // Send calibration mode
+		  send_calibration_packet(); // Send calibration mode
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
 		  wait(3000);
 
 		  // Press B on the top left corner of the screen
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
+		  send_calibration_packet(); // Send right click
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
 		  wait(3000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
+		  send_calibration_packet(); // Send right click
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on yellow 3
 		  wait(3000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
+		  send_calibration_packet(); // Send right click
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on yellow 2
 		  wait(3000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
+		  send_calibration_packet(); // Send right click
 
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
@@ -186,38 +306,9 @@ int main(void)
 		  wait(3000);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET); // Turn off the red LEDs
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // Turn off the red LEDs
-
 	  }
-
-    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-}
-
-void wait (unsigned int n)
-{
-	n *= 100;
-	for (int i = 0; i <= n; i++);
-}
-
-void send_lasers_on()
-{
-	return;
-}
-
-void send_left_click()
-{
-	return;
-}
-
-void send_right_click()
-{
-	return;
-}
-
-void send_calibration_mode()
-{
-	return;
 }
 
 /**
@@ -314,6 +405,44 @@ static void MX_ADC_Init(void)
 }
 
 /**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -332,7 +461,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+                          |GPIO_PIN_11|GPIO_PIN_12|CSN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
@@ -351,9 +480,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PA1 PA3 PA9 PA10
-                           PA11 PA12 */
+                           PA11 PA12 CSN_Pin */
   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12;
+                          |GPIO_PIN_11|GPIO_PIN_12|CSN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -374,31 +503,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB1 PB7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_7;
+  /*Configure GPIO pins : PB1 PB6 PB7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_6|GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB3 PB4 PB5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PB6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 

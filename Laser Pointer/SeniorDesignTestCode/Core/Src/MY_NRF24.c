@@ -42,7 +42,7 @@ static uint16_t				nrf24_CE_PIN;
 //SPI handle
 static SPI_HandleTypeDef nrf24_hspi;
 //Debugging UART handle
-static UART_HandleTypeDef nrf24_huart;
+//static UART_HandleTypeDef nrf24_huart;
 
 //**** Functions prototypes ****//
 //Microsecond delay function
@@ -180,7 +180,7 @@ void NRF24_begin(GPIO_TypeDef *nrf24PORT, uint16_t nrfCSN_Pin, uint16_t nrfCE_Pi
 	
 	//Put pins to idle state
 	NRF24_csn(1);
-	NRF24_ce(0);
+	//NRF24_ce(0);
 	//5 ms initial delay
 	HAL_Delay(5);
 	
@@ -216,7 +216,7 @@ void NRF24_begin(GPIO_TypeDef *nrf24PORT, uint16_t nrfCSN_Pin, uint16_t nrfCE_Pi
 	NRF24_ACTIVATE_cmd();
 	NRF24_write_register(0x1c, 0);
 	NRF24_write_register(0x1d, 0);
-	printRadioSettings();
+	//printRadioSettings();
 	//Initialise retries 15 and delay 1250 usec
 	NRF24_setRetries(15, 15);
 	//Initialise PA level to max (0dB)
@@ -254,14 +254,14 @@ void NRF24_startListening(void)
 	NRF24_flush_tx();
 	NRF24_flush_rx();
 	//Set CE HIGH to start listenning
-	NRF24_ce(1);
+	//NRF24_ce(1);
 	//Wait for 130 uSec for the radio to come on
 	NRF24_DelayMicroSeconds(150);
 }
 //14. Stop listening (essential before any write operation)
 void NRF24_stopListening(void)
 {
-	NRF24_ce(0);
+	//NRF24_ce(0);
 	NRF24_flush_tx();
 	NRF24_flush_rx();
 }
@@ -649,18 +649,18 @@ bool NRF24_availablePipe(uint8_t* pipe_num)
 void NRF24_startWrite( const void* buf, uint8_t len )
 {
   // Transmitter power-up
-  NRF24_ce(0);
+  //NRF24_ce(0);
   NRF24_write_register(REG_CONFIG, ( NRF24_read_register(REG_CONFIG) | _BV(BIT_PWR_UP) ) & ~_BV(BIT_PRIM_RX) );
-  NRF24_ce(1);
+  //NRF24_ce(1);
   NRF24_DelayMicroSeconds(150);
 
   // Send the payload
   NRF24_write_payload( buf, len );
 
   // Enable Tx for 15usec
-  NRF24_ce(1);
+  //NRF24_ce(1);
   NRF24_DelayMicroSeconds(15);
-  NRF24_ce(0);
+  //NRF24_ce(0);
 }
 //41. Write acknowledge payload
 void NRF24_writeAckPayload(uint8_t pipe, const void* buf, uint8_t len)
@@ -724,13 +724,13 @@ uint8_t NRF24_GetAckPayloadSize(void)
 {
 	return ack_payload_length;
 }
-
+/*
 void printRadioSettings(void)
 {
 	uint8_t reg8Val;
 	char uartTxBuf[100];
 	sprintf(uartTxBuf, "\r\n**********************************************\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	//a) Get CRC settings - Config Register
 	reg8Val = NRF24_read_register(0x00);
 	if(reg8Val & (1 << 3))
@@ -742,130 +742,130 @@ void printRadioSettings(void)
 	{
 		sprintf(uartTxBuf, "CRC:\r\n		Disabled \r\n");
 	}
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	//b) AutoAck on pipes
 	reg8Val = NRF24_read_register(0x01);
 	sprintf(uartTxBuf, "ENAA:\r\n		P0:	%d\r\n		P1:	%d\r\n		P2:	%d\r\n		P3:	%d\r\n		P4:	%d\r\n		P5:	%d\r\n",
 	_BOOL(reg8Val&(1<<0)), _BOOL(reg8Val&(1<<1)), _BOOL(reg8Val&(1<<2)), _BOOL(reg8Val&(1<<3)), _BOOL(reg8Val&(1<<4)), _BOOL(reg8Val&(1<<5)));
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	//c) Enabled Rx addresses
 	reg8Val = NRF24_read_register(0x02);
 	sprintf(uartTxBuf, "EN_RXADDR:\r\n		P0:	%d\r\n		P1:	%d\r\n		P2:	%d\r\n		P3:	%d\r\n		P4:	%d\r\n		P5:	%d\r\n",
 	_BOOL(reg8Val&(1<<0)), _BOOL(reg8Val&(1<<1)), _BOOL(reg8Val&(1<<2)), _BOOL(reg8Val&(1<<3)), _BOOL(reg8Val&(1<<4)), _BOOL(reg8Val&(1<<5)));
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	//d) Address width
 	reg8Val = NRF24_read_register(0x03)&0x03;
 	reg8Val +=2;
 	sprintf(uartTxBuf, "SETUP_AW:\r\n		%d bytes \r\n", reg8Val);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	//e) RF channel
 	reg8Val = NRF24_read_register(0x05);
 	sprintf(uartTxBuf, "RF_CH:\r\n		%d CH \r\n", reg8Val&0x7F);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	//f) Data rate & RF_PWR
 	reg8Val = NRF24_read_register(0x06);
 	if(reg8Val & (1 << 3)) sprintf(uartTxBuf, "Data Rate:\r\n		2Mbps \r\n");
 	else sprintf(uartTxBuf, "Data Rate:\r\n		1Mbps \r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	reg8Val &= (3 << 1);
 	reg8Val = (reg8Val>>1);
 	if(reg8Val == 0) sprintf(uartTxBuf, "RF_PWR:\r\n		-18dB \r\n");
 	else if(reg8Val == 1) sprintf(uartTxBuf, "RF_PWR:\r\n		-12dB \r\n");
 	else if(reg8Val == 2) sprintf(uartTxBuf, "RF_PWR:\r\n		-6dB \r\n");
 	else if(reg8Val == 3) sprintf(uartTxBuf, "RF_PWR:\r\n		0dB \r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	//g) RX pipes addresses
 	uint8_t pipeAddrs[6];
 	NRF24_read_registerN(0x0A, pipeAddrs, 5);
 	sprintf(uartTxBuf, "RX_Pipe0 Addrs:\r\n		%02X,%02X,%02X,%02X,%02X  \r\n", pipeAddrs[4], pipeAddrs[3], pipeAddrs[2],pipeAddrs[1],pipeAddrs[0]);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	NRF24_read_registerN(0x0A+1, pipeAddrs, 5);
 	sprintf(uartTxBuf, "RX_Pipe1 Addrs:\r\n		%02X,%02X,%02X,%02X,%02X  \r\n", pipeAddrs[4], pipeAddrs[3], pipeAddrs[2],pipeAddrs[1],pipeAddrs[0]);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	NRF24_read_registerN(0x0A+2, pipeAddrs, 1);
 	sprintf(uartTxBuf, "RX_Pipe2 Addrs:\r\n		xx,xx,xx,xx,%02X  \r\n", pipeAddrs[0]);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	NRF24_read_registerN(0x0A+3, pipeAddrs, 1);
 	sprintf(uartTxBuf, "RX_Pipe3 Addrs:\r\n		xx,xx,xx,xx,%02X  \r\n", pipeAddrs[0]);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	NRF24_read_registerN(0x0A+4, pipeAddrs, 1);
 	sprintf(uartTxBuf, "RX_Pipe4 Addrs:\r\n		xx,xx,xx,xx,%02X  \r\n", pipeAddrs[0]);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	NRF24_read_registerN(0x0A+5, pipeAddrs, 1);
 	sprintf(uartTxBuf, "RX_Pipe5 Addrs:\r\n		xx,xx,xx,xx,%02X  \r\n", pipeAddrs[0]);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	NRF24_read_registerN(0x0A+6, pipeAddrs, 5);
 	sprintf(uartTxBuf, "TX Addrs:\r\n		%02X,%02X,%02X,%02X,%02X  \r\n", pipeAddrs[4], pipeAddrs[3], pipeAddrs[2],pipeAddrs[1],pipeAddrs[0]);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	//h) RX PW (Payload Width 0 - 32)
 	reg8Val = NRF24_read_register(0x11);
 	sprintf(uartTxBuf, "RX_PW_P0:\r\n		%d bytes \r\n", reg8Val&0x3F);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x11+1);
 	sprintf(uartTxBuf, "RX_PW_P1:\r\n		%d bytes \r\n", reg8Val&0x3F);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x11+2);
 	sprintf(uartTxBuf, "RX_PW_P2:\r\n		%d bytes \r\n", reg8Val&0x3F);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x11+3);
 	sprintf(uartTxBuf, "RX_PW_P3:\r\n		%d bytes \r\n", reg8Val&0x3F);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x11+4);
 	sprintf(uartTxBuf, "RX_PW_P4:\r\n		%d bytes \r\n", reg8Val&0x3F);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x11+5);
 	sprintf(uartTxBuf, "RX_PW_P5:\r\n		%d bytes \r\n", reg8Val&0x3F);
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	//i) Dynamic payload enable for each pipe
 	reg8Val = NRF24_read_register(0x1c);
 	sprintf(uartTxBuf, "DYNPD_pipe:\r\n		P0:	%d\r\n		P1:	%d\r\n		P2:	%d\r\n		P3:	%d\r\n		P4:	%d\r\n		P5:	%d\r\n",
 	_BOOL(reg8Val&(1<<0)), _BOOL(reg8Val&(1<<1)), _BOOL(reg8Val&(1<<2)), _BOOL(reg8Val&(1<<3)), _BOOL(reg8Val&(1<<4)), _BOOL(reg8Val&(1<<5)));
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	//j) EN_DPL (is Dynamic payload feature enabled ?)
 	reg8Val = NRF24_read_register(0x1d);
 	if(reg8Val&(1<<2)) sprintf(uartTxBuf, "EN_DPL:\r\n		Enabled \r\n");
 	else sprintf(uartTxBuf, "EN_DPL:\r\n		Disabled \r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	//k) EN_ACK_PAY
 	if(reg8Val&(1<<1)) sprintf(uartTxBuf, "EN_ACK_PAY:\r\n		Enabled \r\n");
 	else sprintf(uartTxBuf, "EN_ACK_PAY:\r\n		Disabled \r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	
 	sprintf(uartTxBuf, "\r\n**********************************************\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 }
-
+*/
 //2. Print Status 
 void printStatusReg(void)
 {
 	uint8_t reg8Val;
 	char uartTxBuf[100];
 	sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x07);
 	sprintf(uartTxBuf, "STATUS reg:\r\n		RX_DR:		%d\r\n		TX_DS:		%d\r\n		MAX_RT:		%d\r\n		RX_P_NO:	%d\r\n		TX_FULL:	%d\r\n",
 	_BOOL(reg8Val&(1<<6)), _BOOL(reg8Val&(1<<5)), _BOOL(reg8Val&(1<<4)), _BOOL(reg8Val&(3<<1)), _BOOL(reg8Val&(1<<0)));
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 }
 //3. Print Config 
 void printConfigReg(void)
@@ -874,36 +874,36 @@ void printConfigReg(void)
 	char uartTxBuf[100];
 	
 	sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x00);
 	sprintf(uartTxBuf, "CONFIG reg:\r\n		PWR_UP:		%d\r\n		PRIM_RX:	%d\r\n",
 	_BOOL(reg8Val&(1<<1)), _BOOL(reg8Val&(1<<0)));
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	//HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 }
 
 //4. Init Variables
-void nrf24_DebugUART_Init(UART_HandleTypeDef nrf24Uart)
-{
-	memcpy(&nrf24_huart, &nrf24Uart, sizeof(nrf24Uart));
-}
+//void nrf24_DebugUART_Init(UART_HandleTypeDef nrf24Uart)
+//{
+//	memcpy(&nrf24_huart, &nrf24Uart, sizeof(nrf24Uart));
+//}
 //5. FIFO Status
 void printFIFOstatus(void)
 {
 	uint8_t reg8Val;
 	char uartTxBuf[100];
 	sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	////HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	reg8Val = NRF24_read_register(0x17);
 	sprintf(uartTxBuf, "FIFO Status reg:\r\n		TX_FULL:		%d\r\n		TX_EMPTY:		%d\r\n		RX_FULL:		%d\r\n		RX_EMPTY:		%d\r\n",
 	_BOOL(reg8Val&(1<<5)), _BOOL(reg8Val&(1<<4)), _BOOL(reg8Val&(1<<1)), _BOOL(reg8Val&(1<<0)));
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	////HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 	sprintf(uartTxBuf, "\r\n-------------------------\r\n");
-	HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
+	////HAL_UART_Transmit(&nrf24_huart, (uint8_t *)uartTxBuf, strlen(uartTxBuf), 10);
 	
 }
