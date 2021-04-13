@@ -55,7 +55,6 @@ static void MX_GPIO_Init(void);
 static void MX_ADC_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
-void wait (unsigned int n);
 void send_lasers_on();
 void send_left_click();
 void send_right_click();
@@ -64,11 +63,6 @@ void send_calibration_mode();
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void wait (unsigned int n)
-{
-	n *= 100;
-	for (int i = 0; i <= n; i++);
-}
 
 void send_lasers_on()
 {
@@ -220,61 +214,53 @@ int main(void)
 		  send_lasers_on(); // Send that the lasers are about to toggle
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); // Toggle red laser
 		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0); // Toggle IR laser
-		  wait(750);
-	  }
-
-	  // '-' is PA2
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2))
-	  {
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
-		  HAL_Delay(500);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Start with yellow 4 (going left to right)
-
+		  HAL_Delay(100);
 	  }
 
 	  // A is PA6
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6))
 	  {
 		  send_left_click(); // Send left click
-		  wait(300);
+		  HAL_Delay(100);
 	  }
 
 	  // B is PA5
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5))
 	  {
 		  send_right_click(); // Send right click
-		  wait(300);
+		  HAL_Delay(100);
 	  }
 
-    // 'Home' is PA7
-    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
-    {
-      send_mouse_movement(); // Send right click
-      wait(300);
-    }
+	  // This is temp code
+	  // 'Home' is PA7
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
+	  {
+		  send_mouse_movement(); // Send right click
+		  HAL_Delay(100);
+	  }
 
 	  // 1 is PB7
 	  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7))
 	  {
 		  send_calibration_packet(); // Send calibration mode
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
-		  wait(3000);
+		  HAL_Delay(1000);
 
 		  // Press B on the top left corner of the screen
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
 		  send_calibration_packet(); // Send right click
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
-		  wait(3000);
+		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
 		  send_calibration_packet(); // Send right click
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on yellow 3
-		  wait(3000);
+		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
 		  send_calibration_packet(); // Send right click
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on yellow 2
-		  wait(3000);
+		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
 		  send_calibration_packet(); // Send right click
@@ -283,7 +269,7 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); // Turn off yellow 1
-		  wait(3000);
+		  HAL_Delay(1000);
 	  }
 
 	  // 2 is PC14
@@ -303,7 +289,7 @@ int main(void)
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // Turn on the red LEDs
 		  }
 
-		  wait(3000);
+		  HAL_Delay(1500);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET); // Turn off the red LEDs
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // Turn off the red LEDs
 	  }
