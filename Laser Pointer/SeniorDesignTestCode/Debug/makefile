@@ -61,8 +61,8 @@ all: main-build
 main-build: SeniorDesignTestCode.elf secondary-outputs
 
 # Tool invocations
-SeniorDesignTestCode.elf: $(OBJS) $(USER_OBJS) C:\Users\Giuce\Desktop\Laser\ Pointer\SeniorDesignTestCode\STM32L010K4TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "SeniorDesignTestCode.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Giuce\Desktop\Laser Pointer\SeniorDesignTestCode\STM32L010K4TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SeniorDesignTestCode.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+SeniorDesignTestCode.elf: $(OBJS) $(USER_OBJS) C:\Users\Giuce\Documents\GitHub\ECE477\Laser\ Pointer\SeniorDesignTestCode\STM32L010K4TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "SeniorDesignTestCode.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Giuce\Documents\GitHub\ECE477\Laser Pointer\SeniorDesignTestCode\STM32L010K4TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SeniorDesignTestCode.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

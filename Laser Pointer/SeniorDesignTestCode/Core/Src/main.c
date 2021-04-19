@@ -33,6 +33,24 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define RF_CLICK_PRECURSOR 0x02
+#define RF_CLICK_LEFT 0x01
+#define RF_CLICK_LEFT_BAD 0x11
+#define RF_CLICK_RIGHT 0x02
+#define RF_CLICK_LEFT_RELEASE 0x00
+#define RF_CLICK_RIGHT_RELEASE 0x00
+
+#define RF_CALIBRATE_PRECURSOR 0x04
+#define RF_CALIBRATE_START 0x07
+#define RF_CALIBRATE_PACKET 0x08
+#define RF_CALIBRATE_END 0x09
+
+#define RF_LASER_PRECURSOR 0x05
+#define RF_LASERS_ON 0x0B
+#define RF_LASERS_OFF 0x8B
+#define RF_IR_ON 0x0C
+#define RF_IR_OFF 0x8C
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -56,31 +74,39 @@ static void MX_ADC_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 void send_lasers_on();
+void send_lasers_off();
+void send_IR_on();
+void send_IR_off();
 void send_left_click();
 void send_right_click();
-void send_calibration_mode();
+void send_left_click_off();
+void send_right_click_off();
+void send_calibration_start();
+void send_calibration_packet();
+void send_calibration_end();
+void send_RF_packet(uint8_t precursor, uint8_t command);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void send_lasers_on()
+void send_RF_packet(uint8_t precursor, uint8_t command)
 {
 	char myTxData[32] = "";
-	myTxData[0] = 0x05;
-	myTxData[1] = 0x0;
-	char AckPayload[32];
+	myTxData[0] = precursor;
+	myTxData[1] = command;
+	char AckPayload[32] = "";
+	AckPayload[0] = 0xFF;
 
-	if(NRF24_write(myTxData, 32)) {
-		NRF24_read(AckPayload, 32);
-		while (AckPayload[0] == 0x01) {
-			if(NRF24_write(myTxData, 32)) {
-				NRF24_read(AckPayload, 32);
-			}
+	do {
+		if(NRF24_write(myTxData, 32)) {
+			NRF24_read(AckPayload, 32);
 		}
-	}
+	} while (AckPayload[0] != 0x01);
+
 	return;
 }
+
 
 void send_mouse_movement()
 {
@@ -99,46 +125,6 @@ void send_mouse_movement()
 	  return;
 }
 
-void send_right_click()
-{
-	char myTxData[32] = "";
-	myTxData[0] = 0x02;
-	myTxData[1] = 0x02;
-	char AckPayload[32];
-
-	if(NRF24_write(myTxData, 32)) {
-		NRF24_read(AckPayload, 32);
-		while (AckPayload[0] == 0x01) {
-			if(NRF24_write(myTxData, 32)) {
-				NRF24_read(AckPayload, 32);
-			}
-		}
-	}
-	return;
-}
-
-void send_left_click()
-{
-	char myTxData[32] = "";
-	myTxData[0] = 0x02;
-	myTxData[1] = 0x01;
-	char AckPayload[32];
-
-	if(NRF24_write(myTxData, 32)) {
-		NRF24_read(AckPayload, 32);
-		while (AckPayload[0] == 0x01) {
-			if(NRF24_write(myTxData, 32)) {
-				NRF24_read(AckPayload, 32);
-			}
-		}
-	}
-	return;
-}
-
-void send_calibration_packet()
-{
-	return;
-}
 /* USER CODE END 0 */
 
 /**
@@ -196,6 +182,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   uint16_t raw;
+  int LASER_ON = false;
 
   // Down to turn the lasers (mouse) on
   // A to left click
@@ -209,25 +196,43 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  // Down is PA4
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4))
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == false)
 	  {
-		  send_lasers_on(); // Send that the lasers are about to toggle
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); // Toggle red laser
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0); // Toggle IR laser
+		  send_RF_packet(RF_LASER_PRECURSOR, RF_LASERS_ON); // Send that the lasers are about to toggle
+		  LASER_ON = true;
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); // Turn red laser ON
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // Turn IR laser ON
+		  HAL_Delay(100);
+	  }
+	  else if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == true) {
+		  send_RF_packet(RF_LASER_PRECURSOR, RF_LASERS_OFF); // Send that the lasers are about to toggle
+		  LASER_ON = false;
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); // Turn red laser ON
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR laser ON
 		  HAL_Delay(100);
 	  }
 
 	  // A is PA6
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6))
 	  {
-		  send_left_click(); // Send left click
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_LEFT); // Send left click
+		  HAL_Delay(100);
+		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)) {
+			  HAL_Delay(100);
+		  }
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_LEFT_RELEASE);
 		  HAL_Delay(100);
 	  }
 
 	  // B is PA5
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5))
 	  {
-		  send_right_click(); // Send right click
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_RIGHT); // Send right click
+		  HAL_Delay(100);
+		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)) {
+			  HAL_Delay(100);
+		  }
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_RIGHT_RELEASE);
 		  HAL_Delay(100);
 	  }
 
@@ -235,41 +240,58 @@ int main(void)
 	  // 'Home' is PA7
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
 	  {
-		  send_mouse_movement(); // Send right click
+		  send_mouse_movement();
 		  HAL_Delay(100);
 	  }
 
 	  // 1 is PB7
 	  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7))
 	  {
-		  send_calibration_packet(); // Send calibration mode
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_START); // Send calibration mode
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
-		  HAL_Delay(1000);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR Off
 
 		  // Press B on the top left corner of the screen
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_calibration_packet(); // Send right click
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn on Y3
 		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_calibration_packet(); // Send right click
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on yellow 3
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on Y2
 		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_calibration_packet(); // Send right click
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on yellow 2
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on Y1
 		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_calibration_packet(); // Send right click
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_Delay(1000);
 
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_END);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); // Turn off yellow 1
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_RESET); // Turn off yellow 1
 		  HAL_Delay(1000);
+
+		  for (int i = 0; i < 2; i++) {
+
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn off yellow 3
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn off yellow 2
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_SET); // Turn off yellow 1
+			  HAL_Delay(500);
+
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_RESET); // Turn off yellow 1
+			  HAL_Delay(500);
+		  }
 	  }
 
 	  // 2 is PC14
@@ -289,7 +311,7 @@ int main(void)
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // Turn on the red LEDs
 		  }
 
-		  HAL_Delay(1500);
+		  HAL_Delay(3000);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET); // Turn off the red LEDs
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // Turn off the red LEDs
 	  }
