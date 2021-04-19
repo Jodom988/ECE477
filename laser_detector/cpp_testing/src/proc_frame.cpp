@@ -24,7 +24,7 @@ void printlist(std::list<Point3d> list);
 void add_lines(Mat img, int row, int col, int w);
 
 void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_vals_ptr, int min_col, int max_col);
-Point detect_in_frame_thread(Mat img, Mat base);
+Point detect_in_frame_threads(Mat img, Mat base);
 
 int main(int argc, char** argv)
 {
@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 			}
 
 			int start = current_time_millis();
-			pos = detect_in_frame_thread(frame, base_frame);
+			pos = detect_in_frame_threads(frame, base_frame);
 			int diff = current_time_millis() - start;
 
 			fprintf(times_fptr, "%d\n", diff);
@@ -148,7 +148,7 @@ void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_
 
 }
 
-Point detect_in_frame_thread(Mat img, Mat base){
+Point detect_in_frame_threads(Mat img, Mat base){
 	std::thread workers[THREADS];
 	std::list<cv::Point3d> queues[THREADS];	
 
