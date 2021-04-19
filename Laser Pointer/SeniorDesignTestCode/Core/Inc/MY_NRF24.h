@@ -18,7 +18,7 @@ References:				This library was written based on the Arduino NRF24 Open-Source l
 */
 
 //List of header files  
-#include "stm32f4xx_hal.h"   //** Change this according to your STM32 series **//
+#include "stm32l0xx_hal.h"   //** Change this according to your STM32 series **//
 #include "nRF24L01.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -182,7 +182,7 @@ void printStatusReg(void);
 //3. Print Config 
 void printConfigReg(void);
 //4. Init Variables
-void nrf24_DebugUART_Init(UART_HandleTypeDef nrf24Uart);
+//void nrf24_DebugUART_Init(UART_HandleTypeDef nrf24Uart);
 //5. FIFO Status
 void printFIFOstatus(void);
 

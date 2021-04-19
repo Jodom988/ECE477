@@ -22,7 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <math.h>
+#include "MY_NRF24.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +33,24 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define RF_CLICK_PRECURSOR 0x02
+#define RF_CLICK_LEFT 0x01
+#define RF_CLICK_LEFT_BAD 0x11
+#define RF_CLICK_RIGHT 0x02
+#define RF_CLICK_LEFT_RELEASE 0x00
+#define RF_CLICK_RIGHT_RELEASE 0x00
+
+#define RF_CALIBRATE_PRECURSOR 0x04
+#define RF_CALIBRATE_START 0x07
+#define RF_CALIBRATE_PACKET 0x08
+#define RF_CALIBRATE_END 0x09
+
+#define RF_LASER_PRECURSOR 0x05
+#define RF_LASERS_ON 0x0B
+#define RF_LASERS_OFF 0x8B
+#define RF_IR_ON 0x0C
+#define RF_IR_OFF 0x8C
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,6 +61,8 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
 
+SPI_HandleTypeDef hspi1;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -50,16 +71,59 @@ ADC_HandleTypeDef hadc;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC_Init(void);
+static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
-void wait (unsigned int n);
 void send_lasers_on();
+void send_lasers_off();
+void send_IR_on();
+void send_IR_off();
 void send_left_click();
 void send_right_click();
-void send_calibration_mode();
+void send_left_click_off();
+void send_right_click_off();
+void send_calibration_start();
+void send_calibration_packet();
+void send_calibration_end();
+void send_RF_packet(uint8_t precursor, uint8_t command);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void send_RF_packet(uint8_t precursor, uint8_t command)
+{
+	char myTxData[32] = "";
+	myTxData[0] = precursor;
+	myTxData[1] = command;
+	char AckPayload[32] = "";
+	AckPayload[0] = 0xFF;
+
+	do {
+		if(NRF24_write(myTxData, 32)) {
+			NRF24_read(AckPayload, 32);
+		}
+	} while (AckPayload[0] != 0x01);
+
+	return;
+}
+
+
+void send_mouse_movement()
+{
+	char myTxData[32] = "";
+	myTxData[0] = 0x03;
+	myTxData[1] = 0x07;
+	myTxData[2] = 0xFF;
+	myTxData[3] = 0x07;
+	myTxData[4] = 0xFF;
+	  char AckPayload[32];
+
+	  if(NRF24_write(myTxData, 32))
+	          {
+	            NRF24_read(AckPayload, 32);
+	          }
+	  return;
+}
 
 /* USER CODE END 0 */
 
@@ -92,13 +156,33 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC_Init();
+  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+
+  //Initialize NRF24
+  NRF24_begin(CSN_GPIO_Port, CSN_Pin, 17, hspi1);
+  //Initialize NRF24 UART Debugging
+  //nrf24_DebugUART_Init(huart2);
+
+  //Attempt Transmission
+	uint64_t TxpipeAddrs = 0x11223344AA;
+	//**** TRANSMIT - ACK ****//
+	NRF24_stopListening();
+	NRF24_openWritingPipe(TxpipeAddrs);
+	NRF24_setAutoAck(true);
+	NRF24_setChannel(52);
+	NRF24_setPayloadSize(32);
+	NRF24_enableDynamicPayloads();
+	NRF24_enableAckPayload();
+
+	//printRadioSettings();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   uint16_t raw;
+  int LASER_ON = false;
 
   // Down to turn the lasers (mouse) on
   // A to left click
@@ -110,60 +194,104 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
 	  // Down is PA4
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4))
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == false)
 	  {
-		  send_lasers_on(); // Send that the lasers are about to toggle
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); // Toggle red laser
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0); // Toggle IR laser
-		  wait(750);
+		  send_RF_packet(RF_LASER_PRECURSOR, RF_LASERS_ON); // Send that the lasers are about to toggle
+		  LASER_ON = true;
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); // Turn red laser ON
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // Turn IR laser ON
+		  HAL_Delay(100);
+	  }
+	  else if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == true) {
+		  send_RF_packet(RF_LASER_PRECURSOR, RF_LASERS_OFF); // Send that the lasers are about to toggle
+		  LASER_ON = false;
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); // Turn red laser ON
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR laser ON
+		  HAL_Delay(100);
 	  }
 
 	  // A is PA6
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6))
 	  {
-		  send_left_click(); // Send left click
-		  wait(300);
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_LEFT); // Send left click
+		  HAL_Delay(100);
+		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)) {
+			  HAL_Delay(100);
+		  }
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_LEFT_RELEASE);
+		  HAL_Delay(100);
 	  }
 
 	  // B is PA5
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5))
 	  {
-		  send_right_click(); // Send right click
-		  wait(300);
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_RIGHT); // Send right click
+		  HAL_Delay(100);
+		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)) {
+			  HAL_Delay(100);
+		  }
+		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_RIGHT_RELEASE);
+		  HAL_Delay(100);
+	  }
+
+	  // This is temp code
+	  // 'Home' is PA7
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
+	  {
+		  send_mouse_movement();
+		  HAL_Delay(100);
 	  }
 
 	  // 1 is PB7
 	  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7))
 	  {
-		  send_calibration_mode(); // Send calibration mode
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_START); // Send calibration mode
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
-		  wait(3000);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR Off
 
 		  // Press B on the top left corner of the screen
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
-		  wait(3000);
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn on Y3
+		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on yellow 3
-		  wait(3000);
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on Y2
+		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on yellow 2
-		  wait(3000);
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on Y1
+		  HAL_Delay(1000);
 
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_right_click(); // Send right click
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
+		  HAL_Delay(1000);
 
+		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_END);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); // Turn off yellow 1
-		  wait(3000);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_RESET); // Turn off yellow 1
+		  HAL_Delay(1000);
+
+		  for (int i = 0; i < 2; i++) {
+
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn off yellow 3
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn off yellow 2
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_SET); // Turn off yellow 1
+			  HAL_Delay(500);
+
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_RESET); // Turn off yellow 1
+			  HAL_Delay(500);
+		  }
 	  }
 
 	  // 2 is PC14
@@ -183,41 +311,12 @@ int main(void)
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); // Turn on the red LEDs
 		  }
 
-		  wait(3000);
+		  HAL_Delay(3000);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET); // Turn off the red LEDs
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // Turn off the red LEDs
-
 	  }
-
-    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-}
-
-void wait (unsigned int n)
-{
-	n *= 100;
-	for (int i = 0; i <= n; i++);
-}
-
-void send_lasers_on()
-{
-	return;
-}
-
-void send_left_click()
-{
-	return;
-}
-
-void send_right_click()
-{
-	return;
-}
-
-void send_calibration_mode()
-{
-	return;
 }
 
 /**
@@ -314,6 +413,44 @@ static void MX_ADC_Init(void)
 }
 
 /**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -332,7 +469,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+                          |GPIO_PIN_11|GPIO_PIN_12|CSN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
@@ -351,9 +488,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PA1 PA3 PA9 PA10
-                           PA11 PA12 */
+                           PA11 PA12 CSN_Pin */
   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12;
+                          |GPIO_PIN_11|GPIO_PIN_12|CSN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -374,31 +511,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB1 PB7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_7;
+  /*Configure GPIO pins : PB1 PB6 PB7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_6|GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB3 PB4 PB5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PB6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
