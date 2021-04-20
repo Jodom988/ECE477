@@ -4400,3 +4400,13 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 
 !ENTRY org.eclipse.core.resources 4 372 2021-04-19 22:58:10.444
 !MESSAGE Resource '/USB_HID' is not open.
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2021-04-19 23:48:31.424
+!MESSAGE HTTP Server 'Internal Error': https://www.st.com/content/ccc/resource/technical/software/firmware/e2/a0/0f/e7/bd/4f/4b/da/stm32f4_dsp_stdperiph_lib.zip/files/stm32f4_dsp_stdperiph_lib.zip/jcr:content/translations/content.xml
+!STACK 1
+org.eclipse.ecf.filetransfer.BrowseFileTransferException: HttpComponents connection error response code 500.
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:293)
+	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.ecf.identity 4 0 2021-04-19 23:48:31.425
+!MESSAGE HttpComponents connection error response code 500.
