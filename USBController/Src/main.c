@@ -36,8 +36,21 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DEBUG 1 //1 for HUART messages
+#define DEBUG 0 //1 for HUART messages
 #define HID_BUFFER_SIZE 7
+
+#define RF_LEFT_CLICK_DOWN 0x01
+#define RF_RIGHT_CLICK_DOWN 0x02
+#define RF_LEFT_CLICK_UP 0x03
+#define RF_RIGHT_CLICK_UP 0x04
+
+#define RF_POSITION 0x05
+#define RF_POSITION_MAX_MSB  0x0F
+#define RF_POSITION_MAX_LSB  0xFF
+
+#define RF_VALID 0x01
+#define RF_NOTVALID 0x02
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -65,10 +78,9 @@ bool readData(uint8_t pipe,uint8_t payloadSize);
 bool validData(uint8_t * myRxData);
 //HID Report Functions
 void setupHIDReportClick(uint8_t click);
-void setupHIDReportXPosition(uint16_t xPosition);
-void setupHIDReportYPosition( uint16_t yPosition);
-void setupHIDReportXYPosition(uint16_t xPosition, uint16_t yPosition);
-void setupHIDReportScrollWheel(uint16_t scrollWheel);
+void setupHIDReportXPosition(uint8_t yPositionLSB, uint8_t yPositionMSB);
+void setupHIDReportYPosition(uint8_t yPositionLSB, uint8_t yPositionMSB);
+void setupHIDReportScrollWheel(uint8_t scrollWheelMSB, uint8_t scrollWheelLSB);
 
 /* USER CODE END PFP */
 
@@ -115,12 +127,21 @@ int main(void)
   nrf24_DebugUART_Init(huart2);   //Initialize NRF24 UART Debugging
 
   //Initialize receiving pipe
-  uint64_t address = 0x100;
-  uint8_t channel = 10;
+  uint64_t address = 0x11223344AA;
+  uint8_t channel = 52;
   uint8_t pipe = 1;
-  uint8_t payloadSize = 32;
+  uint8_t payloadSize = 32; //Change to 5.
   setupRX(address, channel, pipe, payloadSize);
 
+
+  //Initialize HID Buffer
+  HIDBuffer[0] = 0;
+  HIDBuffer[1] = 0;
+  HIDBuffer[2] = 0;
+  HIDBuffer[3] = 0;
+  HIDBuffer[4] = 0;
+  HIDBuffer[5] = 0;
+  HIDBuffer[6] = 0;
 
   /* USER CODE END 2 */
 
@@ -129,12 +150,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(NRF24_available() & readData(pipe,payloadSize)) //Packet Available and Valid
+	  if(NRF24_available() && readData(pipe,payloadSize)) //Packet Available and Valid
 		{
 		  //Send HID Report
 		  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer,HID_BUFFER_SIZE);
 		}
-
     /* USER CODE BEGIN 3 */
   }
 
@@ -149,60 +169,77 @@ void setupRX(uint64_t address, uint8_t channel, uint8_t pipe, uint8_t payloadSiz
 	NRF24_setPayloadSize(payloadSize);
 	NRF24_openReadingPipe(pipe, address);
 	NRF24_enableDynamicPayloads();
-	NRF24_enableAckPayload();
 	NRF24_startListening();
 	if(DEBUG){
 		printRadioSettings();
+		//Read Registers Manually
+		char debugMessage[15]="";
+		for(uint8_t reg = 0; reg <= 0x1D;reg++){
+			uint8_t regValue = NRF24_read_register(reg);
+			snprintf(debugMessage, 15, "%02x: %02x \r\n", reg,regValue);
+			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 15, 10);
+		}
+
 	}
 	return;
 }
 
+
+
 bool readData(uint8_t pipe,uint8_t payloadSize){
-	uint8_t * RxData = 0;
-	uint8_t * AckPayload = 0;
-	bool dataIsValid;
+	uint8_t RxData[payloadSize];
 	NRF24_read(RxData, payloadSize);
-	//Check Data Validity, if valid send regular ACK, otherwise send NACK message
-	if(validData(RxData)){
-		AckPayload[0] = 0x00;
-		dataIsValid = true;
-	}
-	else{
-		AckPayload[0] = 0x01;
-		dataIsValid = false;
-	}
-	NRF24_writeAckPayload(pipe, AckPayload, payloadSize);
-	HAL_UART_Transmit(&huart2, (uint8_t *)RxData, payloadSize,10);
-	return dataIsValid;
+	//Check Data Validity
+	return validData(RxData);
 }
 
 bool validData(uint8_t * myRxData){
-	//Position 0 Encodes Action
-	uint8_t click = 0;
-	uint16_t xPosition = 0;
-	uint16_t yPosition = 0;
-	char debugMessage[32];
-	// Click Message Format 0x02,0x0N //N = 1-> Left Click, 2-> Right Click 3-> Middle
-	if((myRxData[0] == 0x02) &
-	   ((myRxData[1] >= 0x1) & (myRxData[1] <= 0x03)) &
-	   (sscanf(myRxData, "%*u%u", &click))){
-		setupHIDReportClick(click);
+	char debugMessage[32]="";
+	if(myRxData[0] == RF_LEFT_CLICK_DOWN){
+		setupHIDReportClick(1);
 		if(DEBUG){
-			snprintf(debugMessage, 32, "Click: %d", click);
+			snprintf(debugMessage, 32,"Left Click Down/r/n");
 			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 		}
 		return true;
 	}
-	//MouseXY Format 0x03,0x0X,0xXX, 0x0Y,0xYY //Todo Check if sscanf is implemented correctly.
-	else if((myRxData[0] == 0x03) &
-            ((myRxData[1] <= 0x0F) & (myRxData[2] <= 0xFF) & (myRxData[3] <= 0x0F) & (myRxData[4] <= 0xFF)) &
-			(sscanf(myRxData, "%*u%u%u", &xPosition, &yPosition))){
-		setupHIDReportXYPosition(xPosition, yPosition);
+	else if(myRxData[0] == RF_RIGHT_CLICK_DOWN){
+		setupHIDReportClick(2);
 		if(DEBUG){
-			snprintf(debugMessage, 32, "X: %u,Y: %u", xPosition, yPosition);
+			snprintf(debugMessage, 32,"Right Click Down/r/n");
 			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 		}
 		return true;
+	}
+	else if(myRxData[0] == RF_LEFT_CLICK_UP){
+			setupHIDReportClick(0);
+			if(DEBUG){
+				snprintf(debugMessage, 32,"Left Click UP/r/n");
+				HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
+			}
+			return true;
+	}
+	else if(myRxData[0] == RF_RIGHT_CLICK_UP){
+		setupHIDReportClick(0);
+		if(DEBUG){
+			snprintf(debugMessage, 32,"Right Click UP/r/n");
+			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
+		}
+		return true;
+	} else if((myRxData[0] == RF_POSITION) &&
+            ((myRxData[1] <= RF_POSITION_MAX_MSB) && (myRxData[2] <= RF_POSITION_MAX_LSB) && (myRxData[3] <= RF_POSITION_MAX_MSB) && (myRxData[4] <= RF_POSITION_MAX_LSB))){
+		setupHIDReportXPosition(myRxData[1], myRxData[2]);
+		setupHIDReportYPosition(myRxData[3], myRxData[4]);
+		if(DEBUG){
+			uint16_t xPosition = 0x0000 | (myRxData[1] << 8) | myRxData[2];
+			uint16_t yPosition = 0x0000 | (myRxData[3] << 8) | myRxData[4];
+			snprintf(debugMessage, 32, "X: %u,Y: %u\r\n", xPosition, yPosition);
+			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
+		}
+		return true;
+	}
+	else if(DEBUG){//Incorrect Message, Print to HAL UART Directly
+		HAL_UART_Transmit(&huart2,(uint8_t *)myRxData, 32,10);
 	}
 
 	return false;
@@ -212,29 +249,20 @@ void setupHIDReportClick(uint8_t click){
 	HIDBuffer[0] = click; //1-> Left Click, 2-> Right Click 3-> Middle
 }
 
-void setupHIDReportXPosition(uint16_t xPosition){
-	HIDBuffer[1] = (xPosition & 0xFF); //X Position
-	HIDBuffer[2] = (xPosition >> 8) & 0x0F; //X Position (2) (Most Significant Bits)
+void setupHIDReportXPosition(uint8_t xPositionMSB, uint8_t xPositionLSB){
+	HIDBuffer[1] = xPositionLSB; //X Position
+	HIDBuffer[2] = xPositionMSB; //X Position (2) (Most Significant Bits)
 }
 
-void setupHIDReportYPosition( uint16_t yPosition){
-	HIDBuffer[3] = (yPosition & 0xFF); //Y Position
-	HIDBuffer[4] = (yPosition >> 8) & 0x0F; //Y Position (2) (Most Significant Bits)
+void setupHIDReportYPosition(uint8_t yPositionMSB, uint8_t yPositionLSB){
+	HIDBuffer[3] = yPositionLSB; //Y Position
+	HIDBuffer[4] = yPositionMSB; //Y  Position (2) (Most Significant Bits)
 }
 
-void setupHIDReportXYPosition(uint16_t xPosition, uint16_t yPosition){
-	HIDBuffer[1] = (xPosition & 0xFF); //X Position
-	HIDBuffer[2] = (xPosition >> 8) & 0x0F; //X Position (2) (Most Significant Bits)
-	HIDBuffer[3] = (yPosition & 0xFF); //Y Position
-	HIDBuffer[4] = (yPosition >> 8) & 0x0F; //Y Position (2) (Most Significant Bits)
+void setupHIDReportScrollWheel(uint8_t scrollWheelMSB, uint8_t scrollWheelLSB){
+	HIDBuffer[5] = scrollWheelLSB; //Scroll Wheel
+	HIDBuffer[6] = scrollWheelMSB; //Scroll Wheel (2) (Most Significant Bits)
 }
-
-void setupHIDReportScrollWheel(uint16_t scrollWheel){
-	HIDBuffer[5] = (scrollWheel & 0xFF); //Scroll Wheel
-	HIDBuffer[6] = (scrollWheel >> 8) & 0x0F; //Scroll Wheel (2) (Most Significant Bits)
-}
-
-
 
 
 /**
