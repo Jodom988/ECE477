@@ -68,6 +68,7 @@ def consume_frames(req_port):
 				break
 			elif header == CODE_FRAME_DATA:
 				frame_bytes = data
+				logging.info("Frame size in bytes: {}".format(len(frame_bytes)));
 				img = cv.imdecode(np.frombuffer(frame_bytes, dtype=np.uint8), cv.IMREAD_COLOR)
 				logging.info("Received frame %d" % i)
 				i+=1
