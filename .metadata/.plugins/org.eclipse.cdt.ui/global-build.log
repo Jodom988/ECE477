@@ -1,42 +1,29 @@
-22:19:55 **** Incremental Build of configuration Debug for project USBController ****
+22:42:07 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 Building file: ../Src/main.c
 Invoking: MCU GCC Compiler
 /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
 arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-../Src/main.c: In function 'validData':
-../Src/main.c:188:13: warning: pointer targets in passing argument 1 of 'sscanf' differ in signedness [-Wpointer-sign]
-     (sscanf(myRxData, "%*u%u", &click))){
-             ^~~~~~~~
-In file included from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usbd_conf.h:31:0,
-                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:29,
-                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usb_device.h:33,
-                 from ../Src/main.c:23:
-/Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/arm-none-eabi/include/stdio.h:204:5: note: expected 'const char * restrict' but argument is of type 'uint8_t * {aka unsigned char *}'
- int sscanf (const char *__restrict, const char *__restrict, ...)
-     ^~~~~~
-../Src/main.c:188:28: warning: format '%u' expects argument of type 'unsigned int *', but argument 3 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
-     (sscanf(myRxData, "%*u%u", &click))){
-                           ~^   ~~~~~~
-                           %hhu
-../Src/main.c:199:12: warning: pointer targets in passing argument 1 of 'sscanf' differ in signedness [-Wpointer-sign]
-    (sscanf(myRxData, "%*u%u%u", &xPosition, &yPosition))){
-            ^~~~~~~~
-In file included from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usbd_conf.h:31:0,
-                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:29,
-                 from /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc/usb_device.h:33,
-                 from ../Src/main.c:23:
-/Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/arm-none-eabi/include/stdio.h:204:5: note: expected 'const char * restrict' but argument is of type 'uint8_t * {aka unsigned char *}'
- int sscanf (const char *__restrict, const char *__restrict, ...)
-     ^~~~~~
-../Src/main.c:199:27: warning: format '%u' expects argument of type 'unsigned int *', but argument 3 has type 'uint16_t * {aka short unsigned int *}' [-Wformat=]
-    (sscanf(myRxData, "%*u%u%u", &xPosition, &yPosition))){
-                          ~^     ~~~~~~~~~~
-                          %hu
-../Src/main.c:199:29: warning: format '%u' expects argument of type 'unsigned int *', but argument 4 has type 'uint16_t * {aka short unsigned int *}' [-Wformat=]
-    (sscanf(myRxData, "%*u%u%u", &xPosition, &yPosition))){
-                            ~^               ~~~~~~~~~~
-                            %hu
+../Src/main.c: In function 'main':
+../Src/main.c:165:4: warning: implicit declaration of function 'HAL_DELAY'; did you mean 'HAL_Delay'? [-Wimplicit-function-declaration]
+    HAL_DELAY(500);
+    ^~~~~~~~~
+    HAL_Delay
+Finished building: ../Src/main.c
+ 
+Building target: USBController.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
+Src/main.o: In function `main':
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug/../Src/main.c:165: undefined reference to `HAL_DELAY'
+collect2: error: ld returned 1 exit status
+make: *** [USBController.elf] Error 1
+22:43:02 **** Incremental Build of configuration Debug for project USBController ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
 Finished building: ../Src/main.c
  
 Building target: USBController.elf
@@ -49,5 +36,48 @@ Generating hex and Printing size information:
 arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
 arm-none-eabi-size "USBController.elf"
    text	   data	    bss	    dec	    hex	filename
-  29600	    844	   4200	  34644	   8754	USBController.elf
+  27368	    480	   4200	  32048	   7d30	USBController.elf
  
+22:56:56 **** Incremental Build of configuration Debug for project USBController ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USBController.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
+Finished building target: USBController.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
+arm-none-eabi-size "USBController.elf"
+   text	   data	    bss	    dec	    hex	filename
+  26804	    480	   4200	  31484	   7afc	USBController.elf
+ 
+22:58:12 **** Incremental Build of configuration Debug for project USBController ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: USBController.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
+Finished building target: USBController.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
+arm-none-eabi-size "USBController.elf"
+   text	   data	    bss	    dec	    hex	filename
+  26312	    480	   4200	  30992	   7910	USBController.elf
+ 
+22:59:05 **** Incremental Build of configuration Debug for project USBController ****
+make all 
+make: Nothing to be done for `all'.
