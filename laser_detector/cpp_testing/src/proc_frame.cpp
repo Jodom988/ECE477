@@ -25,13 +25,14 @@ void add_lines(Mat img, int row, int col, int w);
 
 void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_vals_ptr, int min_col, int max_col);
 Point detect_in_frame_threads(Mat img, Mat base);
+void add_to_list_sorted(std::list<cv::Point3d> & largest_vals, int val, int thresh, int max);
 
 int main(int argc, char** argv)
 {
 	// Test video
-	if (1)
+	if (0)
 	{
-		VideoCapture cap(".././ir-laser-test-1mw-24ma-2.mjpeg");
+		VideoCapture cap("../ir-laser-test-1mw-24ma-2.mjpeg");
 		//VideoCapture cap(0);
 
 		int fourcc = VideoWriter::fourcc('X','V','I','D');
@@ -39,7 +40,7 @@ int main(int argc, char** argv)
 		int height = 480;
 		//VideoWriter out("./outcpp.avi", fourcc, 30, Size(640,480));
 
-		FILE* times_fptr = fopen("../../scripts/data/times_proc_frame.txt", "w");
+		FILE* times_fptr = fopen("../../scripts/data/times_proc_frame_new.txt", "w");
 
 		int i = 0;
 		Mat frame;
@@ -83,7 +84,7 @@ int main(int argc, char** argv)
 	}
 
 	// Test single frame
-	if (0)
+	if (1)
 	{
 		Mat image, base;
 		base = cv::imread("../../imgs/base.jpg", 1);
@@ -93,9 +94,9 @@ int main(int argc, char** argv)
 		uint16_t cols = image.size().width;
 
 		long start = current_time_millis();
-		test_detect_in_frame(image, base);
+		Point pt = detect_in_frame_threads(image, base);
 		long diff = current_time_millis() - start;
-		//printf("Time Elapsed %ld\n", diff);
+		printf("Time Elapsed %ld\nPoint: (%.2d, %.2d)\n", diff, pt.x, pt.y);
 	}
 
 	return 0;
@@ -111,32 +112,65 @@ void print_point(Point p){
 	printf("(%d, %d)", p.x, p.y);
 }
 
+void add_to_list_sorted(std::list<cv::Point3d> & largest_vals, Point3d pt, int thresh, int max)
+{
+	for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
+		if (pt.z > (*it).z)
+		{
+			largest_vals.insert(it, pt);
+			if (largest_vals.size() > max)
+			{
+				largest_vals.pop_back();
+			}
+			break;
+		}
+	}
+}
+
 void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_vals, int min_col, int max_col){
 	uint16_t height = img.size().height;
 	uint16_t width = img.size().width;
 
 	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
+
+	int val;
 	
-	for (int row_idx = 0; row_idx < height; row_idx++)
+	for (int row_idx = 0; row_idx < height; row_idx+=2)
 	{
 		for (int col_idx = min_col; col_idx < max_col; col_idx++)
 		{
 			// Calculate diff
-			int val = get_pixel(img, col_idx, row_idx)[1] - get_pixel(base, col_idx, row_idx)[1];
+			val = get_pixel(img, col_idx, row_idx)[1] - get_pixel(base, col_idx, row_idx)[1];
+
 			// Add to list
 			if (val > largest_vals.back().z)
 			{
-				for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
-					if (val > (*it).z)
+				Point3d pt = Point3d(col_idx, row_idx, val);
+				add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
+
+				//Check above and add to list
+				if (row_idx >= 1)
+				{
+					val = get_pixel(img, col_idx, row_idx-1)[1] - get_pixel(base, col_idx, row_idx-1)[1];
+
+					if (val > largest_vals.back().z)
 					{
-						largest_vals.insert(it, Point3d(col_idx, row_idx, val));
-						if (largest_vals.size() > N)
-						{
-							largest_vals.pop_back();
-						}
-						break;
+						Point3d pt = Point3d(col_idx, row_idx-1, val);
+						add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
 					}
 				}
+
+				//Check below and add to list
+				if (row_idx <= height-2)
+				{
+					val = get_pixel(img, col_idx, row_idx+1)[1] - get_pixel(base, col_idx, row_idx+1)[1];
+					if (val > largest_vals.back().z)
+					{
+						Point3d pt = Point3d(col_idx, row_idx+1, val);
+						add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
+					}
+				}
+
 			}
 
 		}
@@ -193,7 +227,7 @@ Point detect_in_frame_threads(Mat img, Mat base){
 	{ //Not found 
 		return Point(0, 0);
 	} else if (strips_with_multiple_count == 1)
-	{
+	{ //Only one thread found points
 		Point3d sum;
 	
 		for (std::list<Point3d>::iterator it = queues[strip_with_multiple].begin(); it != queues[strip_with_multiple].end(); it++){
@@ -205,8 +239,40 @@ Point detect_in_frame_threads(Mat img, Mat base){
 
 		return Point(col_avg, row_avg);
 	} else {
-		printf("CONSOLIDATION FUNCTIONALITY NOT WORKING YET\n");
+		//Multiple threads found points
+		Point3d sum;
 
+		for (int i = 0; i < N; i++)
+		{
+			int largest_idx = 0;
+			for (int j = 0; j < THREADS; j++)
+			{
+				if (queues[j].size() != 0)
+				{
+					largest_idx = j;
+					break;
+				}
+			}
+
+			for(int j = largest_idx; j < THREADS; j++)
+			{
+				if(queues[j].size() > 0)
+				{
+					if (queues[j].front().z > queues[largest_idx].front().z)
+					{
+						largest_idx = j;
+					}
+				}
+			}
+
+			sum += queues[largest_idx].front();
+			queues[largest_idx].pop_front();
+
+		}
+
+		printf("consolidation may not be working yet\n");
+		int row_avg = sum.y / N;
+		int col_avg = sum.x / N;
 		return Point(0, 0);
 	}
 
