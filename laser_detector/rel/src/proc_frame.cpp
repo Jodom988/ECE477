@@ -15,7 +15,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define THRESH 50
+#define THRESH 40
 #define THREADS 4
 #define N 4
 #define MESSAGE_SIZE 1000000
@@ -37,6 +37,9 @@ void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_
 Point detect_in_frame_threads(Mat img, Mat base);
 int read_message(int socketfd);
 int read_img_socket(int socketfd, Mat & dest);
+
+Point test_detect_in_frame(Mat img, Mat base);
+void add_lines(Mat img, int row, int col, int w);
 
 FILE* log_fd;
 int main(int argc, char** argv)
@@ -103,6 +106,7 @@ int main(int argc, char** argv)
 				read_img_socket(socketfd, std::ref(frame));
 
 				//Process frame
+				//pos = test_detect_in_frame(frame, base_frame);
 				pos = detect_in_frame_threads(frame, base_frame);
 
 				// Send data back
@@ -110,10 +114,10 @@ int main(int argc, char** argv)
 				//Put 4 bytes for x and y
 				for (int i = 0; i < 4; i++)
 				{
-					send_msg[1 + i] = ((char *) &(pos.x))[3-i];
-					send_msg[5 + i] = ((char *) &(pos.y))[3-i];
+					send_msg[1 + i] = ((char *) &(pos.x))[i];
+					send_msg[5 + i] = ((char *) &(pos.y))[i];
 				}
-				send(socketfd, send_msg, 8, 0);
+				send(socketfd, send_msg, 9, 0);
 
 			} else if (header == BASE_FRAME) {
 				fprintf(log_fd, "Base frame code\n");
@@ -158,8 +162,6 @@ int read_img_socket(int socketfd, Mat & dest)
 		return READ_ERR;
 	}
 
-	fprintf(log_fd, "Image Size: %d\n", img_size);
-
 	uint32_t read_progress = 0;
 	uint32_t buff_size;
 
@@ -178,13 +180,14 @@ int read_img_socket(int socketfd, Mat & dest)
 		read_progress += buff_size;
 	}
 
-	fprintf(log_fd, "read_progress: %d, img_size: %d\n", read_progress, img_size);
 	
-	/* Mat img = imdecode(Mat(img_data), 1);
+	dest = imdecode(Mat(img_data), 1);
 
-	vector<int> compression_params;
+/*	vector<int> compression_params;
+	compression_params.push_back(IMWRITE_JPEG_QUALITY);
+	compression_params.push_back(95);
+	cv::imwrite("rx_img.jpg", dest, compression_params);*/
 
-	cv::imwrite("tmp.jpg", img, compression_params);*/
 	return READ_SUCCESS;
 }
 
@@ -241,7 +244,7 @@ Point detect_in_frame_threads(Mat img, Mat base){
 
 	for (int i = 0; i < THREADS; ++i)
 	{
-
+		fprintf(log_fd, "range %d: [%d, %d]\n", i, min_col, max_col);
 		workers[i] = std::thread(detect_in_frame_worker, img, base, std::ref(queues[i]), min_col, max_col);
 
 		min_col = max_col + 1;
@@ -283,13 +286,104 @@ Point detect_in_frame_threads(Mat img, Mat base){
 
 		return Point(col_avg, row_avg);
 	} else {
-		printf("CONSOLIDATION FUNCTIONALITY NOT WORKING YET\n");
+		fprintf(log_fd, "CONSOLIDATION FUNCTIONALITY NOT WORKING YET\n");
 
 		return Point(0, 0);
 	}
-
 	
 }
+
+
+Point test_detect_in_frame(Mat img, Mat base){
+	uint16_t height = img.size().height;
+	uint16_t width = img.size().width;
+
+	Mat new_img(height, width*3, CV_8UC(3));
+
+	std::list<cv::Point3d> largest_vals;
+	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
+
+	fprintf(log_fd, "img: %d %d, base: %d %d\n", img.size().width, img.size().height, base.size().width, base.size().height);
+
+	int max_col = 0;
+	for (int row_idx = 0; row_idx < height; row_idx++)
+	{
+		for (int col_idx = 0; col_idx < width; col_idx++)
+		{
+			//Create new image
+			for (int i = 0; i < 3; ++i)
+			{
+
+				int val = get_pixel(img, col_idx, row_idx)[i] - get_pixel(base, col_idx, row_idx)[i];
+
+				if (val < 0)
+					val = 0;
+				else if (val > 255)
+					val = 255;
+
+				get_pixel(new_img, col_idx+(width*0), row_idx)[i] = get_pixel(base, col_idx, row_idx)[i];
+				get_pixel(new_img, col_idx+(width*1), row_idx)[i] = get_pixel(img, col_idx, row_idx)[i];
+				get_pixel(new_img, col_idx+(width*2), row_idx)[i] = val;
+			}
+
+			int val = get_pixel(img, col_idx, row_idx)[1] - get_pixel(base, col_idx, row_idx)[1];
+
+			//Add to list
+			if (val > largest_vals.back().z)
+			{
+				for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
+					if (val > (*it).z)
+					{
+						largest_vals.insert(it, Point3d(col_idx, row_idx, val));
+						if (largest_vals.size() > N)
+						{
+							largest_vals.pop_back();
+						}
+						break;
+					}
+				}
+			}
+
+		}
+	}
+
+	if (largest_vals.back().z == THRESH){
+		largest_vals.pop_back();
+	}
+
+	Point3d sum;
+	
+	for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
+		sum += *it;
+	}
+
+	int row_avg = sum.y / N;
+	int col_avg = sum.x / N;
+
+	add_lines(new_img, row_avg, col_avg, 4);
+
+	vector<int> compression_params;
+    compression_params.push_back(IMWRITE_JPEG_QUALITY);
+    compression_params.push_back(95);
+
+    imwrite("./proc_img.jpg", new_img, compression_params);
+
+
+	return Point(col_avg, row_avg);
+}
+
+void add_lines(Mat img, int row, int col, int w)
+{
+	int width = img.size().width;
+	int height = img.size().height;
+
+	cv::line(img, Point(0, row+w), Point(width, row+w), {0, 255, 0}, 1);
+	cv::line(img, Point(0, row-w), Point(width, row-w), {0, 255, 0}, 1);
+
+	cv::line(img, Point(col-w, 0), Point(col-w, height), {0, 255, 0}, 1);
+	cv::line(img, Point(col+w, 0), Point(col+w, height), {0, 255, 0}, 1);
+}
+
 
 uchar* get_pixel(Mat img, int x, int y){
 	return (& img.at<uchar>(y, x, 0));

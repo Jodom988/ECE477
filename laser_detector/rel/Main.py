@@ -49,8 +49,9 @@ class rf_headers(Enum):
 	CAL_START = b'\x10'
 	CAL_CORNER = b'\x11'
 	CMD_LASER_OFF = b'\x12'
-	CAL_RESULT = b'\x13'
+	CAL_CORNER_RESULT = b'\x13'
 	CAL_EXIT = b'\x14'
+	CAL_RESULT = b'\x15'
 
 	LASER_ON = b'\x20'
 	LASER_OFF = b'\x21'
@@ -220,10 +221,20 @@ def main():
 	to_socket, in_addrinfo = listen_socket.accept()
 	print("Received Connection!")
 
+	time.sleep(1)
+
+	print("Setting base frame...", end="")
+	latest_frame = get_latest_frame(circ_buffer)
+	frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
+	to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
+	print("Done!")
+
 	try:
 		last_x = 0
 		last_y = 0
+
 		while True:
+
 			# Get header from rf
 			if nrf.data_ready():
 				payload = nrf.get_payload()
@@ -238,7 +249,6 @@ def main():
 				latest_frame = get_latest_frame(circ_buffer)
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 				to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
-				latest_frame_lock.release()
 
 				# Send base frame result to laser pointer
 				payload = rf_headers.BASE_FRAME_RES.value + b'\x01'
@@ -260,32 +270,37 @@ def main():
 				read_socket, _, _ = select.select([to_socket], list(), list())	# Block process until socket in list has data (blocks until ready)
 				read_socket = read_socket[0]
 				data = rec_from(read_socket)
-				x = int.from_bytes(data[1:5], byteorder='big')
-				y = int.from_bytes(data[5:9], byteorder='big')
+				x = int.from_bytes(data[1:5], byteorder='little')
+				y = int.from_bytes(data[5:9], byteorder='little')
 
 				if (x == 0 and y == 0):
 					print("Not found")
-				# Map to the screen
-				x,y = scrn.get_xy_percent([x,y])
+				else:
+					# Map to the screen
+					# print((x, y))
+					#x,y = scrn.get_xy_percent([x,y])
+					x /= 640
+					y /= 480
+					print("%.2f, %.2f" % (x, y))
 
-				x = last_x + 0.01
-				y = last_y + 0.01
+					# x = last_x + 0.01
+					# y = last_y + 0.01
 
-				if x > 1:
-					x = 0
-					y = 0
+					# if x > 1:
+					# 	x = 0
+					# 	y = 0
 
-				last_x = x
-				last_y = y
+					# last_x = x
+					# last_y = y
 
-				x = int(x*4096)
-				y = int(y*4096)
+					x = int(x*4096)
+					y = int(y*4096)
 
-				print((x, y))
 
-				# Send data to the usb controller
-				payload = rf_headers.MOUSE_XY.value + x.to_bytes(2, byteorder='big') + y.to_bytes(2, byteorder='big')
-				send_nrf(nrf, USB_ADDR, payload)
+					# Send data to the usb controller
+					payload = rf_headers.MOUSE_XY.value + x.to_bytes(2, byteorder='big') + y.to_bytes(2, byteorder='big')
+					send_nrf(nrf, USB_ADDR, payload)
+
 			elif header == rf_headers.CAL_START.value:
 				state = CAL_1
 			elif header == rf_headers.CAL_CORNER.value and is_cal_state(state):
@@ -321,12 +336,12 @@ def main():
 
 				if (x == 0 and y == 0):
 					# Send calibration result fail
-					payload = rf_headers.CAL_RESULT.value + b'\x00'
+					payload = rf_headers.CAL_CORNER_RESULT.value + b'\x00'
 					send_nrf(nrf, LASER_ADDR, payload)
 					print("Not found")
 				else:
 					# Send calibration success
-					payload = rf_headers.CAL_RESULT.value + b'\x01'
+					payload = rf_headers.CAL_CORNER_RESULT.value + b'\x01'
 					send_nrf(nrf, LASER_ADDR, payload)
 					# Update state and screen value
 					if state == states.CAL_1.value:
@@ -344,6 +359,11 @@ def main():
 					elif state == states.CAL_4.value:
 						state = states.LASER_OFF.value
 						screen.set_se([x, y])
+
+						# check points to make sure its a valid screen
+						payload = rf_headers.CAL_CORNER_RESULT.value + b'\x01'
+						send_nrf(nrf, LASER_ADDR, payload)
+
 			elif header == rf_headers.CAL_CORNER.value and not is_cal_state(state):
 				print("Error! Received RF message to calibrate corner when not in calibration state!")
 			elif header == rf_headers.CAL_EXIT.value:

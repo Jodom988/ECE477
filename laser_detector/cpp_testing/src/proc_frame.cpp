@@ -344,7 +344,7 @@ Point test_detect_in_frame(Mat img, Mat base){
     compression_params.push_back(IMWRITE_PNG_COMPRESSION);
     compression_params.push_back(9);
 
-    imwrite("../imgs/ir-laser-1mw-24ma-detected-cpp.png", img, compression_params);
+    imwrite("tmp.png", img, compression_params);
 
 	waitKey(0);
 
