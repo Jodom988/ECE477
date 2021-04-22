@@ -5217,7 +5217,7 @@ OUTPUT(USBController2.elf elf32-littlearm)
  .debug_line    0x000000000000d873      0x924 Src/system_stm32f7xx.o
  .debug_line    0x000000000000e197       0x81 startup/startup_stm32f746xx.o
 
-.debug_str      0x0000000000000000    0xf4fe4
+.debug_str      0x0000000000000000    0xf4fb1
  .debug_str     0x0000000000000000    0xeaaab Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
                                       0xeb27e (size before relaxing)
  .debug_str     0x00000000000eaaab      0x462 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
@@ -5250,12 +5250,12 @@ OUTPUT(USBController2.elf elf32-littlearm)
                                       0xebc2b (size before relaxing)
  .debug_str     0x00000000000f2ade       0xb8 Src/stm32f7xx_it.o
                                       0xeace3 (size before relaxing)
- .debug_str     0x00000000000f2b96     0x23da Src/syscalls.o
-                                       0x857f (size before relaxing)
- .debug_str     0x00000000000f4f70       0x45 Src/system_stm32f7xx.o
+ .debug_str     0x00000000000f2b96     0x23a7 Src/syscalls.o
+                                       0x85ba (size before relaxing)
+ .debug_str     0x00000000000f4f3d       0x45 Src/system_stm32f7xx.o
                                       0xea850 (size before relaxing)
- .debug_str     0x00000000000f4fb5       0x2f startup/startup_stm32f746xx.o
-                                         0x62 (size before relaxing)
+ .debug_str     0x00000000000f4f82       0x2f startup/startup_stm32f746xx.o
+                                         0x9d (size before relaxing)
 
 .comment        0x0000000000000000       0x7f
  .comment       0x0000000000000000       0x7f Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o

@@ -98,7 +98,8 @@ int main(int argc, char** argv)
 				fprintf(log_fd, "Received code exit, exiting gracefully\n");
 				break;
 			} else if (header == PROC_FRAME) {
-				
+				fprintf(log_fd, "Process frame code\n");
+
 				read_img_socket(socketfd, std::ref(frame));
 
 				//Process frame
@@ -109,21 +110,26 @@ int main(int argc, char** argv)
 				//Put 4 bytes for x and y
 				for (int i = 0; i < 4; i++)
 				{
-					send_msg[1 + i] = ((char *) &(pos.x))[i];
-					send_msg[5 + i] = ((char *) &(pos.y))[i];
+					send_msg[1 + i] = ((char *) &(pos.x))[3-i];
+					send_msg[5 + i] = ((char *) &(pos.y))[3-i];
 				}
 				send(socketfd, send_msg, 8, 0);
 
 			} else if (header == BASE_FRAME) {
+				fprintf(log_fd, "Base frame code\n");
 				//Get frame from socket
 				read_img_socket(socketfd, std::ref(base_frame));
 
 			} else if (header == READ_ERR) {
 				fprintf(log_fd, "Read error when interpreting message header, exiting gracefully... \n");
 				break;
-			} 
+			} else if (header == 0x00) {
+				fprintf(log_fd, "Lost connection from other side\n");
+				break;
+			}
 			else {
-				fprintf(log_fd, "Unrecognized code\n");
+				fprintf(log_fd, "Unrecognized code (%X), exiting...\n", header);
+				break;
 			}
 		}
 	}
@@ -148,13 +154,16 @@ int read_img_socket(int socketfd, Mat & dest)
 	uint32_t img_size;
 
 	if(read(socketfd, &(img_size), 4) < 0){
+		fprintf(log_fd, "Could not read image size correctly\n");
 		return READ_ERR;
 	}
+
+	fprintf(log_fd, "Image Size: %d\n", img_size);
 
 	uint32_t read_progress = 0;
 	uint32_t buff_size;
 
-	std::vector<char> img_data;
+	std::vector<char> img_data(img_size);
 
 	while (read_progress < img_size)
 	{
@@ -169,7 +178,13 @@ int read_img_socket(int socketfd, Mat & dest)
 		read_progress += buff_size;
 	}
 
-	Mat img = imdecode(Mat(img_data), 1);
+	fprintf(log_fd, "read_progress: %d, img_size: %d\n", read_progress, img_size);
+	
+	/* Mat img = imdecode(Mat(img_data), 1);
+
+	vector<int> compression_params;
+
+	cv::imwrite("tmp.jpg", img, compression_params);*/
 	return READ_SUCCESS;
 }
 

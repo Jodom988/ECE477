@@ -33,23 +33,26 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define RF_CLICK_PRECURSOR 0x02
+#define USB_ADDR 0x11223344AA
+#define PI_ADDR 0x5566778899
+
 #define RF_CLICK_LEFT 0x01
-#define RF_CLICK_LEFT_BAD 0x11
 #define RF_CLICK_RIGHT 0x02
-#define RF_CLICK_LEFT_RELEASE 0x00
-#define RF_CLICK_RIGHT_RELEASE 0x00
+#define RF_CLICK_LEFT_RELEASE 0x03
+#define RF_CLICK_RIGHT_RELEASE 0x04
 
-#define RF_CALIBRATE_PRECURSOR 0x04
-#define RF_CALIBRATE_START 0x07
-#define RF_CALIBRATE_PACKET 0x08
-#define RF_CALIBRATE_END 0x09
+#define RF_CALIBRATE_START 0x10
+#define RF_CALIBRATE_CORNER 0x11
+#define RF_COMMAND_LASER_ON 0x12
+#define RF_CALIBRATE_CORNER_RESULT 0x13
+#define RF_CALIBRATE_END 0x14
+#define RF_CALIBRATE_RESULT 0X15
+#define RF_CALIBRATE_FAIL 0x00
 
-#define RF_LASER_PRECURSOR 0x05
-#define RF_LASERS_ON 0x0B
-#define RF_LASERS_OFF 0x8B
-#define RF_IR_ON 0x0C
-#define RF_IR_OFF 0x8C
+#define RF_LASERS_ON 0x20
+#define RF_LASERS_OFF 0x21
+#define RF_IR_ON 0x22
+#define RF_IR_OFF 0x23
 
 /* USER CODE END PD */
 
@@ -84,45 +87,46 @@ void send_right_click_off();
 void send_calibration_start();
 void send_calibration_packet();
 void send_calibration_end();
-void send_RF_packet(uint8_t precursor, uint8_t command);
+void send_RF_packet(uint8_t * command, uint64_t addr, uint8_t payloadSize);
+void send_RF_Command(uint8_t command, uint64_t addr);
+void setupTX(uint8_t channel, uint8_t payloadSize);
+void setupRX(uint64_t address, uint8_t channel, uint8_t pipe, uint8_t payloadSize);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void send_RF_packet(uint8_t precursor, uint8_t command)
+void send_RF_packet(uint8_t * command, uint64_t addr, uint8_t payloadSize)
 {
-	char myTxData[32] = "";
-	myTxData[0] = precursor;
-	myTxData[1] = command;
-	char AckPayload[32] = "";
-	AckPayload[0] = 0xFF;
-
-	do {
-		if(NRF24_write(myTxData, 32)) {
-			NRF24_read(AckPayload, 32);
-		}
-	} while (AckPayload[0] != 0x01);
-
+  NRF24_openWritingPipe(addr);
+  NRF24_write(command,payloadSize);
 	return;
 }
 
-
-void send_mouse_movement()
+void send_RF_Command(uint8_t command, uint64_t addr)
 {
-	char myTxData[32] = "";
-	myTxData[0] = 0x03;
-	myTxData[1] = 0x07;
-	myTxData[2] = 0xFF;
-	myTxData[3] = 0x07;
-	myTxData[4] = 0xFF;
-	  char AckPayload[32];
+  send_RF_packet(&command, addr,1);
+  return;
+}
 
-	  if(NRF24_write(myTxData, 32))
-	          {
-	            NRF24_read(AckPayload, 32);
-	          }
-	  return;
+void setupTX(uint8_t channel, uint8_t payloadSize){
+  NRF24_stopListening();
+  NRF24_setAutoAck(true);
+  NRF24_setChannel(channel);
+  NRF24_setPayloadSize(payloadSize);
+  NRF24_enableDynamicPayloads();
+  return;
+}
+
+void setupRX(uint64_t address, uint8_t channel, uint8_t pipe, uint8_t payloadSize){
+  NRF24_stopListening();
+  NRF24_setAutoAck(true);
+  NRF24_setChannel(channel);
+  NRF24_setPayloadSize(payloadSize);
+  NRF24_openReadingPipe(pipe, address);
+  NRF24_enableDynamicPayloads();
+  NRF24_startListening();
+  return;
 }
 
 /* USER CODE END 0 */
@@ -161,19 +165,13 @@ int main(void)
 
   //Initialize NRF24
   NRF24_begin(CSN_GPIO_Port, CSN_Pin, 17, hspi1);
-  //Initialize NRF24 UART Debugging
-  //nrf24_DebugUART_Init(huart2);
+  uint64_t address = 0x2233445566;
+  uint8_t channel = 52;
+  uint8_t pipe = 2;
+  uint8_t payloadSize = 32;
+  setupRX(address,channel,pipe,payloadSize);
 
-  //Attempt Transmission
-	uint64_t TxpipeAddrs = 0x11223344AA;
-	//**** TRANSMIT - ACK ****//
-	NRF24_stopListening();
-	NRF24_openWritingPipe(TxpipeAddrs);
-	NRF24_setAutoAck(true);
-	NRF24_setChannel(52);
-	NRF24_setPayloadSize(32);
-	NRF24_enableDynamicPayloads();
-	NRF24_enableAckPayload();
+	// NRF24_enableAckPayload();
 
 	//printRadioSettings();
 
@@ -198,14 +196,14 @@ int main(void)
 	  // Down is PA4
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == false)
 	  {
-		  send_RF_packet(RF_LASER_PRECURSOR, RF_LASERS_ON); // Send that the lasers are about to toggle
+		  send_RF_Command(RF_LASERS_ON, USB_ADDR); // Send that the lasers are about to toggle
 		  LASER_ON = true;
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); // Turn red laser ON
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // Turn IR laser ON
 		  HAL_Delay(100);
 	  }
 	  else if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == true) {
-		  send_RF_packet(RF_LASER_PRECURSOR, RF_LASERS_OFF); // Send that the lasers are about to toggle
+		  send_RF_Command(RF_LASERS_OFF, USB_ADDR); // Send that the lasers are about to toggle
 		  LASER_ON = false;
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); // Turn red laser ON
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR laser ON
@@ -215,24 +213,24 @@ int main(void)
 	  // A is PA6
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6))
 	  {
-		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_LEFT); // Send left click
+		  send_RF_Command(RF_CLICK_LEFT, USB_ADDR); // Send left click
 		  HAL_Delay(100);
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)) {
 			  HAL_Delay(100);
 		  }
-		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_LEFT_RELEASE);
+		  send_RF_Command(RF_CLICK_LEFT_RELEASE, USB_ADDR);
 		  HAL_Delay(100);
 	  }
 
 	  // B is PA5
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5))
 	  {
-		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_RIGHT); // Send right click
+		  send_RF_Command(RF_CLICK_RIGHT, USB_ADDR); // Send right click
 		  HAL_Delay(100);
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)) {
 			  HAL_Delay(100);
 		  }
-		  send_RF_packet(RF_CLICK_PRECURSOR, RF_CLICK_RIGHT_RELEASE);
+		  send_RF_Command(RF_CLICK_RIGHT_RELEASE, USB_ADDR);
 		  HAL_Delay(100);
 	  }
 
@@ -240,43 +238,70 @@ int main(void)
 	  // 'Home' is PA7
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
 	  {
-		  send_mouse_movement();
+		  // send_mouse_movement();
 		  HAL_Delay(100);
 	  }
 
 	  // 1 is PB7
 	  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7))
 	  {
-		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_START); // Send calibration mode
+		  send_RF_Command(RF_CALIBRATE_START, PI_ADDR); // Send calibration mode
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR Off
 
 		  // Press B on the top left corner of the screen
-		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn on Y3
-		  HAL_Delay(1000);
+      uint8_t RxData[payloadSize];
+      do {
+  		  do {
+          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
+    		  send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
+          while (!NRF24_available()); //Wait until PI responds
+          NRF24_read(RxData, payloadSize);
+        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
+  		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn on Y3
+  		  HAL_Delay(100);
 
-		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on Y2
-		  HAL_Delay(1000);
+       do {
+          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
+          send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
+          while (!NRF24_available()); //Wait until PI responds
+          NRF24_read(RxData, payloadSize);
+        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
+  		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on Y2
+  		  HAL_Delay(100);
 
-		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on Y1
-		  HAL_Delay(1000);
+  		 do {
+          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
+          send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
+          while (!NRF24_available()); //Wait until PI responds
+          NRF24_read(RxData, payloadSize);
+        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
+  		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on Y1
+  		  HAL_Delay(100);
 
-		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_PACKET);
-		  HAL_Delay(1000);
 
-		  send_RF_packet(RF_CALIBRATE_PRECURSOR, RF_CALIBRATE_END);
+  		  do {
+          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
+          send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
+          while (!NRF24_available()); //Wait until PI responds
+          NRF24_read(RxData, payloadSize);
+        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
+  		  HAL_Delay(100);
+
+        //Wait for final message from Pi
+        while (!NRF24_available()); //Wait until PI responds
+        NRF24_read(RxData, payloadSize);
+
+      }while(RxData[0] != RF_CALIBRATE_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Recalibrate
+
+
+
+		  
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_RESET); // Turn off yellow 1
-		  HAL_Delay(1000);
+		  HAL_Delay(100);
 
 		  for (int i = 0; i < 2; i++) {
 

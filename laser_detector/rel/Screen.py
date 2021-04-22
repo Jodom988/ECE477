@@ -23,8 +23,18 @@ class Screen:
 	def get_nw(self):
 		return self.corners[1]
 
-	def get_poly(self):
-		return Polygon(self.corners)
+	def set_ne(self, pt):
+		self.corners[2] = pt
+
+	def set_se(self, pt):
+		 self.corners[3] = pt
+
+	def set_sw(self, pt):
+		 self.corners[0] = pt
+
+	def set_nw(self, pt):
+		 self.corners[1] = pt
+
 
 	def get_y_percent(self, pt):
 		curr_step = .25
@@ -46,6 +56,8 @@ class Screen:
 			lines.append([left_pt, right_pt])
 
 			# Find line between two endpoints
+			if (right_pt[0] == left_pt[0]): 
+				left_pt[0] += 1
 			slope = (right_pt[1]-left_pt[1]) / (right_pt[0]-left_pt[0])
 
 			# Find line value at pt
@@ -81,6 +93,8 @@ class Screen:
 			lines.append([top_pt, bottom_pt])
 
 			# Find line between two endpoints
+			if (bottom_pt[1] == top_pt[1]): 
+				bottom_pt[1] += 1
 			slope = (bottom_pt[0]-top_pt[0]) / (bottom_pt[1]-top_pt[1])
 
 			# Find line value at pt
@@ -98,4 +112,4 @@ class Screen:
 		return percentage, lines
 
 	def get_xy_percent(self, pt):
-		return screen.get_x_percent(pt), screen.get_y_percent(pt)
+		return self.get_x_percent(pt)[0], self.get_y_percent(pt)[0]

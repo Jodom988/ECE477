@@ -103,21 +103,24 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
-	uint64_t RxpipeAddrs = 0x11223344AA;
-	char myRxData[50];
-	char myAckPayload[32] = "Ack by STMF7!";
+    //Reciever
+  	uint64_t RxpipeAddrs = 0x11223344AA;
+  	char myRxData[50];
+  	char myAckPayload[32] = "Ack by STMF7!";
 
-	NRF24_begin(CSN_GPIO_Port, CSN_Pin, CE_Pin, hspi3);
-	nrf24_DebugUART_Init(huart3);
-	NRF24_setAutoAck(true);
-	NRF24_setChannel(52);
-	NRF24_setPayloadSize(32);
-	NRF24_openReadingPipe(1, RxpipeAddrs);
-	NRF24_enableDynamicPayloads();
-	NRF24_enableAckPayload();
-	NRF24_startListening();
+  	NRF24_begin(CSN_GPIO_Port, CSN_Pin, CE_Pin, hspi3);
+  	nrf24_DebugUART_Init(huart3);
+  	NRF24_setAutoAck(true);
+  	NRF24_setChannel(52);
+  	NRF24_setPayloadSize(32);
+  	NRF24_openReadingPipe(1, RxpipeAddrs);
+  	NRF24_enableDynamicPayloads();
+  	NRF24_enableAckPayload();
+  	NRF24_startListening();
 
-	printRadioSettings();
+  	printRadioSettings();
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,12 +131,12 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  if(NRF24_available())
-	  		{
-	  			NRF24_read(myRxData, 32);
-	  			NRF24_writeAckPayload(1, myAckPayload, 32);
-	  			myRxData[32] = '\r'; myRxData[32+1] = '\n';
-	  			HAL_UART_Transmit(&huart3, (uint8_t *)myRxData, 32+2, 10);
-	  		}
+		{
+			NRF24_read(myRxData, 32);
+			NRF24_writeAckPayload(1, myAckPayload, 32);
+			myRxData[32] = '\r'; myRxData[32+1] = '\n';
+			HAL_UART_Transmit(&huart3, (uint8_t *)myRxData, 32+2, 10);
+		}
 
   }
   /* USER CODE END 3 */
