@@ -15,7 +15,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define THRESH 40
+#define THRESH 50
 #define THREADS 4
 #define N 4
 #define MESSAGE_SIZE 1000000
@@ -33,7 +33,9 @@ using namespace std;
 
 uchar* get_pixel(Mat img, int x, int y);
 
+void add_to_list_sorted(std::list<cv::Point3d> & largest_vals, Point3d pt, int thresh, int max);
 void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_vals_ptr, int min_col, int max_col);
+void detect_in_frame_worker_skips(Mat img, Mat base, std::list<cv::Point3d> & largest_vals_ptr, int min_col, int max_col);
 Point detect_in_frame_threads(Mat img, Mat base);
 int read_message(int socketfd);
 int read_img_socket(int socketfd, Mat & dest);
@@ -191,6 +193,75 @@ int read_img_socket(int socketfd, Mat & dest)
 	return READ_SUCCESS;
 }
 
+void add_to_list_sorted(std::list<cv::Point3d> & largest_vals, Point3d pt, int thresh, int max)
+{
+	for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
+		if (pt.z > (*it).z)
+		{
+			largest_vals.insert(it, pt);
+			if (largest_vals.size() > max)
+			{
+				largest_vals.pop_back();
+			}
+			break;
+		}
+	}
+}
+
+void detect_in_frame_worker_skips(Mat img, Mat base, std::list<cv::Point3d> & largest_vals, int min_col, int max_col){
+	uint16_t height = img.size().height;
+	uint16_t width = img.size().width;
+
+	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
+
+	int val;
+	
+	for (int row_idx = 0; row_idx < height; row_idx+=2)
+	{
+		for (int col_idx = min_col; col_idx < max_col; col_idx++)
+		{
+			// Calculate diff
+			val = get_pixel(img, col_idx, row_idx)[1] - get_pixel(base, col_idx, row_idx)[1];
+
+			// Add to list
+			if (val > largest_vals.back().z)
+			{
+				Point3d pt = Point3d(col_idx, row_idx, val);
+				add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
+
+				//Check above and add to list
+				if (row_idx >= 1)
+				{
+					val = get_pixel(img, col_idx, row_idx-1)[1] - get_pixel(base, col_idx, row_idx-1)[1];
+
+					if (val > largest_vals.back().z)
+					{
+						Point3d pt = Point3d(col_idx, row_idx-1, val);
+						add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
+					}
+				}
+
+				//Check below and add to list
+				if (row_idx <= height-2)
+				{
+					val = get_pixel(img, col_idx, row_idx+1)[1] - get_pixel(base, col_idx, row_idx+1)[1];
+					if (val > largest_vals.back().z)
+					{
+						Point3d pt = Point3d(col_idx, row_idx+1, val);
+						add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
+					}
+				}
+
+			}
+
+		}
+	}
+
+	if (largest_vals.back().z == THRESH){
+		largest_vals.pop_back();
+	}
+
+}
 
 void detect_in_frame_worker(Mat img, Mat base, std::list<cv::Point3d> & largest_vals, int min_col, int max_col){
 	uint16_t height = img.size().height;
@@ -245,7 +316,7 @@ Point detect_in_frame_threads(Mat img, Mat base){
 	for (int i = 0; i < THREADS; ++i)
 	{
 		fprintf(log_fd, "range %d: [%d, %d]\n", i, min_col, max_col);
-		workers[i] = std::thread(detect_in_frame_worker, img, base, std::ref(queues[i]), min_col, max_col);
+		workers[i] = std::thread(detect_in_frame_worker_skips, img, base, std::ref(queues[i]), min_col, max_col);
 
 		min_col = max_col + 1;
 
@@ -272,23 +343,61 @@ Point detect_in_frame_threads(Mat img, Mat base){
 
 	if (strips_with_multiple_count == 0)
 	{ //Not found 
-		return Point(0, 0);
+		return Point(0xFFFFFFFF, 0xFFFFFFFF);
 	} else if (strips_with_multiple_count == 1)
 	{
+		//One thread found points
 		Point3d sum;
-	
+		int pts_found = 0;
 		for (std::list<Point3d>::iterator it = queues[strip_with_multiple].begin(); it != queues[strip_with_multiple].end(); it++){
 			sum += *it;
+			pts_found++;
 		}
 
-		int row_avg = sum.y / N;
-		int col_avg = sum.x / N;
+		int row_avg = sum.y / pts_found;
+		int col_avg = sum.x / pts_found;
 
 		return Point(col_avg, row_avg);
 	} else {
-		fprintf(log_fd, "CONSOLIDATION FUNCTIONALITY NOT WORKING YET\n");
+		// Multiple threads found points
+		Point3d sum;
+		int pts_found = 0;
+		for (int i = 0; i < N; i++)
+		{
+			int largest_idx = -1;
+			for (int j = 0; j < THREADS; j++)
+			{
+				if (queues[j].size() != 0)
+				{
+					largest_idx = j;
+					break;
+				}
+			}
 
-		return Point(0, 0);
+			if (largest_idx == -1){
+				break;
+			}else{
+
+				for(int j = largest_idx; j < THREADS; j++)
+				{
+					if(queues[j].size() > 0)
+					{
+						if (queues[j].front().z > queues[largest_idx].front().z)
+						{
+							largest_idx = j;
+						}
+					}
+				}
+
+				sum += queues[largest_idx].front();
+				queues[largest_idx].pop_front();
+				pts_found ++;
+			}
+		}
+
+		int row_avg = sum.y / pts_found;
+		int col_avg = sum.x / pts_found;
+		return Point(col_avg, row_avg);
 	}
 	
 }
