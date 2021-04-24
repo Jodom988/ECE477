@@ -186,7 +186,7 @@ def take_picture(fname, res):
 	cam.capture(fname)
 
 def main():
-	take_picture("../imgs/tmp.jpg", (640, 480))
+	take_picture("../imgs/cal.jpg", (640, 480))
 	#get_video("./videos/ir-laser-test-1mw-9ma-2.mjpeg", (640, 480), durration=5.0)
 	#test_recent_frame((640, 480))
 	#infinte_preview()
