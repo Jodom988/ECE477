@@ -36,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DEBUG 0 //1 for HUART messages
+#define DEBUG 1 //1 for HUART messages
 #define HID_BUFFER_SIZE 7
 
 #define RF_LEFT_CLICK_DOWN 0x01
@@ -118,13 +118,17 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI3_Init();
-  MX_USART2_UART_Init();
+  if(DEBUG){
+	  MX_USART2_UART_Init();
+  }
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
   //Initialize NRF24
   NRF24_begin(CSN_GPIO_Port, CSN_Pin, CE_Pin, hspi3);
-  nrf24_DebugUART_Init(huart2);   //Initialize NRF24 UART Debugging
+  if(DEBUG){
+	  nrf24_DebugUART_Init(huart2);   //Initialize NRF24 UART Debugging
+  }
 
   //Initialize receiving pipe
   uint64_t address = 0x11223344AA;
@@ -132,7 +136,6 @@ int main(void)
   uint8_t pipe = 1;
   uint8_t payloadSize = 32; //Change to 5.
   setupRX(address, channel, pipe, payloadSize);
-
 
   //Initialize HID Buffer
   HIDBuffer[0] = 0;
@@ -198,7 +201,7 @@ bool validData(uint8_t * myRxData){
 	if(myRxData[0] == RF_LEFT_CLICK_DOWN){
 		setupHIDReportClick(1);
 		if(DEBUG){
-			snprintf(debugMessage, 32,"Left Click Down/r/n");
+			snprintf(debugMessage, 32,"Left Click Down\r\n");
 			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 		}
 		return true;
@@ -206,7 +209,7 @@ bool validData(uint8_t * myRxData){
 	else if(myRxData[0] == RF_RIGHT_CLICK_DOWN){
 		setupHIDReportClick(2);
 		if(DEBUG){
-			snprintf(debugMessage, 32,"Right Click Down/r/n");
+			snprintf(debugMessage, 32,"Right Click Down\r\n");
 			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 		}
 		return true;
@@ -214,7 +217,7 @@ bool validData(uint8_t * myRxData){
 	else if(myRxData[0] == RF_LEFT_CLICK_UP){
 			setupHIDReportClick(0);
 			if(DEBUG){
-				snprintf(debugMessage, 32,"Left Click UP/r/n");
+				snprintf(debugMessage, 32,"Left Click UP\r\n");
 				HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 			}
 			return true;
@@ -222,7 +225,7 @@ bool validData(uint8_t * myRxData){
 	else if(myRxData[0] == RF_RIGHT_CLICK_UP){
 		setupHIDReportClick(0);
 		if(DEBUG){
-			snprintf(debugMessage, 32,"Right Click UP/r/n");
+			snprintf(debugMessage, 32,"Right Click UP\r\n");
 			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 		}
 		return true;

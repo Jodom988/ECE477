@@ -1,6 +1,6 @@
-22:59:05 **** Incremental Build of configuration Debug for project USBController ****
+17:13:28 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 make: Nothing to be done for `all'.
 
-22:59:05 Build Finished (took 133ms)
+17:13:28 Build Finished (took 149ms)
 
