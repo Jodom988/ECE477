@@ -1,3 +1,5 @@
+#!/home/pi/Repos/ECE477/laser_detector/rel/env/bin/python3
+
 import argparse
 import asyncio
 import logging
@@ -27,6 +29,8 @@ USB_ADDR = b'\xAA\x44\x33\x22\x11'
 LASER_ADDR = b'\x00\x00\x00\x00\x00'
 SELF_ADDR = b'\x99\x88\x77\x66\x55'
 
+NOT_FOUND = 0xFFFFFFFF
+
 class states(Enum):
 	SETUP = 0
 	LASER_OFF = 1
@@ -49,14 +53,18 @@ class rf_headers(Enum):
 	CAL_START = b'\x10'
 	CAL_CORNER = b'\x11'
 	CMD_LASER_OFF = b'\x12'
-	CAL_RESULT = b'\x13'
+	CAL_CORNER_RESULT = b'\x13'
 	CAL_EXIT = b'\x14'
+	CAL_RESULT = b'\x15'
 
 	LASER_ON = b'\x20'
 	LASER_OFF = b'\x21'
 
 	GET_BASE_FRAME = b'\x30'
 	BASE_FRAME_RES = b'\x31'
+
+def current_time_millis():
+	return round(time.time() * 1000)
 
 def rec_from(s):
 	# Receive all data from socket
@@ -167,13 +175,9 @@ def get_latest_frame(stream):
 
 async def launch_proc_frame(port):
 	cmd = "./ProcessFrame {}".format(port)
-
 	proc = await asyncio.create_subprocess_shell(cmd)
-	
-	#os.system(cmd)
 
-	# consumer_thread = threading.Thread(target=consume_frames, args=[REQ_PORT])
-	# consumer_thread.start()
+	return proc
 
 def is_cal_state(state):
 	return (state == states.CAL_1.value) or (state == states.CAL_2.value) or (state == states.CAL_3.value) or (state == states.CAL_4.value) 
@@ -197,8 +201,8 @@ def main():
 
 	# Initialize the screen mapper
 	res = parsed_args.resolution
-	scrn = Screen([[0,0],[res[0],0],[res[0],res[1]],[0,res[1]]])
-	cal_scrn = Screen([[0,0],[res[0],0],[res[0],res[1]],[0,res[1]]])
+	scrn = Screen([[0,res[1]],[0,0],[res[0],0],[res[0],res[1]]])
+	cal_scrn = Screen([[0,res[1]],[0,0],[res[0],0],[res[0],res[1]]])
 
 	# Start the camera
 	print("Starting camera... ", end="")
@@ -211,7 +215,7 @@ def main():
 	print("Done!")
 
 	# Start process for frame proccessing
-	print("Starting frame processing process...", end="")
+	print("Starting frame processing process...")
 	asyncio.run(launch_proc_frame(parsed_args.port))
 	print("Done!")
 
@@ -220,10 +224,20 @@ def main():
 	to_socket, in_addrinfo = listen_socket.accept()
 	print("Received Connection!")
 
+	time.sleep(1)
+
+	print("Setting base frame...", end="")
+	latest_frame = get_latest_frame(circ_buffer)
+	frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
+	to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
+	print("Done!")
+
+	times = list()
+	start_time = current_time_millis()
+
 	try:
-		last_x = 0
-		last_y = 0
 		while True:
+
 			# Get header from rf
 			if nrf.data_ready():
 				payload = nrf.get_payload()
@@ -238,7 +252,6 @@ def main():
 				latest_frame = get_latest_frame(circ_buffer)
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 				to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
-				latest_frame_lock.release()
 
 				# Send base frame result to laser pointer
 				payload = rf_headers.BASE_FRAME_RES.value + b'\x01'
@@ -260,32 +273,27 @@ def main():
 				read_socket, _, _ = select.select([to_socket], list(), list())	# Block process until socket in list has data (blocks until ready)
 				read_socket = read_socket[0]
 				data = rec_from(read_socket)
-				x = int.from_bytes(data[1:5], byteorder='big')
-				y = int.from_bytes(data[5:9], byteorder='big')
+				x = int.from_bytes(data[1:5], byteorder='little')
+				y = int.from_bytes(data[5:9], byteorder='little')
 
-				if (x == 0 and y == 0):
-					print("Not found")
-				# Map to the screen
-				x,y = scrn.get_xy_percent([x,y])
+				if not (x == NOT_FOUND and y == NOT_FOUND):
+					# Map to the screen
+					x,y = scrn.get_xy_percent([x,y])
+					# x /= 640
+					# y /= 480
+					print("(%.2f, %.2f)" % (x, y))
 
-				x = last_x + 0.01
-				y = last_y + 0.01
+					x = int(x*4096)
+					y = int(y*4096)
 
-				if x > 1:
-					x = 0
-					y = 0
+					if (x >= 0 and x <= 4095 and y >= 0 and y <= 4095):
+						# Send data to the usb controller
+						payload = rf_headers.MOUSE_XY.value + x.to_bytes(2, byteorder='big') + y.to_bytes(2, byteorder='big')
+						send_nrf(nrf, USB_ADDR, payload)
+				else:
+					print("Not found: (%d, %d)" % (x, y))
+					pass
 
-				last_x = x
-				last_y = y
-
-				x = int(x*4096)
-				y = int(y*4096)
-
-				print((x, y))
-
-				# Send data to the usb controller
-				payload = rf_headers.MOUSE_XY.value + x.to_bytes(2, byteorder='big') + y.to_bytes(2, byteorder='big')
-				send_nrf(nrf, USB_ADDR, payload)
 			elif header == rf_headers.CAL_START.value:
 				state = CAL_1
 			elif header == rf_headers.CAL_CORNER.value and is_cal_state(state):
@@ -304,8 +312,12 @@ def main():
 						payload = nrf.get_payload()
 						if payload[0] == rf_headers.LASER_ON.value:
 							break
-						if payload[0] == rf_headers.CAL_EXIT:
-							continue
+						if payload[0] == rf_headers.CAL_EXIT.value:
+							state = states.LASER_OFF.value
+							break
+
+				if state == states.LASER_OFF.value:
+					continue
 
 				# process latest frame for position
 				latest_frame = get_latest_frame(circ_buffer)
@@ -319,14 +331,14 @@ def main():
 				x = int.from_bytes(data[1:5], byteorder='big')
 				y = int.from_bytes(data[5:9], byteorder='big')
 
-				if (x == 0 and y == 0):
+				if (x == NOT_FOUND and y == NOT_FOUND):
 					# Send calibration result fail
-					payload = rf_headers.CAL_RESULT.value + b'\x00'
+					payload = rf_headers.CAL_CORNER_RESULT.value + b'\x00'
 					send_nrf(nrf, LASER_ADDR, payload)
-					print("Not found")
+					print("Not found in calibration, sending fail")
 				else:
 					# Send calibration success
-					payload = rf_headers.CAL_RESULT.value + b'\x01'
+					payload = rf_headers.CAL_CORNER_RESULT.value + b'\x01'
 					send_nrf(nrf, LASER_ADDR, payload)
 					# Update state and screen value
 					if state == states.CAL_1.value:
@@ -344,6 +356,11 @@ def main():
 					elif state == states.CAL_4.value:
 						state = states.LASER_OFF.value
 						screen.set_se([x, y])
+
+						# check points to make sure its a valid screen
+						payload = rf_headers.CAL_CORNER_RESULT.value + b'\x01'
+						send_nrf(nrf, LASER_ADDR, payload)
+
 			elif header == rf_headers.CAL_CORNER.value and not is_cal_state(state):
 				print("Error! Received RF message to calibrate corner when not in calibration state!")
 			elif header == rf_headers.CAL_EXIT.value:
@@ -376,6 +393,9 @@ def main():
 			pi.stop()
 		except Exception as e:
 			print("Unable to close connection to pigpio daemon")
+
+		# with open("../scripts/data/times_laser_on_all.txt", "w") as f:
+		# 	[f.write(str(curr_time) + "\n") for curr_time in times]
 
 
 if __name__ == '__main__':
