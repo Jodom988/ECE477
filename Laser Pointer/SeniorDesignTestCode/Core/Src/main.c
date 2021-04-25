@@ -38,7 +38,7 @@
 
 #define RX_ADDR 0x2233445566
 #define CHANNEL 52
-#define RX_PIPE 2
+#define RX_PIPE 1
 #define PAYLOAD_SIZE 32
 
 #define RF_CLICK_LEFT 0x01
@@ -122,7 +122,7 @@ void setupTX(uint8_t channel, uint8_t payloadSize){
 }
 
 void setupRX(uint64_t address, uint8_t pipe){
-	NRF24_stopListening();
+  //NRF24_stopListening();
   NRF24_setAutoAck(true);
   NRF24_setChannel(CHANNEL);
   NRF24_setPayloadSize(PAYLOAD_SIZE);
@@ -186,9 +186,9 @@ int main(void)
   //Initialize NRF24
   NRF24_begin(CSN_GPIO_Port, CSN_Pin, 17, hspi1);
 	uint8_t RxData[32];
-	setupRX(0x2233445566,2);
+	//setupRX(RX_ADDR,RX_PIPE);
 
-  //setupTX(CHANNEL,PAYLOAD_SIZE);
+  setupTX(CHANNEL,PAYLOAD_SIZE);
 
 	// NRF24_enableAckPayload();
 
@@ -209,11 +209,11 @@ int main(void)
   // Still have plus, minus, and HOME open.
   while (1)
   {
-	  if (NRF24_available()) {
-		  NRF24_read(RxData, PAYLOAD_SIZE);
-			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_12); // Turn off yellow 4
-			HAL_Delay(250);
-	  }
+//	  if (NRF24_available()) {
+//		  NRF24_read(RxData, PAYLOAD_SIZE);
+//			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_12); // Turn off yellow 4
+//			HAL_Delay(250);
+//	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -235,32 +235,44 @@ int main(void)
 //	  }
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4))
 	  {
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
-
-			HAL_Delay(100);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
+		HAL_Delay(100);
 		send_RF_packet(RF_GET_BASE, PI_ADDR); // Send that the lasers are about to toggle
 		NRF24_powerDown();
-		setupRX(0x2233445566,2);
-		while (!NRF24_available()); //Wait until PI responds
-		NRF24_read(RxData, PAYLOAD_SIZE);
-		if (LASER_ON) {
-			send_RF_packet(RF_LASERS_OFF, PI_ADDR); // Send that the lasers are about to toggle
-			LASER_ON = 0;
+		setupRX(RX_ADDR,RX_PIPE);
+		HAL_Delay(100);
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11); // Turn off yellow 4
+		while (!NRF24_available()) {
+			if ( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14)) {
+				break;
+			}
 		}
-		else {
-			send_RF_packet(RF_LASERS_ON, PI_ADDR); // Send that the lasers are about to toggle
-			LASER_ON = 1;
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+
+		if (NRF24_available()) {
+			NRF24_read(RxData, PAYLOAD_SIZE);
+			if (LASER_ON) {
+				send_RF_packet(RF_LASERS_OFF, PI_ADDR); // Send that the lasers are about to toggle
+				LASER_ON = 0;
+			}
+			else {
+				send_RF_packet(RF_LASERS_ON, PI_ADDR); // Send that the lasers are about to toggle
+				LASER_ON = 1;
+			}
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+			  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); // Turn red laser ON
+			  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0); // Turn IR laser ON
+			  HAL_Delay(1000);
 		}
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); // Turn red laser ON
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0); // Turn IR laser ON
-		  HAL_Delay(1000);
+
 	  }
 
 	  // A is PA6
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6))
 	  {
-		  send_RF_packet(RF_CLICK_LEFT, PI_ADDR); // Send left click
+		  send_RF_packet(RF_CLICK_LEFT, USB_ADDR); // Send left click
+		  //send_RF_packet(RF_GET_BASE, PI_ADDR); // Send left click
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
 		  HAL_Delay(500);
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)) {
