@@ -1,4 +1,5 @@
 MY_NRF24.c:57:6:NRF24_csn.part.0	8	static
+MY_NRF24.c:63:6:NRF24_ce.part.0	8	static
 MY_NRF24.c:49:6:NRF24_DelayMicroSeconds	0	static
 MY_NRF24.c:57:6:NRF24_csn	8	static
 MY_NRF24.c:63:6:NRF24_ce	8	static
@@ -49,6 +50,3 @@ MY_NRF24.c:172:6:NRF24_begin	24	static
 MY_NRF24.c:380:6:NRF24_enableAckPayload	8	static
 MY_NRF24.c:393:6:NRF24_enableDynamicPayloads	8	static
 MY_NRF24.c:723:9:NRF24_GetAckPayloadSize	0	static
-MY_NRF24.c:855:6:printStatusReg	136	static
-MY_NRF24.c:871:6:printConfigReg	112	static
-MY_NRF24.c:894:6:printFIFOstatus	128	static

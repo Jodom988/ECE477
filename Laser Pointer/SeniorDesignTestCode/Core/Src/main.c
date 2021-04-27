@@ -36,6 +36,11 @@
 #define USB_ADDR 0x11223344AA
 #define PI_ADDR 0x5566778899
 
+#define RX_ADDR 0x4444444444
+#define CHANNEL 120
+#define RX_PIPE 1
+#define PAYLOAD_SIZE 5
+
 #define RF_CLICK_LEFT 0x01
 #define RF_CLICK_RIGHT 0x02
 #define RF_CLICK_LEFT_RELEASE 0x03
@@ -48,11 +53,14 @@
 #define RF_CALIBRATE_END 0x14
 #define RF_CALIBRATE_RESULT 0X15
 #define RF_CALIBRATE_FAIL 0x00
+#define RF_GET_BASE 0x30
 
 #define RF_LASERS_ON 0x20
 #define RF_LASERS_OFF 0x21
 #define RF_IR_ON 0x22
 #define RF_IR_OFF 0x23
+
+
 
 /* USER CODE END PD */
 
@@ -87,46 +95,88 @@ void send_right_click_off();
 void send_calibration_start();
 void send_calibration_packet();
 void send_calibration_end();
-void send_RF_packet(uint8_t * command, uint64_t addr, uint8_t payloadSize);
-void send_RF_Command(uint8_t command, uint64_t addr);
+void send_RF_packet(uint8_t command, uint64_t addr);
 void setupTX(uint8_t channel, uint8_t payloadSize);
-void setupRX(uint64_t address, uint8_t channel, uint8_t pipe, uint8_t payloadSize);
+void setupRX(uint64_t address, uint8_t pipe);
+void read_regs();
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void send_RF_packet(uint8_t * command, uint64_t addr, uint8_t payloadSize)
+void read_regs()
 {
-  NRF24_openWritingPipe(addr);
-  NRF24_write(command,payloadSize);
+	uint8_t config = NRF24_read_register(REG_CONFIG);
+	uint8_t en_aa = NRF24_read_register(REG_EN_AA);
+	uint8_t en_rxaddr = NRF24_read_register(REG_EN_RXADDR);
+	uint8_t setup_aw = NRF24_read_register(REG_SETUP_AW);
+	uint8_t setup_retr = NRF24_read_register(REG_SETUP_RETR);
+	uint8_t ch = NRF24_read_register(REG_RF_CH);
+	uint8_t rf_setup = NRF24_read_register(REG_RF_SETUP);
+
+	uint8_t dynpd = NRF24_read_register(REG_DYNPD);
+	uint8_t feature = NRF24_read_register(REG_FEATURE);
+
+	uint8_t pipe_addr[5];
+	NRF24_read_registerN(0x0A+1, pipe_addr, 5);
+	uint8_t a = pipe_addr[4];
 	return;
 }
 
-void send_RF_Command(uint8_t command, uint64_t addr)
+void send_RF_packet(uint8_t command, uint64_t addr)
 {
-  send_RF_packet(&command, addr,1);
+	uint8_t tx_data[5] = "Hello";
+	tx_data[0] = command;
+  //NRF24_stopListening();
+  //NRF24_openWritingPipe(addr);
+  read_regs();
+  if(NRF24_write(tx_data,5)) {
+	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_10);
+	  HAL_Delay(500);
+  }
   return;
 }
+
 
 void setupTX(uint8_t channel, uint8_t payloadSize){
   NRF24_stopListening();
+  NRF24_openWritingPipe(PI_ADDR);
   NRF24_setAutoAck(true);
   NRF24_setChannel(channel);
   NRF24_setPayloadSize(payloadSize);
-  NRF24_enableDynamicPayloads();
+	NRF24_setDataRate(RF24_250KBPS);
+	NRF24_powerUp();
+
   return;
 }
 
-void setupRX(uint64_t address, uint8_t channel, uint8_t pipe, uint8_t payloadSize){
-  NRF24_stopListening();
-  NRF24_setAutoAck(true);
-  NRF24_setChannel(channel);
-  NRF24_setPayloadSize(payloadSize);
-  NRF24_openReadingPipe(pipe, address);
-  NRF24_enableDynamicPayloads();
-  NRF24_startListening();
-  return;
+//void setupRX(uint64_t address, uint8_t pipe){
+//  //NRF24_stopListening();
+//  NRF24_setAutoAck(true);
+//  NRF24_setChannel(CHANNEL);
+//  NRF24_setPayloadSize(PAYLOAD_SIZE);
+//  NRF24_openReadingPipe(pipe, address);
+//  NRF24_enableDynamicPayloads();
+//  NRF24_startListening();
+//  return;
+//}
+
+
+void corner(uint16_t led_number, int payloadSize) {
+	uint8_t RxData[payloadSize];
+	do {
+		while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
+		send_RF_packet(RF_CALIBRATE_CORNER, PI_ADDR);
+		//setupRX(0x2233445566,2);
+		while (!NRF24_available()); //Wait until PI responds
+		NRF24_read(RxData, payloadSize);
+		HAL_GPIO_WritePin(GPIOA, led_number, GPIO_PIN_SET);
+		HAL_Delay(250);
+		HAL_GPIO_WritePin(GPIOA, led_number, GPIO_PIN_RESET);
+	} while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
+	HAL_GPIO_WritePin(GPIOA, led_number, GPIO_PIN_SET); // Turn on Y3
+	HAL_Delay(100);
 }
 
 /* USER CODE END 0 */
@@ -164,12 +214,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   //Initialize NRF24
-  NRF24_begin(CSN_GPIO_Port, CSN_Pin, 17, hspi1);
-  uint64_t address = 0x2233445566;
-  uint8_t channel = 52;
-  uint8_t pipe = 2;
-  uint8_t payloadSize = 32;
-  setupRX(address,channel,pipe,payloadSize);
+  NRF24_begin(CSN_GPIO_Port, CSN_Pin, CE_Pin, hspi1);
+	uint8_t RxData[32];
+
+  setupTX(CHANNEL,PAYLOAD_SIZE);
 
 	// NRF24_enableAckPayload();
 
@@ -180,7 +228,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   uint16_t raw;
-  int LASER_ON = false;
+  uint8_t LASER_ON = 0;
 
   // Down to turn the lasers (mouse) on
   // A to left click
@@ -188,49 +236,93 @@ int main(void)
   // 1 to enter calibration mode
   // 2 to check battery level
   // Still have plus, minus, and HOME open.
+  send_RF_packet(RF_GET_BASE, PI_ADDR); // Send left click
+
   while (1)
   {
+//	  if (NRF24_available()) {
+//		  NRF24_read(RxData, PAYLOAD_SIZE);
+//			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_12); // Turn off yellow 4
+//			HAL_Delay(250);
+//	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 	  // Down is PA4
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == false)
-	  {
-		  send_RF_Command(RF_LASERS_ON, USB_ADDR); // Send that the lasers are about to toggle
-		  LASER_ON = true;
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); // Turn red laser ON
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // Turn IR laser ON
-		  HAL_Delay(100);
-	  }
-	  else if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == true) {
-		  send_RF_Command(RF_LASERS_OFF, USB_ADDR); // Send that the lasers are about to toggle
-		  LASER_ON = false;
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); // Turn red laser ON
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR laser ON
-		  HAL_Delay(100);
-	  }
+//	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == false)
+//	  {
+//		  send_RF_packet(RF_LASERS_ON, USB_ADDR); // Send that the lasers are about to toggle
+//		  LASER_ON = true;
+//		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); // Turn red laser ON
+//		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // Turn IR laser ON
+//		  HAL_Delay(100);
+//	  }
+//	  else if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) && LASER_ON == true) {
+//		  send_RF_packet(RF_LASERS_OFF, USB_ADDR); // Send that the lasers are about to toggle
+//		  LASER_ON = false;
+//		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); // Turn red laser ON
+//		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR laser ON
+//		  HAL_Delay(100);
+//	  }
+//	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4))
+//	  {
+//		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
+//		HAL_Delay(100);
+//		send_RF_packet(RF_GET_BASE, PI_ADDR); // Send that the lasers are about to toggle
+//		NRF24_powerDown();
+//		setupRX(RX_ADDR,RX_PIPE);
+//		HAL_Delay(100);
+//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11); // Turn off yellow 4
+//		while (!NRF24_available()) {
+//			if ( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14)) {
+//				break;
+//			}
+//		}
+//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+//
+////		if (NRF24_available()) {
+////			NRF24_read(RxData, PAYLOAD_SIZE);
+////			if (LASER_ON) {
+////				send_RF_packet(RF_LASERS_OFF, PI_ADDR); // Send that the lasers are about to toggle
+////				LASER_ON = 0;
+////			}
+////			else {
+////				send_RF_packet(RF_LASERS_ON, PI_ADDR); // Send that the lasers are about to toggle
+////				LASER_ON = 1;
+////			}
+////			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
+////			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+////			  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); // Turn red laser ON
+////			  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0); // Turn IR laser ON
+////			  HAL_Delay(1000);
+////		}
+//
+//	  }
 
 	  // A is PA6
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6))
 	  {
-		  send_RF_Command(RF_CLICK_LEFT, USB_ADDR); // Send left click
-		  HAL_Delay(100);
+		  //send_RF_packet(RF_CLICK_LEFT, USB_ADDR); // Send left click
+		  send_RF_packet(RF_GET_BASE, PI_ADDR); // Send left click
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
+		  HAL_Delay(500);
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6)) {
 			  HAL_Delay(100);
 		  }
-		  send_RF_Command(RF_CLICK_LEFT_RELEASE, USB_ADDR);
+		  send_RF_packet(RF_CLICK_LEFT_RELEASE, USB_ADDR);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
 		  HAL_Delay(100);
 	  }
 
 	  // B is PA5
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5))
 	  {
-		  send_RF_Command(RF_CLICK_RIGHT, USB_ADDR); // Send right click
+		  send_RF_packet(RF_CLICK_RIGHT, USB_ADDR); // Send right click
 		  HAL_Delay(100);
 		  while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)) {
 			  HAL_Delay(100);
 		  }
-		  send_RF_Command(RF_CLICK_RIGHT_RELEASE, USB_ADDR);
+		  send_RF_packet(RF_CLICK_RIGHT_RELEASE, USB_ADDR);
 		  HAL_Delay(100);
 	  }
 
@@ -245,57 +337,23 @@ int main(void)
 	  // 1 is PB7
 	  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7))
 	  {
-		  send_RF_Command(RF_CALIBRATE_START, PI_ADDR); // Send calibration mode
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
+		  send_RF_packet(RF_CALIBRATE_START, PI_ADDR); // Send calibration mode
+		  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Start with yellow 4 (going left to right)
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); // Turn IR Off
 
 		  // Press B on the top left corner of the screen
-      uint8_t RxData[payloadSize];
+      uint8_t RxData[PAYLOAD_SIZE];
       do {
-  		  do {
-          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-    		  send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
-          while (!NRF24_available()); //Wait until PI responds
-          NRF24_read(RxData, payloadSize);
-        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
-  		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn on Y3
-  		  HAL_Delay(100);
-
-       do {
-          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-          send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
-          while (!NRF24_available()); //Wait until PI responds
-          NRF24_read(RxData, payloadSize);
-        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
-  		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn on Y2
-  		  HAL_Delay(100);
-
-  		 do {
-          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-          send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
-          while (!NRF24_available()); //Wait until PI responds
-          NRF24_read(RxData, payloadSize);
-        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
-  		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); // Turn on Y1
-  		  HAL_Delay(100);
-
-
-  		  do {
-          while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == 0);
-          send_RF_Command(RF_CALIBRATE_CORNER, PI_ADDR);
-          while (!NRF24_available()); //Wait until PI responds
-          NRF24_read(RxData, payloadSize);
-        }while(RxData[0] != RF_CALIBRATE_CORNER_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Sucessful Corner Calibration
-  		  HAL_Delay(100);
+			corner(GPIO_PIN_12, PAYLOAD_SIZE);
+			corner(GPIO_PIN_11, PAYLOAD_SIZE);
+			corner(GPIO_PIN_10, PAYLOAD_SIZE);
+			corner(GPIO_PIN_9, PAYLOAD_SIZE);
 
         //Wait for final message from Pi
         while (!NRF24_available()); //Wait until PI responds
-        NRF24_read(RxData, payloadSize);
+        NRF24_read(RxData, PAYLOAD_SIZE);
 
       }while(RxData[0] != RF_CALIBRATE_RESULT || RxData[1] == RF_CALIBRATE_FAIL); //Recalibrate
-
-
-
 		  
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
@@ -303,20 +361,6 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_RESET); // Turn off yellow 1
 		  HAL_Delay(100);
 
-		  for (int i = 0; i < 2; i++) {
-
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET); // Turn off yellow 4
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); // Turn off yellow 3
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); // Turn off yellow 2
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_SET); // Turn off yellow 1
-			  HAL_Delay(500);
-
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET); // Turn off yellow 4
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET); // Turn off yellow 3
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); // Turn off yellow 2
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 , GPIO_PIN_RESET); // Turn off yellow 1
-			  HAL_Delay(500);
-		  }
 	  }
 
 	  // 2 is PC14
@@ -493,8 +537,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12|CSN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_3|Y4_Pin|Y3_Pin
+                          |Y2_Pin|Y1_Pin|CSN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
@@ -512,18 +556,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA1 PA3 PA9 PA10
-                           PA11 PA12 CSN_Pin */
-  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12|CSN_Pin;
+  /*Configure GPIO pins : PA1 PA3 Y4_Pin Y3_Pin
+                           Y2_Pin Y1_Pin CSN_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_3|Y4_Pin|Y3_Pin
+                          |Y2_Pin|Y1_Pin|CSN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA2 PA4 PA5 PA6
+  /*Configure GPIO pins : CE_Pin PA4 PA5 PA6
                            PA7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
+  GPIO_InitStruct.Pin = CE_Pin|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
                           |GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
