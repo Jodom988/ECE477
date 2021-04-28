@@ -35,10 +35,7 @@ class states(Enum):
 	SETUP = 0
 	LASER_OFF = 1
 	LASER_ON = 3
-	CAL_1 = 4
-	CAL_2 = 5
-	CAL_3 = 6
-	CAL_4 = 7
+	CAL = 4
 
 class headers(Enum):
 	EXIT = b'\x95'
@@ -81,12 +78,13 @@ def setup_nrf():
 	if not pi.connected:
 		return None, pi
 
-	nrf = NRF24(pi, ce=25, payload_size=5, channel=120, data_rate=RF24_DATA_RATE.RATE_2MBPS, pa_level=RF24_PA.MAX)
+	nrf = NRF24(pi, ce=25, payload_size=5, channel=120, data_rate=RF24_DATA_RATE.RATE_250KBPS, pa_level=RF24_PA.MAX)
 
 	nrf.set_address_bytes(len(LASER_ADDR))
 	nrf.set_retransmission(15, 15)
 
 	nrf.open_reading_pipe(RF24_RX_ADDR.P1,SELF_ADDR)
+	nrf.open_reading_pipe(RF24_RX_ADDR.P0,SELF_ADDR)
 	time.sleep(0.25)
 
 	nrf.show_registers()
@@ -102,6 +100,7 @@ def send_nrf(nrf, addr, payload):
 
 	nrf.reset_reading_pipes()
 	nrf.open_reading_pipe(RF24_RX_ADDR.P1,SELF_ADDR)
+	nrf.open_reading_pipe(RF24_RX_ADDR.P0,SELF_ADDR)
 	nrf._nrf_write_reg(NRF24.CONFIG, 0x0F)
 
 	if not (nrf.get_packages_lost() == 0):
@@ -119,7 +118,7 @@ def setup_camera(res: int, framerate: int):
 	time.sleep(0.5)
 
 	#camera.start_preview()
-	camera.start_recording(buff, format='mjpeg', quality=23)
+	camera.start_recording(buff, format='mjpeg', quality=100)
 
 	return camera, buff
 
@@ -196,10 +195,6 @@ async def launch_proc_frame(port):
 
 	#stdout, stderr = await proc.communicate()
 
-
-def is_cal_state(state):
-	return (state == states.CAL_1) or (state == states.CAL_2) or (state == states.CAL_3) or (state == states.CAL_4) 
-
 def main():
 	state = states.SETUP
 	parser = argparse.ArgumentParser()
@@ -272,18 +267,22 @@ def main():
 
 	state = states.LASER_OFF
 
+	i = 0
+
 	try:
 		while running:
 			# Get header from rf
 			if nrf.data_ready():
+				print("Current state: {}".format(state))
 				payload = nrf.get_payload()
 				header = payload[0]
-				print("Command recieved: 0x%02x" % header)
+				print("Command recieved(%d): 0x%02x" % (i, header))
 				header = payload[0].to_bytes(1, 'big')
-				print("Current state: {}".format(state))
+				i += 1
 			else:
 				header = None
 
+			#header = rf_headers.LASER_ON.value
 
 			if header == rf_headers.GET_BASE_FRAME.value:
 				print("Acquiring base frame")
@@ -292,8 +291,6 @@ def main():
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 				to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
 				latest_frame_lock.release()
-				print("acquired base frame")
-
 			elif (header == rf_headers.LASER_OFF.value and state == states.LASER_ON):
 				print("Setting to state laser off")
 				state = states.LASER_OFF
@@ -331,12 +328,11 @@ def main():
 				else:
 					print("Not found")
 					pass
-
-
 			elif header == rf_headers.CAL_START.value:
-				print("Entering CAL1")
-				state = states.CAL_1
-			elif header == rf_headers.CAL_CORNER.value and is_cal_state(state):
+				state = states.CAL
+			elif header == rf_headers.CAL_CORNER.value and state == states.CAL:
+				corner = int(payload[1])
+				print("Corner %d" % corner)
 
 				# process latest frame for position
 				latest_frame_lock.acquire()
@@ -348,53 +344,48 @@ def main():
 				read_socket, _, _ = select.select([to_socket], list(), list())	# Block process until socket in list has data (blocks until ready)
 				read_socket = read_socket[0]
 				data = rec_from(read_socket)
-				x = int.from_bytes(data[1:5], byteorder='big')
-				y = int.from_bytes(data[5:9], byteorder='big')
+				x = int.from_bytes(data[1:5], byteorder='little')
+				y = int.from_bytes(data[5:9], byteorder='little')
 
 				latest_frame_lock.release()
 
-				print("Updating state, currently: " + state)
 
 				# Update state and screen value
 				if (x == NOT_FOUND and y == NOT_FOUND):
-					if state == states.CAL_1:
-						state = states.CAL_2
-						screen.set_nw(default_scrn.get_nw())
+					if corner == 1:
+						scrn.set_nw(default_scrn.get_nw())
 
-					elif state == states.CAL_2:
-						state = states.CAL_3
-						screen.set_ne(default_scrn.get_ne())
+					elif corner == 2:
+						scrn.set_ne(default_scrn.get_ne())
 
-					elif state == states.CAL_3:
-						state = states.CAL_4
-						screen.set_sw(default_scrn.get_sw())
+					elif corner == 3:
+						scrn.set_sw(default_scrn.get_sw())
 
-					elif state == states.CAL_4:
-						state = states.LASER_OFF
-						screen.set_se(default_scrn.get_se())
+					elif corner == 4:
+						scrn.set_se(default_scrn.get_se())
+
+					print("Corner not found, setting to defualt")
 
 				else:
-					if state == states.CAL_1:
-						state = states.CAL_2
-						screen.set_nw([x, y])
+					if corner == 1:
+						scrn.set_nw([x, y])
 
-					elif state == states.CAL_2:
-						state = states.CAL_3
-						screen.set_ne([x, y])
+					elif corner == 2:
+						scrn.set_ne([x, y])
 
-					elif state == states.CAL_3:
-						state = states.CAL_4
-						screen.set_sw([x, y])
+					elif corner == 3:
+						scrn.set_sw([x, y])
 
-					elif state == states.CAL_4:
-						state = states.LASER_OFF
-						screen.set_se([x, y])
+					elif corner == 4:
+						scrn.set_se([x, y])
 
-				print("State updated, currently: " + state)
+					print("Corner found: (%d, %d)" % (x, y))
 
-			elif header == rf_headers.CAL_CORNER.value and not is_cal_state(state):
+
+			elif header == rf_headers.CAL_CORNER.value and not state == states.CAL:
 				print("Error! Received RF message to calibrate corner when not in calibration state!")
 			elif header == rf_headers.CAL_EXIT.value:
+				print("Exiting Calibration Mode")
 				state = states.LASER_OFF
 
 	except KeyboardInterrupt as e:

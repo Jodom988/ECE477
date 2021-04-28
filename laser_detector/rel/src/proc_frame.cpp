@@ -191,10 +191,10 @@ int read_img_socket(int socketfd, Mat & dest)
 	
 	dest = imdecode(Mat(img_data), 1);
 
-	vector<int> compression_params;
+/*	vector<int> compression_params;
 	compression_params.push_back(IMWRITE_JPEG_QUALITY);
 	compression_params.push_back(95);
-	cv::imwrite("rx_img.jpg", dest, compression_params);
+	cv::imwrite("rx_img.jpg", dest, compression_params);*/
 
 	return READ_SUCCESS;
 }
