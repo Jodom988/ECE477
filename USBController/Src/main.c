@@ -36,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DEBUG 1 //1 for SERIAL messages
+#define DEBUG 0//1 for SERIAL messages
 #define HID_BUFFER_SIZE 7 //USB HID Buffer Size
 
 #define RF_ADDRESS_USB 0x11223344AA //USB Controller

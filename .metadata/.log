@@ -5250,3 +5250,16 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 
 !ENTRY org.eclipse.launchbar.core 2 0 2021-04-27 16:06:05.202
 !MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2021-04-27 16:32:06.016
+!MESSAGE HTTP Server 'Internal Error': https://www.st.com/content/ccc/resource/technical/software/firmware/e2/a0/0f/e7/bd/4f/4b/da/stm32f4_dsp_stdperiph_lib.zip/files/stm32f4_dsp_stdperiph_lib.zip/jcr:content/translations/content.xml
+!STACK 1
+org.eclipse.ecf.filetransfer.BrowseFileTransferException: HttpComponents connection error response code 500.
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:293)
+	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.ecf.identity 4 0 2021-04-27 16:32:06.017
+!MESSAGE HttpComponents connection error response code 500.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2021-04-27 16:36:50.079
+!MESSAGE No repository found at http://www.ebuc23.com/s5/ac6/software/firmware/.
