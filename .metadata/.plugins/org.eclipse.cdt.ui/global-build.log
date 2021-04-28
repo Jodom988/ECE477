@@ -1,24 +1,51 @@
-22:42:07 **** Incremental Build of configuration Debug for project USBController ****
+23:40:03 **** Incremental Build of configuration Debug for project USBController ****
 make all 
+Building file: ../Src/MY_NRF24.c
+Invoking: MCU GCC Compiler
+/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/MY_NRF24.d" -MT"Src/MY_NRF24.o" -o "Src/MY_NRF24.o" "../Src/MY_NRF24.c"
+../Src/MY_NRF24.c: In function 'printRadioSettings':
+../Src/MY_NRF24.c:732:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  sprintf(uartTxBuf, "\r\n**********************************************\r\n");
+  ^~~~~~~
+../Src/MY_NRF24.c:732:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Src/MY_NRF24.c:732:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Src/MY_NRF24.c: In function 'printStatusReg':
+../Src/MY_NRF24.c:859:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  sprintf(uartTxBuf, "\r\n-------------------------\r\n");
+  ^~~~~~~
+../Src/MY_NRF24.c:859:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Src/MY_NRF24.c: In function 'printConfigReg':
+../Src/MY_NRF24.c:876:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  sprintf(uartTxBuf, "\r\n-------------------------\r\n");
+  ^~~~~~~
+../Src/MY_NRF24.c:876:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Src/MY_NRF24.c: In function 'printFIFOstatus':
+../Src/MY_NRF24.c:898:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  sprintf(uartTxBuf, "\r\n-------------------------\r\n");
+  ^~~~~~~
+../Src/MY_NRF24.c:898:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+Finished building: ../Src/MY_NRF24.c
+ 
 Building file: ../Src/main.c
 Invoking: MCU GCC Compiler
 /Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
 arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-../Src/main.c: In function 'main':
-../Src/main.c:165:4: warning: implicit declaration of function 'HAL_DELAY'; did you mean 'HAL_Delay'? [-Wimplicit-function-declaration]
-    HAL_DELAY(500);
-    ^~~~~~~~~
-    HAL_Delay
 Finished building: ../Src/main.c
  
 Building target: USBController.elf
 Invoking: MCU GCC Linker
 arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
-Src/main.o: In function `main':
-/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug/../Src/main.c:165: undefined reference to `HAL_DELAY'
-collect2: error: ld returned 1 exit status
-make: *** [USBController.elf] Error 1
-22:43:02 **** Incremental Build of configuration Debug for project USBController ****
+Finished building target: USBController.elf
+ 
+/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
+arm-none-eabi-size "USBController.elf"
+   text	   data	    bss	    dec	    hex	filename
+  26736	    480	   4200	  31416	   7ab8	USBController.elf
+ 
+00:34:12 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 Building file: ../Src/main.c
 Invoking: MCU GCC Compiler
@@ -36,9 +63,9 @@ Generating hex and Printing size information:
 arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
 arm-none-eabi-size "USBController.elf"
    text	   data	    bss	    dec	    hex	filename
-  27368	    480	   4200	  32048	   7d30	USBController.elf
+  26740	    480	   4200	  31420	   7abc	USBController.elf
  
-22:56:56 **** Incremental Build of configuration Debug for project USBController ****
+00:35:37 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 Building file: ../Src/main.c
 Invoking: MCU GCC Compiler
@@ -56,32 +83,12 @@ Generating hex and Printing size information:
 arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
 arm-none-eabi-size "USBController.elf"
    text	   data	    bss	    dec	    hex	filename
-  26804	    480	   4200	  31484	   7afc	USBController.elf
+  26728	    480	   4200	  31408	   7ab0	USBController.elf
  
-22:58:12 **** Incremental Build of configuration Debug for project USBController ****
-make all 
-Building file: ../Src/main.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-Finished building: ../Src/main.c
- 
-Building target: USBController.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
-Finished building target: USBController.elf
- 
-/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
-Generating hex and Printing size information:
-arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
-arm-none-eabi-size "USBController.elf"
-   text	   data	    bss	    dec	    hex	filename
-  26312	    480	   4200	  30992	   7910	USBController.elf
- 
-22:59:05 **** Incremental Build of configuration Debug for project USBController ****
+00:37:22 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 make: Nothing to be done for `all'.
-16:59:06 **** Build of configuration Debug for project USBController ****
+16:06:08 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 Building file: ../Src/main.c
 Invoking: MCU GCC Compiler
@@ -99,68 +106,5 @@ Generating hex and Printing size information:
 arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
 arm-none-eabi-size "USBController.elf"
    text	   data	    bss	    dec	    hex	filename
-  26804	    480	   4200	  31484	   7afc	USBController.elf
+  26740	    480	   4200	  31420	   7abc	USBController.elf
  
-16:59:57 **** Incremental Build of configuration Debug for project USBController ****
-make all 
-Building file: ../Src/main.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-Finished building: ../Src/main.c
- 
-Building target: USBController.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
-Finished building target: USBController.elf
- 
-/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
-Generating hex and Printing size information:
-arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
-arm-none-eabi-size "USBController.elf"
-   text	   data	    bss	    dec	    hex	filename
-  26804	    480	   4200	  31484	   7afc	USBController.elf
- 
-17:06:21 **** Incremental Build of configuration Debug for project USBController ****
-make all 
-Building file: ../Src/main.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-Finished building: ../Src/main.c
- 
-Building target: USBController.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
-Finished building target: USBController.elf
- 
-/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
-Generating hex and Printing size information:
-arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
-arm-none-eabi-size "USBController.elf"
-   text	   data	    bss	    dec	    hex	filename
-  25380	    480	   4200	  30060	   756c	USBController.elf
- 
-17:13:04 **** Incremental Build of configuration Debug for project USBController ****
-make all 
-Building file: ../Src/main.c
-Invoking: MCU GCC Compiler
-/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F446xx -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/Users/joseluistejada/Documents/Purdue/Year 4/Semester 2/Computer Engineering 477/ECE477/USBController/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-Finished building: ../Src/main.c
- 
-Building target: USBController.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETX_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "USBController.elf" @"objects.list"   -lm
-Finished building target: USBController.elf
- 
-/Library/Developer/CommandLineTools/usr/bin/make --no-print-directory post-build
-Generating hex and Printing size information:
-arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
-arm-none-eabi-size "USBController.elf"
-   text	   data	    bss	    dec	    hex	filename
-  26804	    480	   4200	  31484	   7afc	USBController.elf
- 
-17:13:28 **** Incremental Build of configuration Debug for project USBController ****
-make all 
-make: Nothing to be done for `all'.

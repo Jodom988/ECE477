@@ -46,7 +46,13 @@ void add_lines(Mat img, int row, int col, int w);
 FILE* log_fd;
 int main(int argc, char** argv)
 {
-	log_fd = fopen("ProcessFrame.log", "w");
+	log_fd = fopen("/home/pi/Repos/ECE477/laser_detector/rel/build/ProcessFrame.log", "w");
+	
+	if (log_fd == NULL)
+	{
+		printf("Unable to create log file");
+		return 1;
+	}
 	if (argc != 2)
 	{
 		fprintf(log_fd, "Propper Usage: ProcessFrame <port>\n");
@@ -185,10 +191,10 @@ int read_img_socket(int socketfd, Mat & dest)
 	
 	dest = imdecode(Mat(img_data), 1);
 
-/*	vector<int> compression_params;
+	vector<int> compression_params;
 	compression_params.push_back(IMWRITE_JPEG_QUALITY);
 	compression_params.push_back(95);
-	cv::imwrite("rx_img.jpg", dest, compression_params);*/
+	cv::imwrite("rx_img.jpg", dest, compression_params);
 
 	return READ_SUCCESS;
 }
@@ -461,24 +467,33 @@ Point test_detect_in_frame(Mat img, Mat base){
 	}
 
 	Point3d sum;
-	
-	for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
-		sum += *it;
+
+	if (largest_vals.size() > N / 2)
+	{
+		for (std::list<Point3d>::iterator it = largest_vals.begin(); it != largest_vals.end(); it++){
+			sum += *it;
+		}
+
+		int row_avg = sum.y / N;
+		int col_avg = sum.x / N;
+
+		add_lines(new_img, row_avg, col_avg, 4);
+
+		vector<int> compression_params;
+	    compression_params.push_back(IMWRITE_JPEG_QUALITY);
+	    compression_params.push_back(95);
+
+	    imwrite("./proc_img.jpg", new_img, compression_params);
+
+		return Point(col_avg, row_avg);
+
+	} else {
+		return Point(-1, -1);
 	}
-
-	int row_avg = sum.y / N;
-	int col_avg = sum.x / N;
-
-	add_lines(new_img, row_avg, col_avg, 4);
-
-	vector<int> compression_params;
-    compression_params.push_back(IMWRITE_JPEG_QUALITY);
-    compression_params.push_back(95);
-
-    imwrite("./proc_img.jpg", new_img, compression_params);
+	
 
 
-	return Point(col_avg, row_avg);
+
 }
 
 void add_lines(Mat img, int row, int col, int w)

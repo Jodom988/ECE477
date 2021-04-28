@@ -26,7 +26,7 @@ LOCAL_HOST = "127.0.0.1"
 BUFFER_SIZE = 4096
 
 USB_ADDR = b'\xAA\x44\x33\x22\x11'
-LASER_ADDR = b'\x00\x00\x00\x00\x00'
+LASER_ADDR = b'\x44\x44\x44\x44\x44'
 SELF_ADDR = b'\x99\x88\x77\x66\x55'
 
 NOT_FOUND = 0xFFFFFFFF
@@ -34,7 +34,6 @@ NOT_FOUND = 0xFFFFFFFF
 class states(Enum):
 	SETUP = 0
 	LASER_OFF = 1
-	GET_BASE_FRAME = 2
 	LASER_ON = 3
 	CAL_1 = 4
 	CAL_2 = 5
@@ -52,7 +51,7 @@ class rf_headers(Enum):
 
 	CAL_START = b'\x10'
 	CAL_CORNER = b'\x11'
-	CMD_LASER_OFF = b'\x12'
+	CMD_LASER_ON = b'\x12'
 	CAL_CORNER_RESULT = b'\x13'
 	CAL_EXIT = b'\x14'
 	CAL_RESULT = b'\x15'
@@ -82,26 +81,33 @@ def setup_nrf():
 	if not pi.connected:
 		return None, pi
 
-	nrf = NRF24(pi, ce=25, payload_size=RF24_PAYLOAD.DYNAMIC, channel=52, data_rate=RF24_DATA_RATE.RATE_2MBPS, pa_level=RF24_PA.MAX)
+	nrf = NRF24(pi, ce=25, payload_size=5, channel=120, data_rate=RF24_DATA_RATE.RATE_2MBPS, pa_level=RF24_PA.MAX)
+
 	nrf.set_address_bytes(len(LASER_ADDR))
 	nrf.set_retransmission(15, 15)
 
-	nrf.open_reading_pipe(RF24_RX_ADDR.P4,LASER_ADDR)
-	time.sleep(0.25)
-	nrf.open_reading_pipe(RF24_RX_ADDR.P5,USB_ADDR)
+	nrf.open_reading_pipe(RF24_RX_ADDR.P1,SELF_ADDR)
 	time.sleep(0.25)
 
-	nrf.open_writing_pipe(USB_ADDR)
-
-	nrf._nrf_write_reg(NRF24.DYNPD, 0x3F)
-	nrf._nrf_write_reg(NRF24.FEATURE, 0x4)
+	nrf.show_registers()
 
 	return nrf, pi
 
 def send_nrf(nrf, addr, payload):
-	nrf.reset_packages_lost()
 	nrf.open_writing_pipe(addr)
+
+	nrf.reset_packages_lost()
+	print("Sent RF message, ADDR: " + str(addr) + ", PACKET: " + str(payload))
 	nrf.send(payload)
+
+	nrf.reset_reading_pipes()
+	nrf.open_reading_pipe(RF24_RX_ADDR.P1,SELF_ADDR)
+	nrf._nrf_write_reg(NRF24.CONFIG, 0x0F)
+
+	if not (nrf.get_packages_lost() == 0):
+		return 0
+	else:
+		return 1
 
 
 def setup_camera(res: int, framerate: int):
@@ -112,6 +118,7 @@ def setup_camera(res: int, framerate: int):
 	buff = PiCameraCircularIO(camera, size=50 * MB_SIZE)
 	time.sleep(0.5)
 
+	#camera.start_preview()
 	camera.start_recording(buff, format='mjpeg', quality=23)
 
 	return camera, buff
@@ -130,31 +137,39 @@ def setup_socket(host, port):
 
 	return listen_socket
 
-def gen_frames(stream, latest_frame_lock, camera):
+def gen_frames(stream, latest_frame_lock):
 	global latest_frame
-	global gen_frames_running
+	global running
 	i = 0
-	while gen_frames_running:
-		frames = list()
-		read_size = 0
-		last_read_size = 0
-		latest_frame_lock.acquire()
-		for frame in stream.frames:
-			frames.append(frame)
-			last_read_size = read_size
-			read_size += frame.frame_size
-		
-		if read_size>0 and frames[-1].complete:
-			stream.seek(SEEK_SET, whence=0)
-			stream_bytes = stream.read(read_size)
-			stream.clear()
-			latest_frame = stream_bytes[last_read_size:]
+	try:
+		while running:
+			frames = list()
+			read_size = 0
+			last_read_size = 0
+			latest_frame_lock.acquire()
+			for frame in stream.frames:
+				frames.append(frame)
+				last_read_size = read_size
+				read_size += frame.frame_size
+			
+			if read_size>0 and frames[-1].complete:
+				stream.seek(SEEK_SET, whence=0)
+				stream_bytes = stream.read(read_size)
+				stream.clear()
+				latest_frame = stream_bytes[last_read_size:]
+			if latest_frame_lock.locked():
+				latest_frame_lock.release()
 
+			time.sleep(0.05)
+
+	except KeyboardInterrupt as e:
+		print("KeyboardInterrupt, exting gracefully...")
+	finally:
+		running = False
 		if latest_frame_lock.locked():
 			latest_frame_lock.release()
 
-		print(i)
-		i+=1
+
 
 def get_latest_frame(stream):
 	while True:
@@ -174,13 +189,16 @@ def get_latest_frame(stream):
 
 
 async def launch_proc_frame(port):
-	cmd = "./ProcessFrame {}".format(port)
-	proc = await asyncio.create_subprocess_shell(cmd)
+	cmd = "/home/pi/Repos/ECE477/laser_detector/rel/build/ProcessFrame {}".format(port)
+	proc = await asyncio.create_subprocess_shell(cmd,
+		stdout=asyncio.subprocess.PIPE,
+		stderr=asyncio.subprocess.PIPE)
 
-	return proc
+	#stdout, stderr = await proc.communicate()
+
 
 def is_cal_state(state):
-	return (state == states.CAL_1.value) or (state == states.CAL_2.value) or (state == states.CAL_3.value) or (state == states.CAL_4.value) 
+	return (state == states.CAL_1) or (state == states.CAL_2) or (state == states.CAL_3) or (state == states.CAL_4) 
 
 def main():
 	state = states.SETUP
@@ -199,10 +217,17 @@ def main():
 		return
 	print("Done!")
 
+	global running
+	running = True
+
 	# Initialize the screen mapper
 	res = parsed_args.resolution
 	scrn = Screen([[0,res[1]],[0,0],[res[0],0],[res[0],res[1]]])
-	cal_scrn = Screen([[0,res[1]],[0,0],[res[0],0],[res[0],res[1]]])
+	# scrn.set_ne([495,175])
+	# scrn.set_nw([147,179])
+	# scrn.set_se([519,402])
+	# scrn.set_sw([129,400])
+	default_scrn = Screen([[0,res[1]],[0,0],[res[0],0],[res[0],res[1]]])
 
 	# Start the camera
 	print("Starting camera... ", end="")
@@ -212,6 +237,14 @@ def main():
 	# Do socket setup 
 	print("Starting listen socket at {}:{}... ".format(LOCAL_HOST, parsed_args.port), end="")
 	listen_socket = setup_socket(LOCAL_HOST, parsed_args.port)
+	print("Done!")
+
+	# Start update latest frame thread
+	print("Starting update latest frame thread...", end="")
+	global latest_frame
+	latest_frame_lock = threading.Lock()
+	update_latest_frame_thread = threading.Thread(target=gen_frames, args=[circ_buffer, latest_frame_lock])
+	update_latest_frame_thread.start()
 	print("Done!")
 
 	# Start process for frame proccessing
@@ -224,48 +257,51 @@ def main():
 	to_socket, in_addrinfo = listen_socket.accept()
 	print("Received Connection!")
 
-	time.sleep(1)
-
+	latest_frame_lock.acquire()
 	print("Setting base frame...", end="")
 	latest_frame = get_latest_frame(circ_buffer)
 	frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 	to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
 	print("Done!")
+	latest_frame_lock.release()
+
+	print("Entering main loop. Press ctrl+c to exit.")
 
 	times = list()
 	start_time = current_time_millis()
 
-	try:
-		while True:
+	state = states.LASER_OFF
 
+	try:
+		while running:
 			# Get header from rf
 			if nrf.data_ready():
 				payload = nrf.get_payload()
 				header = payload[0]
+				print("Command recieved: 0x%02x" % header)
+				header = payload[0].to_bytes(1, 'big')
+				print("Current state: {}".format(state))
 			else:
 				header = None
-			header = rf_headers.LASER_ON.value
+
 
 			if header == rf_headers.GET_BASE_FRAME.value:
-				state = states.GET_BASE_FRAME
+				print("Acquiring base frame")
 				# Send most recent frame to proc thread
-				latest_frame = get_latest_frame(circ_buffer)
+				latest_frame_lock.acquire()
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 				to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
+				latest_frame_lock.release()
+				print("acquired base frame")
 
-				# Send base frame result to laser pointer
-				payload = rf_headers.BASE_FRAME_RES.value + b'\x01'
-				send_nrf(nrf, LASER_ADDR, payload)
+			elif (header == rf_headers.LASER_OFF.value and state == states.LASER_ON):
+				print("Setting to state laser off")
+				state = states.LASER_OFF
+			elif (header == rf_headers.LASER_ON.value and state == states.LASER_OFF) or state == states.LASER_ON:
+				print("Setting to state laser on")
+				state = states.LASER_ON
 
-				pass
-			elif header == rf_headers.LASER_ON.value or state == states.LASER_ON:
-				if header == rf_headers.LASER_OFF.value:
-					state = states.LASER_OFF
-				else:
-					state = states.LASER_ON
-
-				# Send most recent frame to processing thread
-				latest_frame = get_latest_frame(circ_buffer)
+				latest_frame_lock.acquire()
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 				to_socket.send(headers.PROC_FRAME.value + frame_len_bytes + latest_frame)
 
@@ -276,12 +312,14 @@ def main():
 				x = int.from_bytes(data[1:5], byteorder='little')
 				y = int.from_bytes(data[5:9], byteorder='little')
 
+				latest_frame_lock.release()
+
 				if not (x == NOT_FOUND and y == NOT_FOUND):
 					# Map to the screen
+
 					x,y = scrn.get_xy_percent([x,y])
-					# x /= 640
-					# y /= 480
-					print("(%.2f, %.2f)" % (x, y))
+					#print("(%.2f, %.2f)" % (x, y))
+					print("After mapping: %.2f, %.2f" % (x, y))
 
 					x = int(x*4096)
 					y = int(y*4096)
@@ -291,36 +329,18 @@ def main():
 						payload = rf_headers.MOUSE_XY.value + x.to_bytes(2, byteorder='big') + y.to_bytes(2, byteorder='big')
 						send_nrf(nrf, USB_ADDR, payload)
 				else:
-					print("Not found: (%d, %d)" % (x, y))
+					print("Not found")
 					pass
 
+
 			elif header == rf_headers.CAL_START.value:
-				state = CAL_1
+				print("Entering CAL1")
+				state = states.CAL_1
 			elif header == rf_headers.CAL_CORNER.value and is_cal_state(state):
-				# update base frame
-				latest_frame = get_latest_frame(circ_buffer)
-				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
-				to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
-
-				# Command laser on
-				payload = rf_headers.LASER_ON.value
-				send_nrf(nrf, LASER_ADDR, payload)
-
-				# Wait for message saying laser is on or cal_exit
-				while True:
-					if nrf.data_ready():
-						payload = nrf.get_payload()
-						if payload[0] == rf_headers.LASER_ON.value:
-							break
-						if payload[0] == rf_headers.CAL_EXIT.value:
-							state = states.LASER_OFF.value
-							break
-
-				if state == states.LASER_OFF.value:
-					continue
 
 				# process latest frame for position
-				latest_frame = get_latest_frame(circ_buffer)
+				latest_frame_lock.acquire()
+				
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 				to_socket.send(headers.PROC_FRAME.value + frame_len_bytes + latest_frame)
 
@@ -331,40 +351,51 @@ def main():
 				x = int.from_bytes(data[1:5], byteorder='big')
 				y = int.from_bytes(data[5:9], byteorder='big')
 
+				latest_frame_lock.release()
+
+				print("Updating state, currently: " + state)
+
+				# Update state and screen value
 				if (x == NOT_FOUND and y == NOT_FOUND):
-					# Send calibration result fail
-					payload = rf_headers.CAL_CORNER_RESULT.value + b'\x00'
-					send_nrf(nrf, LASER_ADDR, payload)
-					print("Not found in calibration, sending fail")
+					if state == states.CAL_1:
+						state = states.CAL_2
+						screen.set_nw(default_scrn.get_nw())
+
+					elif state == states.CAL_2:
+						state = states.CAL_3
+						screen.set_ne(default_scrn.get_ne())
+
+					elif state == states.CAL_3:
+						state = states.CAL_4
+						screen.set_sw(default_scrn.get_sw())
+
+					elif state == states.CAL_4:
+						state = states.LASER_OFF
+						screen.set_se(default_scrn.get_se())
+
 				else:
-					# Send calibration success
-					payload = rf_headers.CAL_CORNER_RESULT.value + b'\x01'
-					send_nrf(nrf, LASER_ADDR, payload)
-					# Update state and screen value
-					if state == states.CAL_1.value:
-						state = states.CAL_2.value
+					if state == states.CAL_1:
+						state = states.CAL_2
 						screen.set_nw([x, y])
 
-					elif state == states.CAL_2.value:
-						state = states.CAL_3.value
+					elif state == states.CAL_2:
+						state = states.CAL_3
 						screen.set_ne([x, y])
 
-					elif state == states.CAL_3.value:
-						state = states.CAL_4.value
+					elif state == states.CAL_3:
+						state = states.CAL_4
 						screen.set_sw([x, y])
 
-					elif state == states.CAL_4.value:
-						state = states.LASER_OFF.value
+					elif state == states.CAL_4:
+						state = states.LASER_OFF
 						screen.set_se([x, y])
 
-						# check points to make sure its a valid screen
-						payload = rf_headers.CAL_CORNER_RESULT.value + b'\x01'
-						send_nrf(nrf, LASER_ADDR, payload)
+				print("State updated, currently: " + state)
 
 			elif header == rf_headers.CAL_CORNER.value and not is_cal_state(state):
 				print("Error! Received RF message to calibrate corner when not in calibration state!")
 			elif header == rf_headers.CAL_EXIT.value:
-				state = states.LASER_OFF.value
+				state = states.LASER_OFF
 
 	except KeyboardInterrupt as e:
 		print("\nExiting gracefully...")
@@ -373,6 +404,9 @@ def main():
 		print("===================================================")
 		print("WARNING: Unexpcted exception, performing cleanup...")
 	finally:
+		running = False
+		if latest_frame_lock.locked():
+			latest_frame_lock.release()
 		# Do cleanup
 		try:
 			listen_socket.sendall(headers.EXIT.value)
@@ -380,6 +414,7 @@ def main():
 			print("Unable to send exit code to process frame process")
 		
 		try:
+			#camera.stop_preview()
 			camera.close()
 		except Exception as e:
 			print("Unable to stop camera in shutdown")
@@ -393,6 +428,8 @@ def main():
 			pi.stop()
 		except Exception as e:
 			print("Unable to close connection to pigpio daemon")
+
+		update_latest_frame_thread.join()
 
 		# with open("../scripts/data/times_laser_on_all.txt", "w") as f:
 		# 	[f.write(str(curr_time) + "\n") for curr_time in times]

@@ -168,15 +168,6 @@ def get_video(fname, res, framerate=30, durration=5.0):
 
 	os.system("rm {}".format(tmp_fname))
 
-def infinte_preview(res=(640, 480), framerate=30):
-	camera = PiCamera()
-	camera.resolution = res
-	camera.framerate = framerate
-	camera.start_preview()
-
-	print("Press enter to stop preview")
-	input()
-	camera.stop_preview()
 
 def take_picture(fname, res):
 	cam = PiCamera()
@@ -186,8 +177,8 @@ def take_picture(fname, res):
 	cam.capture(fname)
 
 def main():
-	take_picture("../imgs/cal.jpg", (640, 480))
-	#get_video("./videos/ir-laser-test-1mw-9ma-2.mjpeg", (640, 480), durration=5.0)
+	#take_picture("../imgs/cal.jpg", (640, 480))
+	get_video("./videos/ir-laser-test-1mw-9ma-2.mjpeg", (640, 480), durration=5.0)
 	#test_recent_frame((640, 480))
 	#infinte_preview()
 

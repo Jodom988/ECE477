@@ -36,8 +36,15 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DEBUG 1 //1 for HUART messages
-#define HID_BUFFER_SIZE 7
+#define DEBUG 1 //1 for SERIAL messages
+#define HID_BUFFER_SIZE 7 //USB HID Buffer Size
+
+#define RF_ADDRESS_USB 0x11223344AA //USB Controller
+#define RF_ADDRESS_LP  0x4444444444//Laser Pointer
+#define RF_ADDRESS_PI  0x5566778899 //RPI
+#define RF_CHANNEL 120
+#define RF_PIPE 1
+#define RF_PAYLOAD_SIZE 5
 
 #define RF_LEFT_CLICK_DOWN 0x01
 #define RF_RIGHT_CLICK_DOWN 0x02
@@ -86,7 +93,6 @@ void setupHIDReportScrollWheel(uint8_t scrollWheelMSB, uint8_t scrollWheelLSB);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -131,11 +137,7 @@ int main(void)
   }
 
   //Initialize receiving pipe
-  uint64_t address = 0x11223344AA;
-  uint8_t channel = 52;
-  uint8_t pipe = 1;
-  uint8_t payloadSize = 32; //Change to 5.
-  setupRX(address, channel, pipe, payloadSize);
+  setupRX(RF_ADDRESS_USB, RF_CHANNEL, RF_PIPE, RF_PAYLOAD_SIZE);
 
   //Initialize HID Buffer
   HIDBuffer[0] = 0;
@@ -153,11 +155,12 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(NRF24_available() && readData(pipe,payloadSize)) //Packet Available and Valid
+	  if(NRF24_available() && readData(RF_PIPE,RF_PAYLOAD_SIZE)) //Packet Available and Valid
 		{
 		  //Send HID Report
 		  USBD_HID_SendReport(&hUsbDeviceFS, HIDBuffer,HID_BUFFER_SIZE);
 		}
+
     /* USER CODE BEGIN 3 */
   }
 
@@ -171,11 +174,11 @@ void setupRX(uint64_t address, uint8_t channel, uint8_t pipe, uint8_t payloadSiz
 	NRF24_setChannel(channel);
 	NRF24_setPayloadSize(payloadSize);
 	NRF24_openReadingPipe(pipe, address);
-	NRF24_enableDynamicPayloads();
+	NRF24_setDataRate(RF24_250KBPS);
 	NRF24_startListening();
 	if(DEBUG){
 		printRadioSettings();
-		//Read Registers Manually
+//		Read Registers Manually
 		char debugMessage[15]="";
 		for(uint8_t reg = 0; reg <= 0x1D;reg++){
 			uint8_t regValue = NRF24_read_register(reg);
@@ -217,7 +220,7 @@ bool validData(uint8_t * myRxData){
 	else if(myRxData[0] == RF_LEFT_CLICK_UP){
 			setupHIDReportClick(0);
 			if(DEBUG){
-				snprintf(debugMessage, 32,"Left Click UP\r\n");
+				snprintf(debugMessage, 32,"Left Click Up\r\n");
 				HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 			}
 			return true;
@@ -225,7 +228,7 @@ bool validData(uint8_t * myRxData){
 	else if(myRxData[0] == RF_RIGHT_CLICK_UP){
 		setupHIDReportClick(0);
 		if(DEBUG){
-			snprintf(debugMessage, 32,"Right Click UP\r\n");
+			snprintf(debugMessage, 32,"Right Click Up\r\n");
 			HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32,10);
 		}
 		return true;
@@ -242,7 +245,8 @@ bool validData(uint8_t * myRxData){
 		return true;
 	}
 	else if(DEBUG){//Incorrect Message, Print to HAL UART Directly
-		HAL_UART_Transmit(&huart2,(uint8_t *)myRxData, 32,10);
+		snprintf(debugMessage, 15, "%02x\r\n", myRxData[0]);
+		HAL_UART_Transmit(&huart2,(uint8_t *)debugMessage, 32, 10);
 	}
 
 	return false;
