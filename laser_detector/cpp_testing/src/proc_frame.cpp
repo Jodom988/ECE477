@@ -49,6 +49,7 @@ int main(int argc, char** argv)
 		Point pos(0, 0);
 		while(1)
 		{
+
 			cap.read(frame);
 			if(frame.empty())
 			{
@@ -63,8 +64,14 @@ int main(int argc, char** argv)
 				base_frame = frame.clone();
 			}
 
+			if (i != 78)
+			{
+				i++;
+				continue;
+			}
+
 			int start = current_time_millis();
-			pos = detect_in_frame_threads(frame, base_frame);
+			pos = test_detect_in_frame(frame, base_frame);
 			int diff = current_time_millis() - start;
 
 			fprintf(times_fptr, "%d\n", diff);
@@ -136,10 +143,13 @@ void detect_in_frame_worker_skips(Mat img, Mat base, std::list<cv::Point3d> & la
 
 	int val;
 	
+	int start = 0;
 	for (int row_idx = 0; row_idx < height; row_idx+=2)
 	{
-		for (int col_idx = min_col; col_idx < max_col; col_idx++)
+		start = start & 0x1;
+		for (int col_idx = min_col; col_idx < max_col; col_idx+=2)
 		{
+			col_idx += start;
 			// Calculate diff
 			val = get_pixel(img, col_idx, row_idx)[1] - get_pixel(base, col_idx, row_idx)[1];
 
@@ -165,6 +175,28 @@ void detect_in_frame_worker_skips(Mat img, Mat base, std::list<cv::Point3d> & la
 				if (row_idx <= height-2)
 				{
 					val = get_pixel(img, col_idx, row_idx+1)[1] - get_pixel(base, col_idx, row_idx+1)[1];
+					if (val > largest_vals.back().z)
+					{
+						Point3d pt = Point3d(col_idx, row_idx+1, val);
+						add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
+					}
+				}
+
+				//Check left and add to list
+				if (col_idx >= 1)
+				{
+					val = get_pixel(img, col_idx-1, row_idx)[1] - get_pixel(base, col_idx-1, row_idx)[1];
+					if (val > largest_vals.back().z)
+					{
+						Point3d pt = Point3d(col_idx, row_idx+1, val);
+						add_to_list_sorted(std::ref(largest_vals), pt, THRESH, N);
+					}
+				}
+
+				//Check right and add to list
+				if (row_idx <= width-2)
+				{
+					val = get_pixel(img, col_idx+1, row_idx)[1] - get_pixel(base, col_idx+1, row_idx)[1];
 					if (val > largest_vals.back().z)
 					{
 						Point3d pt = Point3d(col_idx, row_idx+1, val);
@@ -377,7 +409,7 @@ Point test_detect_in_frame(Mat img, Mat base){
 	largest_vals.push_front(cv::Point3d(0, 0, THRESH));
 
 	if (height != base.size().height || width != base.size().width){
-		printf("Image and Base Image dimensions do not match");
+		printf("Image and Base Image dimensions do not match\n");
 		throw;
 	}
 
@@ -441,14 +473,15 @@ Point test_detect_in_frame(Mat img, Mat base){
 
 	add_lines(new_img, row_avg, col_avg, 4);
 
-	namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
-	imshow("Display Image", new_img);
+/*	namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
+	imshow("Display Image", new_img);*/
+
 
 	vector<int> compression_params;
-    compression_params.push_back(IMWRITE_PNG_COMPRESSION);
-    compression_params.push_back(9);
+/*    compression_params.push_back(IMWRITE_PNG_COMPRESSION);
+    compression_params.push_back(9);*/
 
-    imwrite("tmp.png", img, compression_params);
+    imwrite("tmp.png", new_img, compression_params);
 
 	waitKey(0);
 
