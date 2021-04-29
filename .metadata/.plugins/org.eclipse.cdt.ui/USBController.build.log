@@ -1,4 +1,4 @@
-16:06:08 **** Incremental Build of configuration Debug for project USBController ****
+01:11:26 **** Incremental Build of configuration Debug for project USBController ****
 make all 
 Building file: ../Src/main.c
 Invoking: MCU GCC Compiler
@@ -16,8 +16,8 @@ Generating hex and Printing size information:
 arm-none-eabi-objcopy -O ihex "USBController.elf" "USBController.hex"
 arm-none-eabi-size "USBController.elf"
    text	   data	    bss	    dec	    hex	filename
-  26740	    480	   4200	  31420	   7abc	USBController.elf
+  25308	    480	   4200	  29988	   7524	USBController.elf
  
 
-16:06:09 Build Finished (took 1s.53ms)
+01:11:27 Build Finished (took 814ms)
 
