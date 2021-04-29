@@ -42,6 +42,7 @@ class headers(Enum):
 	PROC_FRAME = b'\x96'
 	XY_DATA = b'\x97'
 	BASE_FRAME = b'\x98'
+	SCRN_BOUNDS = b'\x99'
 
 class rf_headers(Enum):
 	MOUSE_XY = b'\x05'
@@ -109,7 +110,7 @@ def send_nrf(nrf, addr, payload):
 		return 1
 
 
-def setup_camera(res: int, framerate: int):
+def setup_camera(res: int, framerate: int, preview=False):
 	camera = PiCamera()
 	camera.resolution = res
 	camera.framerate = framerate
@@ -117,7 +118,8 @@ def setup_camera(res: int, framerate: int):
 	buff = PiCameraCircularIO(camera, size=50 * MB_SIZE)
 	time.sleep(0.5)
 
-	#camera.start_preview()
+	if preview:
+		camera.start_preview()
 	camera.start_recording(buff, format='mjpeg', quality=100)
 
 	return camera, buff
@@ -193,14 +195,13 @@ async def launch_proc_frame(port):
 		stdout=asyncio.subprocess.PIPE,
 		stderr=asyncio.subprocess.PIPE)
 
-	#stdout, stderr = await proc.communicate()
-
 def main():
 	state = states.SETUP
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-p', '--port', action='store', type=int, default=9595, help="Port to communicate between two processes")
 	parser.add_argument('-r', '--resolution', action='store', type=int, nargs=2, default=[640, 480], help="Video dimension")
 	parser.add_argument('-f', '--framerate', action='store', type=int, default=15, help="Video framerate")
+	parser.add_argument('-v', '--preview', action='store_true', default=False, help="Show video preview")
 	
 	parsed_args = parser.parse_args(sys.argv[1:])
 
@@ -226,7 +227,7 @@ def main():
 
 	# Start the camera
 	print("Starting camera... ", end="")
-	camera, circ_buffer = setup_camera(parsed_args.resolution, parsed_args.framerate)
+	camera, circ_buffer = setup_camera(parsed_args.resolution, parsed_args.framerate, preview=parsed_args.preview)
 	print("Done!")
 
 	# Do socket setup 
@@ -269,124 +270,240 @@ def main():
 
 	i = 0
 
+	hist = list()
+	avg_n = 4
+
+	# top = 1024
+	# bottom = 3072
+	# left = 1024
+	# right = 3072
+
+	# to_socket.send(headers.SCRN_BOUNDS.value + top.to_bytes(2, byteorder='little') + right.to_bytes(2, byteorder='little') + bottom.to_bytes(2, byteorder='little') + left.to_bytes(2, byteorder='little'))
+
+
+	time_last_base = current_time_millis()
 	try:
+		x = 0
+		y = 0
 		while running:
-			# Get header from rf
-			if nrf.data_ready():
-				print("Current state: {}".format(state))
-				payload = nrf.get_payload()
-				header = payload[0]
-				print("Command recieved(%d): 0x%02x" % (i, header))
-				header = payload[0].to_bytes(1, 'big')
-				i += 1
-			else:
-				header = None
+			try: 
+				# Get header from rf
+				if nrf.data_ready():
+					print("Current state: {}".format(state))
+					payload = nrf.get_payload()
+					header = payload[0]
+					print("Command recieved(%d): 0x%02x" % (i, header))
+					header = payload[0].to_bytes(1, 'big')
+					i += 1
+				else:
+					header = None
 
-			#header = rf_headers.LASER_ON.value
+				#header = rf_headers.LASER_ON.value
 
-			if header == rf_headers.GET_BASE_FRAME.value:
-				print("Acquiring base frame")
-				# Send most recent frame to proc thread
+				if header == rf_headers.GET_BASE_FRAME.value:
+					print("Setting base frame")
+					# Send most recent frame to proc thread
+					latest_frame_lock.acquire()
+					frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
+					to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
+					latest_frame_lock.release()
+					time_last_base = current_time_millis()
+
+				elif (header == rf_headers.LASER_OFF.value and state == states.LASER_ON):
+					print("Setting to state laser off")
+					state = states.LASER_OFF
+
+				elif (header == rf_headers.LASER_ON.value and state == states.LASER_OFF):
+					print("Setting to state laser on")
+					state = states.LASER_ON
+
+				elif header == rf_headers.CAL_START.value:
+					state = states.CAL
+				elif header == rf_headers.CAL_CORNER.value and state == states.CAL:
+					corner = int(payload[1])
+					print("Corner: %d" % corner)
+
+					# process latest frame for position
+					latest_frame_lock.acquire()
+					
+					frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
+					to_socket.send(headers.PROC_FRAME.value + frame_len_bytes + latest_frame)
+
+					# Wait (use select) until process frame thread returns data
+					read_socket, _, _ = select.select([to_socket], list(), list())	# Block process until socket in list has data (blocks until ready)
+					read_socket = read_socket[0]
+					data = rec_from(read_socket)
+					x = int.from_bytes(data[1:5], byteorder='little')
+					y = int.from_bytes(data[5:9], byteorder='little')
+
+					latest_frame_lock.release()
+
+
+					# Update state and screen value
+					if (x == NOT_FOUND and y == NOT_FOUND):
+						if corner == 1:
+							print("set nw")
+							scrn.set_nw(default_scrn.get_nw())
+
+						elif corner == 2:
+							print("set ne")
+							scrn.set_ne(default_scrn.get_ne())
+
+						elif corner == 3:
+							print("set sw")
+							scrn.set_sw(default_scrn.get_sw())
+
+						elif corner == 4:
+							print("set se")
+							scrn.set_se(default_scrn.get_se())
+
+						print("Corner not found, setting to defualt")
+
+					else:
+						if corner == 1:
+							print("set nw")
+							scrn.set_nw([x, y])
+
+						elif corner == 2:
+							print("set ne")
+							scrn.set_ne([x, y])
+
+						elif corner == 3:
+							print("set sw")
+							scrn.set_sw([x, y])
+
+						elif corner == 4:
+							print("set se")
+							scrn.set_se([x, y])
+
+						print("Corner found: (%d, %d)" % (x, y))
+
+
+				elif header == rf_headers.CAL_CORNER.value and not state == states.CAL:
+					print("Error! Received RF message to calibrate corner when not in calibration state!")
+				elif header == rf_headers.CAL_EXIT.value:
+					print("Exiting Calibration Mode")
+
+					print("top choices: %d %d -> %d" (scrn.get_nw()[1], scrn.get_ne()[1], min(scrn.get_nw()[1], scrn.get_ne()[1])))
+					top = int((min(scrn.get_nw()[1], scrn.get_ne()[1]) / parsed_args.resolution[1]) * 4095)
+					bottom = int((max(scrn.get_sw()[1], scrn.get_se()[1]) / parsed_args.resolution[1]) * 4095)
+					left = int((min(scrn.get_sw()[0], scrn.get_nw()[0]) / parsed_args.resolution[0]) * 4095)
+					right = int((max(scrn.get_se()[0], scrn.get_ne()[0]) / parsed_args.resolution[0]) * 4095)
+
+					print((scrn.get_nw(), scrn.get_ne(), scrn.get_sw(), scrn.get_se()))
+
+					print("Bounds rows:[%d %d] cols:[%d %d]" % (top, bottom, left, right))
+
+					to_socket.send(headers.SCRN_BOUNDS.value + top.to_bytes(2, byteorder='little') + right.to_bytes(2, byteorder='little') + bottom.to_bytes(2, byteorder='little') + left.to_bytes(2, byteorder='little'))
+					state = states.LASER_OFF
+
+				if state == states.LASER_ON:
+
+
+					latest_frame_lock.acquire()
+					frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
+					to_socket.send(headers.PROC_FRAME.value + frame_len_bytes + latest_frame)
+
+					# Wait (use select) until process frame thread returns data
+					read_socket, _, _ = select.select([to_socket], list(), list())	# Block process until socket in list has data (blocks until ready)
+					read_socket = read_socket[0]
+					data = rec_from(read_socket)
+					x = int.from_bytes(data[1:5], byteorder='little')
+					y = int.from_bytes(data[5:9], byteorder='little')
+
+					latest_frame_lock.release()
+
+					if not (x == NOT_FOUND and y == NOT_FOUND):
+						# Map to the screen
+
+						x,y = scrn.get_xy_percent([x,y])
+						#print("(%.2f, %.2f)" % (x, y))
+						print("After mapping: %.2f, %.2f" % (x, y))
+
+						x = int(x*4096)
+						y = int(y*4096)
+
+						# Do averaging
+						# Keep most recent term at end of average list
+						hist.append([x, y])
+						if (len(hist) > avg_n):
+							hist.pop(0)
+
+						x_avg = 0
+						y_avg = 0
+						for pt in hist:
+							x_avg += pt[0]
+							y_avg += pt[1]
+						
+						x_avg /= len(hist)
+						y_avg /= len(hist)
+
+						x = int(x_avg)
+						y = int(y_avg)
+
+						if (x >= 0 and x <= 4095 and y >= 0 and y <= 4095):
+							# Send data to the usb controller
+							payload = rf_headers.MOUSE_XY.value + x.to_bytes(2, byteorder='big') + y.to_bytes(2, byteorder='big')
+							send_nrf(nrf, USB_ADDR, payload)
+
+					else:
+						if (len(hist) > 0):
+							hist.pop(0)
+						print("Not found")
+						pass
+					# update base frame if too long
+					if (current_time_millis() - time_last_base) > 1000:
+						#print("Updating base")
+						latest_frame_lock.acquire()
+						frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
+						to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
+						latest_frame_lock.release()
+						time_last_base = current_time_millis()
+
+			except ConnectionResetError as e:
+				if latest_frame_lock.locked():
+					latest_frame_lock.release()
+				print("Warning: Process Frame process crashed, attempting to restart...")
+
+				# Start process for frame proccessing
+				print("Starting frame processing process...")
+				asyncio.run(launch_proc_frame(parsed_args.port))
+				print("Done!")
+
+				# Listen for process frame process to connect
+				print("Awaiting Connection...")
+				to_socket, in_addrinfo = listen_socket.accept()
+				print("Received Connection!")
+
 				latest_frame_lock.acquire()
+				print("Setting base frame...")
+				latest_frame = get_latest_frame(circ_buffer)
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
 				to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
+				print("Done!")
 				latest_frame_lock.release()
-			elif (header == rf_headers.LASER_OFF.value and state == states.LASER_ON):
-				print("Setting to state laser off")
-				state = states.LASER_OFF
-			elif (header == rf_headers.LASER_ON.value and state == states.LASER_OFF) or state == states.LASER_ON:
-				print("Setting to state laser on")
-				state = states.LASER_ON
+			except BrokenPipeError as e:
+				if latest_frame_lock.locked():
+					latest_frame_lock.release()
+				print("Warning: Process Frame process crashed, attempting to restart...")
+
+				# Start process for frame proccessing
+				print("Starting frame processing process...")
+				asyncio.run(launch_proc_frame(parsed_args.port))
+				print("Done!")
+
+				# Listen for process frame process to connect
+				print("Awaiting Connection...")
+				to_socket, in_addrinfo = listen_socket.accept()
+				print("Received Connection!")
 
 				latest_frame_lock.acquire()
+				print("Setting base frame...")
+				latest_frame = get_latest_frame(circ_buffer)
 				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
-				to_socket.send(headers.PROC_FRAME.value + frame_len_bytes + latest_frame)
-
-				# Wait (use select) until process frame thread returns data
-				read_socket, _, _ = select.select([to_socket], list(), list())	# Block process until socket in list has data (blocks until ready)
-				read_socket = read_socket[0]
-				data = rec_from(read_socket)
-				x = int.from_bytes(data[1:5], byteorder='little')
-				y = int.from_bytes(data[5:9], byteorder='little')
-
+				to_socket.send(headers.BASE_FRAME.value + frame_len_bytes + latest_frame)
+				print("Done!")
 				latest_frame_lock.release()
-
-				if not (x == NOT_FOUND and y == NOT_FOUND):
-					# Map to the screen
-
-					x,y = scrn.get_xy_percent([x,y])
-					#print("(%.2f, %.2f)" % (x, y))
-					print("After mapping: %.2f, %.2f" % (x, y))
-
-					x = int(x*4096)
-					y = int(y*4096)
-
-					if (x >= 0 and x <= 4095 and y >= 0 and y <= 4095):
-						# Send data to the usb controller
-						payload = rf_headers.MOUSE_XY.value + x.to_bytes(2, byteorder='big') + y.to_bytes(2, byteorder='big')
-						send_nrf(nrf, USB_ADDR, payload)
-				else:
-					print("Not found")
-					pass
-			elif header == rf_headers.CAL_START.value:
-				state = states.CAL
-			elif header == rf_headers.CAL_CORNER.value and state == states.CAL:
-				corner = int(payload[1])
-				print("Corner %d" % corner)
-
-				# process latest frame for position
-				latest_frame_lock.acquire()
-				
-				frame_len_bytes = len(latest_frame).to_bytes(4, byteorder='little')
-				to_socket.send(headers.PROC_FRAME.value + frame_len_bytes + latest_frame)
-
-				# Wait (use select) until process frame thread returns data
-				read_socket, _, _ = select.select([to_socket], list(), list())	# Block process until socket in list has data (blocks until ready)
-				read_socket = read_socket[0]
-				data = rec_from(read_socket)
-				x = int.from_bytes(data[1:5], byteorder='little')
-				y = int.from_bytes(data[5:9], byteorder='little')
-
-				latest_frame_lock.release()
-
-
-				# Update state and screen value
-				if (x == NOT_FOUND and y == NOT_FOUND):
-					if corner == 1:
-						scrn.set_nw(default_scrn.get_nw())
-
-					elif corner == 2:
-						scrn.set_ne(default_scrn.get_ne())
-
-					elif corner == 3:
-						scrn.set_sw(default_scrn.get_sw())
-
-					elif corner == 4:
-						scrn.set_se(default_scrn.get_se())
-
-					print("Corner not found, setting to defualt")
-
-				else:
-					if corner == 1:
-						scrn.set_nw([x, y])
-
-					elif corner == 2:
-						scrn.set_ne([x, y])
-
-					elif corner == 3:
-						scrn.set_sw([x, y])
-
-					elif corner == 4:
-						scrn.set_se([x, y])
-
-					print("Corner found: (%d, %d)" % (x, y))
-
-
-			elif header == rf_headers.CAL_CORNER.value and not state == states.CAL:
-				print("Error! Received RF message to calibrate corner when not in calibration state!")
-			elif header == rf_headers.CAL_EXIT.value:
-				print("Exiting Calibration Mode")
-				state = states.LASER_OFF
 
 	except KeyboardInterrupt as e:
 		print("\nExiting gracefully...")
@@ -405,7 +522,8 @@ def main():
 			print("Unable to send exit code to process frame process")
 		
 		try:
-			#camera.stop_preview()
+			if parsed_args.preview:
+				camera.stop_preview()
 			camera.close()
 		except Exception as e:
 			print("Unable to stop camera in shutdown")
